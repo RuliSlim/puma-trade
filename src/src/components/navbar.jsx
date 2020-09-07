@@ -1,44 +1,20 @@
 import React, { useState } from "react";
 import clsx from "clsx";
-import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import { Collapse } from "@material-ui/core";
-
-const useStyles = makeStyles((theme) => ({
-	list: {
-		width: 250,
-	},
-	fullList: {
-		width: "auto",
-	},
-	container: {
-		width: "5vw",
-		height:"100vh",
-		//backgroundColor: "red",
-		display: "flex",
-		flexDirection: "column",
-		justifyContent: "center",
-		position: "absolute"
-	},
-	nested: {
-		paddingLeft: theme.spacing(4),
-	},
-}));
+import { useStyles } from "../utils/styles";
 
 export default function TemporaryDrawer() {
 	const classes = useStyles();
-	const [state, setState] = React.useState({
+	const [state, setState] = useState({
 		left: false,
 	});
 	const [expand, setExpand] = useState({
@@ -56,7 +32,7 @@ export default function TemporaryDrawer() {
 		setState({ ...state, [anchor]: open });
 	};
 
-	const expandList = (text) => (event) => {
+	const expandList = (text) => () => {
 		setExpand({ ...expand, [text.toLowerCase()]: !expand[text.toLowerCase()]});
 		console.log(expand);
 	};
@@ -75,7 +51,7 @@ export default function TemporaryDrawer() {
 			//onKeyDown={toggleDrawer(anchor, false)}
 		>
 			<List>
-				{listData.map((text, index) => (
+				{listData.map((text) => (
 					<>
 						<ListItem button onClick={expandList(text)} key={text}>
 							<ListItemText primary={text} />
@@ -93,7 +69,7 @@ export default function TemporaryDrawer() {
 											<Divider />
 										</>
 									)) :
-									historyList.map((list) => (
+									text === "History" && historyList.map((list) => (
 										<>
 											<ListItem button className={classes.nested} key={list}>
 												<ListItemText primary={list}/>
