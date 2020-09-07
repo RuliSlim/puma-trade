@@ -47,34 +47,32 @@ export default function TemporaryDrawer() {
 				[classes.fullList]: anchor === "top" || anchor === "bottom",
 			})}
 			role="presentation"
-			//onClick={toggleDrawer(anchor, false)}
-			//onKeyDown={toggleDrawer(anchor, false)}
 		>
 			<List>
 				{listData.map((text) => (
 					<>
-						<ListItem button onClick={expandList(text)} key={text}>
-							<ListItemText primary={text} />
-							{text === "Deposit" || text === "History" ? expand[text.toLowerCase()] ? <ExpandLess /> : <ExpandMore /> : null}
+						<ListItem button onClick={expandList(text)} key={text + "-list"}>
+							<ListItemText primary={text} key={text + "-item"} />
+							{text === "Deposit" || text === "History" ? expand[text.toLowerCase()] ? <ExpandLess key={text + "-expanded"}/> : <ExpandMore key={text + "-expand"}/> : null}
 						</ListItem>
-						<Divider />
-						<Collapse in={expand[text.toLowerCase()]} timeout="auto" unmountOnExit>
+						<Divider key={text + "-divider"}/>
+						<Collapse in={expand[text.toLowerCase()]} timeout="auto" unmountOnExit key={text + "-collapse"}>
 							<List component="div" disablePadding>
 								{text === "Deposit" ? 
 									depositList.map((list) => (
 										<>
 											<ListItem button className={classes.nested} key={list}>
-												<ListItemText primary={list}/> 
+												<ListItemText primary={list} key={list + "-item"}/> 
 											</ListItem>
-											<Divider />
+											<Divider key={list + "-divider"}/>
 										</>
 									)) :
 									text === "History" && historyList.map((list) => (
 										<>
 											<ListItem button className={classes.nested} key={list}>
-												<ListItemText primary={list}/>
+												<ListItemText primary={list} key={list + "-item"}/>
 											</ListItem>
-											<Divider />
+											<Divider key={list + "-divider"}/>
 										</>
 									))
 								}

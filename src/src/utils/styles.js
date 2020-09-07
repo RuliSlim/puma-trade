@@ -44,4 +44,8 @@ export const useStyles = makeStyles((theme) => ({
 			justifyContent: "space-around",
 		},
 	},
+	tree: {
+		width: "100vw",
+		height: "100vh"
+	}
 }));
