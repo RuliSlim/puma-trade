@@ -52,10 +52,10 @@ export 	const structTree = () => {
 				name: "Register New Member",
 				children: [
 					{
-						name: "ISI ATAS DULU"
+						name: "Empty"
 					},
 					{
-						name: "ISI ATAS DULU"
+						name: "Empty"
 					},
 				]
 			},
@@ -63,10 +63,10 @@ export 	const structTree = () => {
 				name: "Register New Member",
 				children: [
 					{
-						name: "ISI ATAS DULU"
+						name: "Empty"
 					},
 					{
-						name: "ISI ATAS DULU"
+						name: "Empty"
 					},
 				]
 			},
@@ -86,7 +86,7 @@ export 	const structTree = () => {
 	}
 
 	if (result[0].children.length < 2) {
-		result[0].children.push({name: "Register New Member", children:[{name: "ISI ATAS DULU"}, {name: "ISI ATAS DULU"}]});
+		result[0].children.push({name: "Register New Member", children:[{name: "Empty"}, {name: "Empty"}]});
 	}
 
 	for (let i of result[0].children) {
@@ -111,7 +111,7 @@ export const treeOnClick = (e) => {
 		return "modal";
 	}
 
-	if(e.name === "ISI ATAS DULU") {
+	if(e.name === "Empty") {
 		return "snackbar";
 	}
 };

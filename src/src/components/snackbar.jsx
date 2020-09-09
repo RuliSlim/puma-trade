@@ -25,8 +25,9 @@ export default function MySnackbar({isOpen, message, variant, onClose}) {
 	);
 }
 
-MySnackbar.propTypes  = {
+MySnackbar.propTypes = {
 	isOpen: PropTypes.bool,
 	message: PropTypes.string,
-	variant: PropTypes.string
+	variant: PropTypes.string,
+	onClose: PropTypes.func
 };

@@ -8,30 +8,22 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import PropTypes from "prop-types";
 
-export default function FormDialog({isOpen, onClose}) {
+export default function FormDialog({isOpen, onClose, message, buttons, content}) {
 	return (
 		<Dialog open={isOpen} onClose={onClose} aria-labelledby="form-dialog-title">
-			<DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+			<DialogTitle id="form-dialog-title">{message.title}</DialogTitle>
 			<DialogContent>
 				<DialogContentText>
-					To subscribe to this website, please enter your email address here. We will send updates
-					occasionally.
+					{message.message}
 				</DialogContentText>
-				<TextField
-					autoFocus
-					margin="dense"
-					id="name"
-					label="Email Address"
-					type="email"
-					fullWidth
-				/>
+				{content}
 			</DialogContent>
 			<DialogActions>
 				<Button onClick={onClose} color="primary">
-					Cancel
+					{buttons.cancel}
 				</Button>
 				<Button onClick={onClose} color="primary">
-					Subscribe
+					{buttons.accept}
 				</Button>
 			</DialogActions>
 		</Dialog>
@@ -41,5 +33,8 @@ export default function FormDialog({isOpen, onClose}) {
 
 FormDialog.propTypes = {
 	isOpen: PropTypes.bool,
-	onClose: PropTypes.bool
+	onClose: PropTypes.bool,
+	message: PropTypes.object,
+	buttons: PropTypes.object,
+	content: PropTypes.node
 };

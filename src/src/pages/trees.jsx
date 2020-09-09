@@ -3,7 +3,7 @@ import Tree from "react-d3-tree";
 import { Box } from "@material-ui/core";
 import { useStyles } from "../utils/styles";
 import { structTree, treeOnClick } from "../utils";
-import { MyModal, MySnackbar } from "../components";
+import { MyModal, MySnackbar, Register } from "../components";
 
 export default function Trees() {
 	const classes = useStyles();
@@ -44,6 +44,9 @@ export default function Trees() {
 				<MyModal 
 					isOpen={isOpen} 
 					onClose={() => setIsOpen({...isOpen, modal: false})}
+					message={{title: "Register New Member"}}
+					buttons={{cancel: "Cancel", accept: "Register"}}
+					content={<Register type="register"/>}
 				/>}
 			{isOpen.snackbar &&
 				<MySnackbar 
