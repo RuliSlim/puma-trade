@@ -9,7 +9,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
-import { Collapse } from "@material-ui/core";
+import { Collapse, Link } from "@material-ui/core";
 import { useStyles } from "../utils/styles";
 
 export default function TemporaryDrawer() {
@@ -37,6 +37,10 @@ export default function TemporaryDrawer() {
 		console.log(expand);
 	};
 
+	const navigate = (text) => () => {
+
+	};
+
 	const listData = ["Logo", "Dashboard", "Profile", "Deposit", "Withdraw", "Trees", "History"];
 	const depositList = ["BTC", "ETH", "DOGE"];
 	const historyList = ["Deposit", "Sponsor", "Pairing"];
@@ -52,7 +56,9 @@ export default function TemporaryDrawer() {
 				{listData.map((text) => (
 					<>
 						<ListItem button onClick={expandList(text)} key={text + "-list"}>
-							<ListItemText primary={text} key={text + "-item"} />
+							<Link href={"#" + text.toLowerCase()}>
+								<ListItemText primary={text} key={text + "-item"}/>
+							</Link>
 							{text === "Deposit" || text === "History" ? expand[text.toLowerCase()] ? <ExpandLess key={text + "-expanded"}/> : <ExpandMore key={text + "-expand"}/> : null}
 						</ListItem>
 						<Divider key={text + "-divider"}/>
@@ -85,7 +91,7 @@ export default function TemporaryDrawer() {
 	);
 
 	return (
-		<div className={classes.container}>
+		<div className={classes.sidebarContainer}>
 			<React.Fragment>
 				<Button onClick={toggleDrawer("left", true)}>
 					<ArrowForwardIosIcon color="secondary" fontSize="large"/>

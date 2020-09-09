@@ -7,13 +7,13 @@ export const useStyles = makeStyles((theme) => ({
 	fullList: {
 		width: "auto",
 	},
-	container: {
+	sidebarContainer: {
 		width: "5vw",
 		height:"100vh",
 		display: "flex",
 		flexDirection: "column",
 		justifyContent: "center",
-		position: "absolute"
+		position: "fixed"
 	},
 	nested: {
 		paddingLeft: theme.spacing(4),
@@ -45,7 +45,7 @@ export const useStyles = makeStyles((theme) => ({
 		},
 	},
 	tree: {
-		width: "100vw",
+		width: "80vw",
 		height: "100vh"
 	}
 }));
