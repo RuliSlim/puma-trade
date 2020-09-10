@@ -10,7 +10,7 @@ import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import { Collapse, Link } from "@material-ui/core";
-import { useStyles } from "../utils/styles";
+import { useStyles } from "../../utils/styles";
 
 export default function TemporaryDrawer() {
 	const classes = useStyles();

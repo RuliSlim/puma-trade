@@ -1,4 +1,5 @@
-export { default as Navbar } from "./navbar";
-export { default as MyModal } from "./modal";
-export { default as MySnackbar } from "./snackbar";
-export { default as Register } from "./register";
+export { default as Navbar } from "./utils/navbar";
+export { default as MyModal } from "./utils/modal";
+export { default as MySnackbar } from "./utils/snackbar";
+export { default as Register } from "./forms/register";
+export { default as HistoryTable } from "./table/history_table";

@@ -35,9 +35,10 @@ export default function Trees() {
 			<Tree 
 				data={treeData}
 				orientation="vertical"
-				translate={{x: window.innerWidth/2, y: window.innerHeight/3}}
+				translate={{x: window.innerWidth/2.5, y: window.innerHeight/3}}
 				pathFunc={"straight"}
 				collapsible={false}
+				zoomable={false}
 				onClick={handleClick}
 			/>
 			{isOpen.modal && 
@@ -46,7 +47,7 @@ export default function Trees() {
 					onClose={() => setIsOpen({...isOpen, modal: false})}
 					message={{title: "Register New Member"}}
 					buttons={{cancel: "Cancel", accept: "Register"}}
-					content={<Register type="register"/>}
+					content={<Register />}
 				/>}
 			{isOpen.snackbar &&
 				<MySnackbar 
