@@ -68,7 +68,6 @@ export default function HistoryTable({rows, title}) {
 								.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 								.map((row, i, arr) => {
 									const isItemSelected = isSelected(row.id);
-									console.log(arr[i], "<<<<<<");
 									return (
 										<TableRow
 											hover

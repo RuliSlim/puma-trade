@@ -26,15 +26,11 @@ export default function TemporaryDrawer() {
 		if (event.type === "keydown" && (event.key === "Tab" || event.key === "Shift")) {
 			return;
 		}
-
-		console.log("tsdsadas");
-
 		setState({ ...state, [anchor]: open });
 	};
 
 	const expandList = (text) => () => {
 		setExpand({ ...expand, [text.toLowerCase()]: !expand[text.toLowerCase()]});
-		console.log(expand);
 	};
 
 	const navigate = (text) => () => {
@@ -55,29 +51,33 @@ export default function TemporaryDrawer() {
 			<List>
 				{listData.map((text) => (
 					<>
-						<ListItem button onClick={expandList(text)} key={text + "-list"}>
-							<Link href={"#" + text.toLowerCase()}>
+						<Link href={"#" + text.toLowerCase()} onClick={expandList(text)}>
+							<ListItem button key={text + "-list"}>
 								<ListItemText primary={text} key={text + "-item"}/>
-							</Link>
-							{text === "Deposit" || text === "History" ? expand[text.toLowerCase()] ? <ExpandLess key={text + "-expanded"}/> : <ExpandMore key={text + "-expand"}/> : null}
-						</ListItem>
+								{text === "Deposit" || text === "History" ? expand[text.toLowerCase()] ? <ExpandLess key={text + "-expanded"}/> : <ExpandMore key={text + "-expand"}/> : null}
+							</ListItem>
+						</Link>
 						<Divider key={text + "-divider"}/>
 						<Collapse in={expand[text.toLowerCase()]} timeout="auto" unmountOnExit key={text + "-collapse"}>
 							<List component="div" disablePadding>
 								{text === "Deposit" ? 
 									depositList.map((list) => (
 										<>
-											<ListItem button className={classes.nested} key={list}>
-												<ListItemText primary={list} key={list + "-item"}/> 
-											</ListItem>
+											<Link href={"#" + text.toLowerCase() + "?" + list.toLowerCase()} >
+												<ListItem button className={classes.nested} key={list}>
+													<ListItemText primary={list} key={list + "-item"}/> 
+												</ListItem>
+											</Link>
 											<Divider key={list + "-divider"}/>
 										</>
 									)) :
 									text === "History" && historyList.map((list) => (
 										<>
-											<ListItem button className={classes.nested} key={list}>
-												<ListItemText primary={list} key={list + "-item"}/>
-											</ListItem>
+											<Link href={`#${text.toLowerCase()}?${list.toLowerCase()}`}>
+												<ListItem button className={classes.nested} key={list}>
+													<ListItemText primary={list} key={list + "-item"}/>
+												</ListItem>
+											</Link>
 											<Divider key={list + "-divider"}/>
 										</>
 									))

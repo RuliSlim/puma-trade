@@ -1,12 +1,5 @@
 import TreeData from "../model/tree_data";
 import { dummyData } from "../model/dummy_data";
-import { Modal } from "@material-ui/core";
-import { componentType } from "../model/enums";
-
-
-// TODO: FUNCTION TREE TETAP MENAMPILKAN ' TITIK TAPI KALAU REAL DATA ANAK MASIH KOSONG JIKA DIKLIK MENAMPILKAN FORM PENDAFTARAN. KALAU SUDAH TERISI BERPINDAH KE ROOT ELEMENT
-
-// TODO: FUNCTION ON HOVER MENAMPILKAN DETAIL DATA TSB
 
 // function for struct data in tree for initial stage
 export const structTree = () => {
@@ -40,8 +33,6 @@ export const structTree = () => {
 	// NOTE: result will looks like this [{name, childre:[2]}, {name, children:[2], name, childre:[2]}]
 	let result = data.filter(el => el.children.length !== 0);
 	
-	console.log(data, result, "ini data");
-
 	if (!result.length) {
 		result = {
 			name: data[0].name
@@ -94,8 +85,6 @@ export const structTree = () => {
 			i.children = [{name: "Register New Member"}, {name: "Register New Member"}];
 		}
 		if (i.children.length < 2) {
-			console.log("masuk sinifa");
-
 			i.children.push({name:"Register New Member"});
 		}
 	}

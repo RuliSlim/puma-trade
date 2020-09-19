@@ -1,13 +1,21 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 import { HistoryTable } from "../components";
 import { dummyDeposit, dummyPairing, dummySponsor } from "../model/dummy_data";
 
 export default function HistoryPages() {
+	const params = useLocation().hash.slice(9);
 	return(
 		<>
-			<HistoryTable rows={dummyDeposit} title="History Deposit"/>
-			<HistoryTable rows={dummySponsor} title="History Sponsor"/>
-			<HistoryTable rows={dummyPairing} title="History Pairing"/>
+			{(params === "deposit" || params === "") &&
+				<HistoryTable rows={dummyDeposit} title="History Deposit"/>
+			}
+			{params === "sponsor" &&
+				<HistoryTable rows={dummySponsor} title="History Sponsor"/>
+			}
+			{params === "pairing" &&
+				<HistoryTable rows={dummyPairing} title="History Pairing"/>
+			}
 		</>
 	);
 }
