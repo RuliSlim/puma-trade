@@ -9,7 +9,7 @@ import { componentType } from "../model/enums";
 // TODO: FUNCTION ON HOVER MENAMPILKAN DETAIL DATA TSB
 
 // function for struct data in tree for initial stage
-export 	const structTree = () => {
+export const structTree = () => {
 	const data = [];
 
 	for (let i of dummyData) {

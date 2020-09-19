@@ -22,7 +22,7 @@ export const useStyles = makeStyles((theme) => ({
 		height: "100vh",
 		display: "flex",
 		justifyContent: "center",
-		flexDirection: "column"
+		flexDirection: "column",
 	},
 	paper: {
 		height: "20vw",
