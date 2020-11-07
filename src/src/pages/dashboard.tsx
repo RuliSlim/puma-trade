@@ -3,10 +3,10 @@ import { Grid, Container, Card, CardContent, Typography, Divider, CardActions, B
 import { useStyles } from "../utils/styles";
 
 export default function Dashboard() {
-	const item = ["Aktif", "Pasif", "250%", "Saldo Token", "Saldo Point"];
+	const item = [ "Aktif", "Pasif", "250%", "Saldo Token", "Saldo Point" ];
 	const classes = useStyles();
 
-	const card = (text, index) => (
+	const card = (text: string, index: number) => (
 		<Card elevation={5} raised={true} className={classes.paper}>
 			<CardContent>
 				<div>
@@ -15,7 +15,7 @@ export default function Dashboard() {
 				</div>
 			</CardContent>
 			<Divider />
-			{index < 3 && 
+			{index < 3 &&
 				<CardActions>
 					<Button size="small">Convert</Button>
 				</CardActions>

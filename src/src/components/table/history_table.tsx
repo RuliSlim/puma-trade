@@ -10,35 +10,44 @@ import Paper from "@material-ui/core/Paper";
 import { getComparator, stableSort, useStyles } from "../../utils";
 import TitleTable from "./title_table";
 import LabelTable from "./label_table";
+import { SponsorHistoryModel, TItleTableModel } from "../../model/history";
 
-export default function HistoryTable({rows, title}) {
+type HistoryTableProps = {
+	rows: Array<TItleTableModel | SponsorHistoryModel>;
+	title: string;
+}
+
+type Order = "asc" | "desc" | false;
+
+export default function HistoryTable(props: HistoryTableProps) {
+	const { rows, title } = props;
 	const classes = useStyles();
-	const [order, setOrder] = React.useState("asc");
-	const [orderBy, setOrderBy] = React.useState("calories");
-	const [selected, setSelected] = React.useState([]);
-	const [page, setPage] = React.useState(0);
+	const [ order, setOrder ] = React.useState<Order>("asc");
+	const [ orderBy, setOrderBy ] = React.useState<keyof TItleTableModel>("id");
+	const [ selected, setSelected ] = React.useState<Array<string>>([]);
+	const [ page, setPage ] = React.useState(0);
 	const rowsPerPage = 10;
 
-	const handleRequestSort = (event, property) => {
+	const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof TItleTableModel) => {
 		const isAsc = orderBy === property && order === "asc";
 		setOrder(isAsc ? "desc" : "asc");
 		setOrderBy(property);
 	};
 
-	const handleSelectAllClick = (event) => {
+	const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (event.target.checked) {
-			const newSelecteds = rows.map((n) => n.name);
+			const newSelecteds: Array<string> = rows.map((n) => n.id.toString());
 			setSelected(newSelecteds);
 			return;
 		}
 		setSelected([]);
 	};
 
-	const handleChangePage = (event, newPage) => {
+	const handleChangePage = (event: unknown, newPage: number) => {
 		setPage(newPage);
 	};
 
-	const isSelected = (name) => selected.indexOf(name) !== -1;
+	const isSelected = (name: string) => selected.indexOf(name) !== -1;
 
 	const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
@@ -66,8 +75,8 @@ export default function HistoryTable({rows, title}) {
 						<TableBody>
 							{stableSort(rows, getComparator(order, orderBy))
 								.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-								.map((row, i, arr) => {
-									const isItemSelected = isSelected(row.id);
+								.map((row: TItleTableModel, i: number, arr: Array<TItleTableModel>) => {
+									const isItemSelected = isSelected(row.id.toString());
 									return (
 										<TableRow
 											hover
@@ -77,7 +86,7 @@ export default function HistoryTable({rows, title}) {
 											key={row.id}
 											selected={isItemSelected}
 										>
-											{Object.values(arr[i]).map((value, j) => 
+											{Object.values(arr[i]).map((value, j) =>
 												j !== 0 && <TableCell align="left" key={j}>{value}</TableCell>
 											)}
 										</TableRow>
@@ -92,7 +101,7 @@ export default function HistoryTable({rows, title}) {
 					</Table>
 				</TableContainer>
 				<TablePagination
-					rowsPerPageOptions={10}
+					rowsPerPageOptions={[ 10 ]}
 					component="div"
 					count={rows.length}
 					rowsPerPage={rowsPerPage}

@@ -1,23 +1,27 @@
-export const dummyData = [
+import { TItleTableModel } from "./history";
+import { Member } from "./tree_data";
+
+export const dummyData: Array<Member> = [
 	{
-		name: "1"
+		name: "1",
+		ref: "0"
 	},
+	// {
+	// 	name: "2",
+	// 	ref: "1"
+	// },
 	{
-		name: "2",
-		ref: "1"
+		name: "4",
+		ref: "2"
 	},
 	{
 		name: "5",
 		ref: "2"
 	},
-	{
-		name: "4",
-		ref: "2"
-	},
 
 ];
 
-export const dummyDeposit = [
+export const dummyDeposit: Array<TItleTableModel> = [
 	{
 		id: 1,
 		date: "2020-08-01",
@@ -103,7 +107,6 @@ export const dummyDeposit = [
 		type: "ETH"
 	},
 ];
-
 
 export const dummySponsor = [
 	{
@@ -314,7 +317,7 @@ tipe jenis (wd admin atau wd p2p member)
 
 wd admin:
 menampilkan saldo token
-isi nominal (minimum 10% purchase, ambil dari token!, max capping kalau sudah melebihi capping repurchase) 
+isi nominal (minimum 10% purchase, ambil dari token!, max capping kalau sudah melebihi capping repurchase)
 hasil yang diterima
 password
 tos

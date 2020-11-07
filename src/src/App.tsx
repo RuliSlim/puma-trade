@@ -4,7 +4,7 @@ import { Navbar } from "./components";
 import { Dashboard, Trees, History } from "./pages";
 import { BrowserRouter } from "react-router-dom";
 
-function App() {
+function App(): JSX.Element {
 	return (
 		<BrowserRouter>
 			<div className="App">

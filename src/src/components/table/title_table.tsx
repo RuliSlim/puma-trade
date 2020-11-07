@@ -16,7 +16,7 @@ const useToolbarStyles = makeStyles((theme) => ({
 				color: theme.palette.secondary.main,
 				backgroundColor: lighten(theme.palette.secondary.light, 0.85),
 			}
-			: { 
+			: {
 				color: theme.palette.text.primary,
 				backgroundColor: theme.palette.secondary.dark,
 			},
@@ -25,7 +25,12 @@ const useToolbarStyles = makeStyles((theme) => ({
 	},
 }));
 
-export default function TitleTable (props) {
+interface TitleTableProps {
+	numSelected: number;
+	title: string;
+}
+
+export default function TitleTable (props: TitleTableProps) {
 	const classes = useToolbarStyles();
 	const { numSelected, title } = props;
 

@@ -11,37 +11,42 @@ import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import { Collapse, Link } from "@material-ui/core";
 import { useStyles } from "../../utils/styles";
+import { CollapseNavbar } from "../../model/components/navbar";
+
+type Anchor = "top" | "left" | "bottom" | "right";
 
 export default function TemporaryDrawer() {
 	const classes = useStyles();
-	const [state, setState] = useState({
+	const [ state, setState ] = useState({
 		left: false,
 	});
-	const [expand, setExpand] = useState({
+	const [ expand, setExpand ] = useState<CollapseNavbar>({
 		deposit: false,
 		history: false
 	});
 
-	const toggleDrawer = (anchor, open) => (event) => {
-		if (event.type === "keydown" && (event.key === "Tab" || event.key === "Shift")) {
+	const toggleDrawer = (anchor: Anchor, open: boolean) => (
+		event: React.KeyboardEvent | React.MouseEvent,
+	) => {
+		if (event.type === "keydown" && ((event as React.KeyboardEvent).key === "Tab" || (event as React.KeyboardEvent).key === "Shift")) {
 			return;
 		}
 		setState({ ...state, [anchor]: open });
 	};
 
-	const expandList = (text) => () => {
-		setExpand({ ...expand, [text.toLowerCase()]: !expand[text.toLowerCase()]});
+	const expandList = (text: keyof CollapseNavbar) => () => {
+		setExpand({ ...expand, [text]: !expand[text] });
 	};
 
-	const navigate = (text) => () => {
+	// const navigate = (text) => () => {
 
-	};
+	// };
 
-	const listData = ["Logo", "Dashboard", "Profile", "Deposit", "Withdraw", "Trees", "History"];
-	const depositList = ["BTC", "ETH", "DOGE"];
-	const historyList = ["Deposit", "Sponsor", "Pairing"];
+	const listData = [ "Logo", "Dashboard", "Profile", "Deposit", "Withdraw", "Trees", "History" ];
+	const depositList = [ "BTC", "ETH", "DOGE" ];
+	const historyList = [ "Deposit", "Sponsor", "Pairing" ];
 
-	const list = (anchor) => (
+	const list = (anchor: Anchor) => (
 		<div
 			className={clsx(classes.list, {
 				[classes.fullList]: anchor === "top" || anchor === "bottom",
@@ -49,42 +54,42 @@ export default function TemporaryDrawer() {
 			role="presentation"
 		>
 			<List>
-				{listData.map((text) => (
-					<>
-						<Link href={"#" + text.toLowerCase()} onClick={expandList(text)}>
+				{listData.map((text: string) => (
+					<React.Fragment key={text}>
+						<Link href={"#" + text.toLowerCase()} onClick={expandList(text as keyof CollapseNavbar)}>
 							<ListItem button key={text + "-list"}>
 								<ListItemText primary={text} key={text + "-item"}/>
-								{text === "Deposit" || text === "History" ? expand[text.toLowerCase()] ? <ExpandLess key={text + "-expanded"}/> : <ExpandMore key={text + "-expand"}/> : null}
+								{text === "Deposit" || text === "History" ? expand[(text.toLowerCase() as keyof CollapseNavbar)] ? <ExpandLess key={text + "-expanded"}/> : <ExpandMore key={text + "-expand"}/> : null}
 							</ListItem>
 						</Link>
 						<Divider key={text + "-divider"}/>
-						<Collapse in={expand[text.toLowerCase()]} timeout="auto" unmountOnExit key={text + "-collapse"}>
+						<Collapse in={expand[(text.toLowerCase() as keyof CollapseNavbar)]} timeout="auto" unmountOnExit key={text + "-collapse"}>
 							<List component="div" disablePadding>
-								{text === "Deposit" ? 
+								{text === "Deposit" ?
 									depositList.map((list) => (
-										<>
+										<React.Fragment key={list}>
 											<Link href={"#" + text.toLowerCase() + "?" + list.toLowerCase()} >
 												<ListItem button className={classes.nested} key={list}>
-													<ListItemText primary={list} key={list + "-item"}/> 
+													<ListItemText primary={list} key={list + "-item"}/>
 												</ListItem>
 											</Link>
 											<Divider key={list + "-divider"}/>
-										</>
+										</React.Fragment>
 									)) :
 									text === "History" && historyList.map((list) => (
-										<>
+										<React.Fragment key={list}>
 											<Link href={`#${text.toLowerCase()}?${list.toLowerCase()}`}>
 												<ListItem button className={classes.nested} key={list}>
 													<ListItemText primary={list} key={list + "-item"}/>
 												</ListItem>
 											</Link>
 											<Divider key={list + "-divider"}/>
-										</>
+										</React.Fragment>
 									))
 								}
 							</List>
 						</Collapse>
-					</>
+					</React.Fragment>
 				))}
 			</List>
 		</div>

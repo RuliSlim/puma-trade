@@ -7,8 +7,18 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import PropTypes from "prop-types";
+import { ButtonModal, MessageModal } from "../../model/components/modal";
 
-export default function FormDialog({isOpen, onClose, message, buttons, content}) {
+interface FormDialogProps {
+	isOpen: boolean;
+	onClose: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+	message: MessageModal;
+	buttons: ButtonModal;
+	content: JSX.Element;
+}
+
+export default function FormDialog(props: FormDialogProps) {
+	const { isOpen, onClose, message, buttons, content } = props;
 	return (
 		<Dialog open={isOpen} onClose={onClose} aria-labelledby="form-dialog-title">
 			<DialogTitle id="form-dialog-title">{message.title}</DialogTitle>
@@ -29,7 +39,6 @@ export default function FormDialog({isOpen, onClose, message, buttons, content})
 		</Dialog>
 	);
 }
-
 
 FormDialog.propTypes = {
 	isOpen: PropTypes.bool,

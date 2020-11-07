@@ -1,17 +1,23 @@
 import TreeData from "../model/tree_data";
 import { dummyData } from "../model/dummy_data";
+// import { Modal } from "@material-ui/core";
+// import { componentType } from "../model/enums";
+
+// TODO: FUNCTION TREE TETAP MENAMPILKAN ' TITIK TAPI KALAU REAL DATA ANAK MASIH KOSONG JIKA DIKLIK MENAMPILKAN FORM PENDAFTARAN. KALAU SUDAH TERISI BERPINDAH KE ROOT ELEMENT
+
+// TODO: FUNCTION ON HOVER MENAMPILKAN DETAIL DATA TSB
 
 // function for struct data in tree for initial stage
-export const structTree = () => {
+export 	const structTree = () => {
 	const data = [];
 
-	for (let i of dummyData) {
+	for (const i of dummyData) {
 		data.push(new TreeData(i.name));
 	}
 
-	for (let i of dummyData) {
+	for (const i of dummyData) {
 		if (i.ref !== undefined) {
-			for (let j of data) {
+			for (const j of data) {
 				if (i.ref === j.name) {
 					j.children.push(i);
 				}
@@ -19,20 +25,21 @@ export const structTree = () => {
 		}
 	}
 
-	for (let i of data) {
+	for (const i of data) {
 		if (i.ref !== undefined) {
-			for (let j of data) {
+			for (const j of data) {
 				if (i.ref === j.name && i.children.length > 0) {
 					j.children.push(i);
-				} 
+				}
 			}
 		}
 	}
-	
-	
+
 	// NOTE: result will looks like this [{name, childre:[2]}, {name, children:[2], name, childre:[2]}]
 	let result = data.filter(el => el.children.length !== 0);
-	
+
+	console.log(data, result, "ini data");
+
 	if (!result.length) {
 		result = {
 			name: data[0].name
@@ -65,7 +72,6 @@ export const structTree = () => {
 		return result;
 	}
 
-
 	// TODO: If tree doesnt show 3 level
 	if (result.length === 2) {
 		result[0].children[0] = result[1];
@@ -77,19 +83,19 @@ export const structTree = () => {
 	}
 
 	if (result[0].children.length < 2) {
-		result[0].children.push({name: "Register New Member", children:[{name: "Empty"}, {name: "Empty"}]});
+		result[0].children.push({ name: "Register New Member", children:[ { name: "Empty" }, { name: "Empty" } ] });
 	}
 
-	for (let i of result[0].children) {
+	for (const i of result[0].children) {
 		if (i.children == undefined) {
-			i.children = [{name: "Register New Member"}, {name: "Register New Member"}];
+			i.children = [ { name: "Register New Member" }, { name: "Register New Member" } ];
 		}
 		if (i.children.length < 2) {
-			i.children.push({name:"Register New Member"});
+			console.log("masuk sinifa");
+
+			i.children.push({ name:"Register New Member" });
 		}
 	}
-
-
 
 	return result[0];
 };

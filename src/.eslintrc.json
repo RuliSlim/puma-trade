@@ -5,21 +5,20 @@
     },
     "extends": [
         "eslint:recommended",
-        "plugin:react/recommended"
+        "plugin:react/recommended",
+        "plugin:@typescript-eslint/recommended"
     ],
-    "globals": {
-        "Atomics": "readonly",
-        "SharedArrayBuffer": "readonly"
-    },
+    "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaFeatures": {
             "jsx": true
         },
-        "ecmaVersion": 2018,
+        "ecmaVersion": 12,
         "sourceType": "module"
     },
     "plugins": [
-        "react"
+        "react",
+        "@typescript-eslint"
     ],
     "rules": {
         "indent": [
@@ -37,6 +36,17 @@
         "semi": [
             "error",
             "always"
+        ],
+        "array-bracket-spacing": [
+            "error",
+            "always"
+        ],
+        "no-trailing-spaces": "error",
+        "object-curly-newline": "error",
+        "object-curly-spacing": ["error", "always"],
+        "no-multiple-empty-lines": [
+            "error", 
+            { "max": 1, "maxEOF": 0 }
         ]
     }
 }
