@@ -6,10 +6,10 @@ export const dummyData: Array<Member> = [
 		name: "1",
 		ref: "0"
 	},
-	// {
-	// 	name: "2",
-	// 	ref: "1"
-	// },
+	{
+		name: "2",
+		ref: "1",
+	},
 	{
 		name: "4",
 		ref: "2"

@@ -15,7 +15,7 @@ import { CollapseNavbar } from "../../model/components/navbar";
 
 type Anchor = "top" | "left" | "bottom" | "right";
 
-export default function TemporaryDrawer() {
+export default function TemporaryDrawer(): JSX.Element {
 	const classes = useStyles();
 	const [ state, setState ] = useState({
 		left: false,
@@ -27,26 +27,23 @@ export default function TemporaryDrawer() {
 
 	const toggleDrawer = (anchor: Anchor, open: boolean) => (
 		event: React.KeyboardEvent | React.MouseEvent,
-	) => {
+	): void => {
 		if (event.type === "keydown" && ((event as React.KeyboardEvent).key === "Tab" || (event as React.KeyboardEvent).key === "Shift")) {
 			return;
 		}
 		setState({ ...state, [anchor]: open });
 	};
 
-	const expandList = (text: keyof CollapseNavbar) => () => {
-		setExpand({ ...expand, [text]: !expand[text] });
+	const expandList = (text: keyof CollapseNavbar) => (): void => {
+		const key: keyof CollapseNavbar = text.toLowerCase() as keyof CollapseNavbar;
+		setExpand({ ...expand, [key]: !expand[key] });
 	};
-
-	// const navigate = (text) => () => {
-
-	// };
 
 	const listData = [ "Logo", "Dashboard", "Profile", "Deposit", "Withdraw", "Trees", "History" ];
 	const depositList = [ "BTC", "ETH", "DOGE" ];
 	const historyList = [ "Deposit", "Sponsor", "Pairing" ];
 
-	const list = (anchor: Anchor) => (
+	const list = (anchor: Anchor): JSX.Element => (
 		<div
 			className={clsx(classes.list, {
 				[classes.fullList]: anchor === "top" || anchor === "bottom",
@@ -56,7 +53,7 @@ export default function TemporaryDrawer() {
 			<List>
 				{listData.map((text: string) => (
 					<React.Fragment key={text}>
-						<Link href={"#" + text.toLowerCase()} onClick={expandList(text as keyof CollapseNavbar)}>
+						<Link href={"/" + text.toLowerCase()} onClick={expandList(text as keyof CollapseNavbar)}>
 							<ListItem button key={text + "-list"}>
 								<ListItemText primary={text} key={text + "-item"}/>
 								{text === "Deposit" || text === "History" ? expand[(text.toLowerCase() as keyof CollapseNavbar)] ? <ExpandLess key={text + "-expanded"}/> : <ExpandMore key={text + "-expand"}/> : null}
@@ -98,7 +95,7 @@ export default function TemporaryDrawer() {
 	return (
 		<div className={classes.sidebarContainer}>
 			<React.Fragment>
-				<Button onClick={toggleDrawer("left", true)}>
+				<Button onClick={toggleDrawer("left", true)} style={{ background: "transparent" }}>
 					<ArrowForwardIosIcon color="secondary" fontSize="large"/>
 				</Button>
 				<Drawer anchor="left" open={state["left"]} onClose={toggleDrawer("left", false)}>

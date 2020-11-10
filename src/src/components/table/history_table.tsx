@@ -17,7 +17,7 @@ type HistoryTableProps = {
 	title: string;
 }
 
-type Order = "asc" | "desc" | false;
+type Order = "asc" | "desc" | undefined;
 
 export default function HistoryTable(props: HistoryTableProps) {
 	const { rows, title } = props;
@@ -53,7 +53,7 @@ export default function HistoryTable(props: HistoryTableProps) {
 
 	return (
 		<div className={classes.tree}>
-			<Paper className={classes.paperTable}>
+			<Paper className={classes.paperTable} elevation={10}>
 				<TitleTable numSelected={selected.length} title={title}/>
 				<TableContainer>
 					<Table

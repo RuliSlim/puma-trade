@@ -1,13 +1,13 @@
 import React from "react";
-import PropTypes from "prop-types";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
 import { useStyles } from "../../utils";
 import { SponsorHistoryModel, TItleTableModel } from "../../model/history";
+import { ArrowDownward, ArrowUpward } from "@material-ui/icons";
 
-type Order = "asc" | "desc" | false;
+type Order = "asc" | "desc" | undefined;
 
 interface EnhancedTableProps {
   classes: ReturnType<typeof useStyles>;
@@ -22,7 +22,7 @@ interface EnhancedTableProps {
 
 export default function LabelTable(props: EnhancedTableProps) {
 	const { classes, order, orderBy, onRequestSort, labels } = props;
-	const createSortHandler = (property: keyof TItleTableModel) => (event: React.MouseEvent<unknown>) => {
+	const createSortHandler = (property: keyof TItleTableModel) => (event: React.MouseEvent<unknown>): void => {
 		onRequestSort(event, property);
 	};
 
@@ -44,6 +44,7 @@ export default function LabelTable(props: EnhancedTableProps) {
 							active={orderBy === key}
 							direction={orderBy === labels.date ? order : "asc"}
 							onClick={createSortHandler(label[i] as keyof TItleTableModel)}
+							IconComponent={(): JSX.Element => order === "asc" ? <ArrowUpward /> : <ArrowDownward />}
 						>
 							{key}
 							{orderBy === key ? (
@@ -58,14 +59,3 @@ export default function LabelTable(props: EnhancedTableProps) {
 		</TableHead>
 	);
 }
-
-LabelTable.propTypes = {
-	classes: PropTypes.object.isRequired,
-	numSelected: PropTypes.number.isRequired,
-	onRequestSort: PropTypes.func.isRequired,
-	onSelectAllClick: PropTypes.func.isRequired,
-	order: PropTypes.oneOf([ "asc", "desc" ]).isRequired,
-	orderBy: PropTypes.string.isRequired,
-	rowCount: PropTypes.number.isRequired,
-	labels: PropTypes.object.isRequired
-};

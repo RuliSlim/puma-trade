@@ -20,34 +20,54 @@ export const useStyles = makeStyles((theme) => ({
 	},
 	root: {
 		height: "100vh",
+		// padding: `${theme.spacing(20)} 0`
 		display: "flex",
 		justifyContent: "center",
 		flexDirection: "column",
 	},
-	paper: {
+	cardDashboard: {
 		height: "20vw",
 		display: "flex",
 		flexDirection: "column",
-		"& .MuiCardContent-root": {
-			flex: 3,
-		},
-		"& .MuiCardContent-root div": {
-			flex: 1,
-			paddingTop: theme.spacing(12)
-		},
-		"& .MuiCardActions-root": {
-			flex: 1,
-		},
-		"& div": {
-			display: "flex",
-			flexDirection: "row",
-			justifyContent: "space-around",
-		},
+		justifyContent: "flex-end",
+		alignContent: "center"
+	},
+	deposit: {
+		height: "10vw",
+		display: "flex",
+		flexDirection: "column",
+		justifyContent: "center",
+		alignContent: "center"
+	},
+	paper: {
+		// height: "20vw",
+		// display: "flex",
+		// flexDirection: "column",
+		// "& .MuiCardContent-root": {
+		// 	flex: 3,
+		// },
+		// "& .MuiCardContent-root div": {
+		// 	flex: 1,
+		// 	paddingTop: theme.spacing(12)
+		// },
+		// "& .MuiCardActions-root": {
+		// 	flex: 1,
+		// },
+		// "& div": {
+		// 	[theme.breakpoints.up("md")]: {
+		// 		display: "flex",
+		// 		flexDirection: "row",
+		// 		justifyContent: "space-around",
+		// 	},
+		// 	[theme.breakpoints.down("md")]: {
+		// 		display: "none",
+		// 	}
+		// },
 	},
 	tree: {
 		width: "80vw",
-		height: "100vh",
-		margin: "0 auto"
+		height: "80vh",
+		margin: "10vh auto"
 	},
 	table: {
 		minWidth: 750,

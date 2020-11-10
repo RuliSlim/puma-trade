@@ -46,8 +46,3 @@ export default function TitleTable (props: TitleTableProps) {
 		</Toolbar>
 	);
 }
-
-TitleTable.propTypes = {
-	numSelected: PropTypes.number.isRequired,
-	title: PropTypes.string.isRequired
-};

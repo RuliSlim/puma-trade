@@ -1,25 +1,21 @@
 import React from "react";
-import "./App.css";
 import { Navbar } from "./components";
 import { Dashboard, Trees, History } from "./pages";
-import { BrowserRouter } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
+import { useDebounce } from "./hooks/debounce";
 
 function App(): JSX.Element {
+	useDebounce();
+
 	return (
-		<BrowserRouter>
-			<div className="App">
-				<Navbar />
-				<div id="dashboard">
-					<Dashboard/>
-				</div>
-				<div id="trees">
-					<Trees />
-				</div>
-				<div id="history">
-					<History />
-				</div>
-			</div>
-		</BrowserRouter>
+		<div className="App">
+			<Navbar />
+			<Switch>
+				<Route exact path="/" render={(): JSX.Element => <Dashboard />} />
+				<Route path="/trees" render={(): JSX.Element => <Trees />} />
+				<Route path="/history" render={(): JSX.Element => <History />} />
+			</Switch>
+		</div>
 	);
 }
 

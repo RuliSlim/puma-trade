@@ -3,10 +3,18 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
+import { CssBaseline, MuiThemeProvider } from "@material-ui/core";
+import { MyTheme } from "./lib/theme";
+import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.render(
 	<React.StrictMode>
-		<App />
+		<MuiThemeProvider theme={MyTheme}>
+			<CssBaseline />
+			<BrowserRouter>
+				<App />
+			</BrowserRouter>
+		</MuiThemeProvider>
 	</React.StrictMode>,
 	document.getElementById("root")
 );
