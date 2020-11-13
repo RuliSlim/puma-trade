@@ -1,10 +1,11 @@
 import React from "react";
-import { Grid, Container, Card, CardContent, Typography, Divider, CardActions, Button, CardActionArea } from "@material-ui/core";
+import { Grid, Card, CardContent, Typography, Divider, CardActions, Button, CardActionArea } from "@material-ui/core";
 import { useStyles } from "../utils/styles";
 
 export default function Dashboard(): JSX.Element {
 	const topItem = [ "Deposit", "Purchase", "Transfer", "Withdraw" ];
-	const item = [ "Aktif", "250%", "Saldo Token", "Saldo Point" ];
+	const item = [ "Bonus", "Capping", "Saldo Token", "Saldo Point" ];
+	const value = [ "100", "300%" ];
 	const classes = useStyles();
 
 	React.useEffect(() => {
@@ -17,11 +18,13 @@ export default function Dashboard(): JSX.Element {
 				<CardContent>
 					<Grid container direction="column" spacing={10}>
 						<Grid item>
-							<Typography component="p">{text}</Typography>
+							<Typography component="p" align="center">{text}</Typography>
 						</Grid>
 						{ pos !== "top" &&
 							<Grid item>
-								{index < 1 && <Typography component="p">100</Typography>}
+								{index < 2 && value.map((el, i) => (
+									<Typography component="p" align="center" key={el+i}>{el}</Typography>
+								))}
 							</Grid>
 						}
 					</Grid>
@@ -39,23 +42,21 @@ export default function Dashboard(): JSX.Element {
 	);
 
 	return (
-		<Container className={classes.root}>
-			<Grid container direction="column" spacing={5}>
-				<Grid item container spacing={3}>
-					{topItem.map((item) => (
-						<Grid item xs={12} md={3} key={item}>
-							<Button size="large" fullWidth>{item}</Button>
-						</Grid>
-					))}
-				</Grid>
-				<Grid item container spacing={3}>
-					{item.map((item, index) => (
-						<Grid item xs={12} md={index < 3 ? 6 : 6} key={item}>
-							{card(item, index, "bot")}
-						</Grid>
-					))}
-				</Grid>
+		<Grid container direction="column" spacing={5}>
+			<Grid item container spacing={3}>
+				{topItem.map((item) => (
+					<Grid item xs={12} md={3} key={item}>
+						<Button size="large" fullWidth>{item}</Button>
+					</Grid>
+				))}
 			</Grid>
-		</Container>
+			<Grid item container spacing={3}>
+				{item.map((item, index) => (
+					<Grid item xs={12} md={index < 3 ? 6 : 6} key={item}>
+						{card(item, index, "bot")}
+					</Grid>
+				))}
+			</Grid>
+		</Grid>
 	);
 }

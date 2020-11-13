@@ -52,7 +52,7 @@ export default function HistoryTable(props: HistoryTableProps) {
 	const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
 	return (
-		<div className={classes.tree}>
+		<>
 			<Paper className={classes.paperTable} elevation={10}>
 				<TitleTable numSelected={selected.length} title={title}/>
 				<TableContainer>
@@ -109,7 +109,7 @@ export default function HistoryTable(props: HistoryTableProps) {
 					onChangePage={handleChangePage}
 				/>
 			</Paper>
-		</div>
+		</>
 	);
 }
 

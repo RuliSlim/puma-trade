@@ -1,6 +1,15 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles((theme) => ({
+	root: {
+		height: "100vh",
+		// padding: `${theme.spacing(20)} 0`
+		display: "flex",
+		justifyContent: "center",
+		flexDirection: "column",
+		alignContent: "center",
+		width: "100vw"
+	},
 	list: {
 		width: 250,
 	},
@@ -18,13 +27,6 @@ export const useStyles = makeStyles((theme) => ({
 	nested: {
 		paddingLeft: theme.spacing(4),
 	},
-	root: {
-		height: "100vh",
-		// padding: `${theme.spacing(20)} 0`
-		display: "flex",
-		justifyContent: "center",
-		flexDirection: "column",
-	},
 	cardDashboard: {
 		height: "20vw",
 		display: "flex",
@@ -39,35 +41,10 @@ export const useStyles = makeStyles((theme) => ({
 		justifyContent: "center",
 		alignContent: "center"
 	},
-	paper: {
-		// height: "20vw",
-		// display: "flex",
-		// flexDirection: "column",
-		// "& .MuiCardContent-root": {
-		// 	flex: 3,
-		// },
-		// "& .MuiCardContent-root div": {
-		// 	flex: 1,
-		// 	paddingTop: theme.spacing(12)
-		// },
-		// "& .MuiCardActions-root": {
-		// 	flex: 1,
-		// },
-		// "& div": {
-		// 	[theme.breakpoints.up("md")]: {
-		// 		display: "flex",
-		// 		flexDirection: "row",
-		// 		justifyContent: "space-around",
-		// 	},
-		// 	[theme.breakpoints.down("md")]: {
-		// 		display: "none",
-		// 	}
-		// },
-	},
 	tree: {
 		width: "80vw",
-		height: "80vh",
-		margin: "10vh auto"
+		height: "60vh",
+		margin: "5vh auto"
 	},
 	table: {
 		minWidth: 750,

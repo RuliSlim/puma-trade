@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import Tree, { ReactD3TreeItem } from "react-d3-tree";
-import { Box, Typography } from "@material-ui/core";
-import { useStyles } from "../utils/styles";
+import { Box, Grid, Typography } from "@material-ui/core";
 import { structTree, treeOnClick } from "../utils";
 import { MyModal, MySnackbar, Register } from "../components";
 import { ModalState } from "../model/components/modal";
 import "./../lib/tree.css";
+import { useDeviceSize } from "../hooks/device";
 
 export default function Trees(): JSX.Element {
-	const classes = useStyles();
 	const [ isOpen, setIsOpen ] = useState<ModalState>({ modal: false, snackbar: false });
 
 	// states
@@ -67,18 +66,23 @@ export default function Trees(): JSX.Element {
 	};
 
 	return (
-		<Box className={classes.tree}>
-			<Typography variant="h4" color="textPrimary">Tree</Typography>
-			<Tree
-				data={treeData}
-				orientation="vertical"
-				translate={{ x: window.innerWidth/2.5, y: window.innerHeight/3 }}
-				pathFunc={"straight"}
-				collapsible={false}
-				zoomable={false}
-				onClick={handleClick}
-				styles={styles}
-			/>
+		<Grid container direction="column">
+			<Grid item>
+				<Typography variant="h4" color="textPrimary">Tree</Typography>
+			</Grid>
+			<Box width="80vw" height="80vh">
+				<Tree
+					data={treeData}
+					orientation="vertical"
+					translate={{ x: window.innerWidth/2.5, y: window.innerHeight/3 }}
+					pathFunc={"straight"}
+					collapsible={false}
+					zoomable={false}
+					onClick={handleClick}
+					styles={styles}
+					zoom={useDeviceSize().device.isMobile ? 0.4 : 1}
+				/>
+			</Box>
 			{isOpen.modal &&
 				<MyModal
 					isOpen={isOpen.modal}
@@ -95,6 +99,6 @@ export default function Trees(): JSX.Element {
 					onClose={(): void => setIsOpen({ ...isOpen, snackbar: false })}
 				/>
 			}
-		</Box>
+		</Grid>
 	);
 }

@@ -4,10 +4,10 @@ import { useLocation } from "react-router-dom";
 import { HistoryTable } from "../components";
 import { dummyDeposit, dummyPairing, dummySponsor } from "../model/dummy_data";
 
-export default function HistoryPages() {
+export default function HistoryPages(): JSX.Element {
 	const params = useLocation().hash.slice(9);
 	return(
-		<Container>
+		<React.Fragment>
 			{(params === "deposit" || params === "") &&
 				<HistoryTable rows={dummyDeposit} title="History Deposit"/>
 			}
@@ -17,6 +17,6 @@ export default function HistoryPages() {
 			{params === "pairing" &&
 				<HistoryTable rows={dummyPairing} title="History Pairing"/>
 			}
-		</Container>
+		</React.Fragment>
 	);
 }

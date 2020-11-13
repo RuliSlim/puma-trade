@@ -1,12 +1,10 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import PropTypes from "prop-types";
 import { ButtonModal, MessageModal } from "../../model/components/modal";
 
 interface FormDialogProps {
@@ -17,7 +15,7 @@ interface FormDialogProps {
 	content: JSX.Element;
 }
 
-export default function FormDialog(props: FormDialogProps) {
+export default function FormDialog(props: FormDialogProps): JSX.Element {
 	const { isOpen, onClose, message, buttons, content } = props;
 	return (
 		<Dialog open={isOpen} onClose={onClose} aria-labelledby="form-dialog-title">
@@ -39,11 +37,3 @@ export default function FormDialog(props: FormDialogProps) {
 		</Dialog>
 	);
 }
-
-FormDialog.propTypes = {
-	isOpen: PropTypes.bool,
-	onClose: PropTypes.bool,
-	message: PropTypes.object,
-	buttons: PropTypes.object,
-	content: PropTypes.node
-};
