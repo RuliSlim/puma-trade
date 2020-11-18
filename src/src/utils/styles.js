@@ -2,13 +2,12 @@ import { makeStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles((theme) => ({
 	root: {
-		height: "100vh",
-		// padding: `${theme.spacing(20)} 0`
-		display: "flex",
-		justifyContent: "center",
-		flexDirection: "column",
-		alignContent: "center",
-		width: "100vw"
+		margin: "0",
+		position: "absolute",
+		top: "50%",
+		left: "50%",
+		transform: "translate(-50%, -50%)",
+		msTransform: "translate(-50%, -50%)",
 	},
 	list: {
 		width: 250,
@@ -23,6 +22,16 @@ export const useStyles = makeStyles((theme) => ({
 		flexDirection: "column",
 		justifyContent: "center",
 		position: "fixed"
+	},
+	sidebarProfile: {
+		width: "5vw",
+		height:"70vh",
+		display: "flex",
+		flexDirection: "column",
+		justifyContent: "center",
+		position: "absolute",
+		right: "0",
+		top: "8vh"
 	},
 	nested: {
 		paddingLeft: theme.spacing(4),
@@ -61,7 +70,47 @@ export const useStyles = makeStyles((theme) => ({
 		width: 1,
 	},
 	paperTable: {
-		width: "100%",
-		marginBottom: theme.spacing(2),
+		// width: "100%",
+		// marginBottom: theme.spacing(2),
 	},
+	// dashboard
+	containerWallet: {
+		[theme.breakpoints.up("lg")]: {
+			height: "100%"
+		},
+		[theme.breakpoints.down("md")]: {
+			height: "15vh",
+		}
+	},
+	"containerWallet::nth-of-type(2)": {
+		[theme.breakpoints.up("lg")]: {
+			height: "100%"
+		},
+		[theme.breakpoints.down("md")]: {
+			height: "50%",
+			marginTop: "-45%"
+		}
+	},
+	wallet: {
+		display: "flex",
+		flexDirection: "row",
+		justifyContent: "flex-end",
+		alignItems: "center",
+		height: "100%",
+	},
+	bonus: {
+		display: "flex",
+		flexDirection: "column",
+		justifyContent: "center",
+		alignItems: "center",
+		height: "100%",
+	},
+	convert: {
+		[theme.breakpoints.up("lg")]: {
+			width: "65%"
+		},
+		[theme.breakpoints.down("md")]: {
+			width: "65%"
+		},
+	}
 }));

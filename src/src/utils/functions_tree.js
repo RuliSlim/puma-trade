@@ -102,6 +102,7 @@ export 	const structTree = () => {
 
 // CLICK TREE
 export const treeOnClick = (e) => {
+	console.log(e, "<<<<<<<<<<DSDSA");
 	if(e.name === "Register New Member") {
 		return "modal";
 	}

@@ -1,8 +1,13 @@
 export { default as Navbar } from "./utils/navbar";
+export { default as MyAppbar } from "./utils/appbar";
 export { default as MyModal } from "./utils/modal";
 export { default as MySnackbar } from "./utils/snackbar";
 export { default as Register } from "./forms/register";
 export { default as HistoryTable } from "./table/history_table";
 export { default as TitleTable } from "./table/title_table";
 export { default as LabelTable } from "./table/label_table";
-export { default as CardDashboard } from "./card/card_dashboard";
+export { default as CardHorizontal } from "./card/card_horizontal";
+export { default as CardVertical } from "./card/car_vertical";
+export { default as DepositForm } from "./forms/deposit";
+export { default as InvestForm } from "./forms/invest";
+export { default as Profile } from "./profile/profile";

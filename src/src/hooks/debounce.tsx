@@ -1,7 +1,7 @@
 import AwesomeDebouncePromise from "awesome-debounce-promise";
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { SwipeableHandlers, useSwipeable } from "react-swipeable";
+import { SwipeableHandlers, SwipeEventData, useSwipeable } from "react-swipeable";
 import useConstant from "use-constant";
 
 interface ReturnUseDebounce {
@@ -56,10 +56,10 @@ export const useDebounce = (): ReturnUseDebounce => {
 	};
 
 	const eventTouch = useSwipeable({
-		onSwipedUp: () => {
+		onSwipedLeft: (e: SwipeEventData) => {
 			setPages(oldPages => oldPages + 1);
 		},
-		onSwipedDown: () => {
+		onSwipedRight: (e: SwipeEventData) => {
 			if (history.location.pathname === "/") return;
 			setPages(oldPages => oldPages - 1);
 		}

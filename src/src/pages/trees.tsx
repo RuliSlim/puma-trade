@@ -66,11 +66,11 @@ export default function Trees(): JSX.Element {
 	};
 
 	return (
-		<Grid container direction="column">
+		<Grid container direction="column" spacing={5}>
 			<Grid item>
 				<Typography variant="h4" color="textPrimary">Tree</Typography>
 			</Grid>
-			<Box width="80vw" height="80vh">
+			<Box width="80vw" height="80vh" mt="-10%">
 				<Tree
 					data={treeData}
 					orientation="vertical"
@@ -80,7 +80,7 @@ export default function Trees(): JSX.Element {
 					zoomable={false}
 					onClick={handleClick}
 					styles={styles}
-					zoom={useDeviceSize().device.isMobile ? 0.4 : 1}
+					zoom={useDeviceSize().device.isMobile ? 0.45 : 1}
 				/>
 			</Box>
 			{isOpen.modal &&

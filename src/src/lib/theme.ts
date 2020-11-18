@@ -11,6 +11,10 @@ export const MyTheme = createMuiTheme({
 			primary: primaryText,
 		}
 	},
+	shape: {
+		borderRadius: 20,
+	},
+	typography: {},
 	overrides: {
 		MuiPaper: {
 			root: {
@@ -19,15 +23,20 @@ export const MyTheme = createMuiTheme({
 			},
 		},
 		MuiButton: {
-			root: {
-				background: "linear-gradient(90deg, rgba(30,149,233,1) 35%, rgba(10,95,247,1) 100%)"
+			contained: {
+				background: "linear-gradient(90deg, rgba(30,149,233,1) 35%, rgba(10,95,247,1) 100%)",
+				color:  primaryText
+			},
+			containedSecondary: {
+				background: "linear-gradient(90deg, rgba(244,6,1,0.654499299719888) 0%, rgba(241,255,84,1) 29%, rgba(4,198,29,1) 100%)",
+				color: "black"
 			},
 			sizeLarge: {
 				height: "150%"
 			},
-			label: {
-				color: primaryText
-			}
+			// label: {
+			// 	color: primaryText
+			// }
 		},
 		MuiListItemText: {
 			primary: {
@@ -43,6 +52,18 @@ export const MyTheme = createMuiTheme({
 			root: {
 				color: primaryText
 			}
-		}
+		},
+		MuiCardActionArea: {
+			root: {
+			},
+			focusHighlight: {
+				cursor: "default",
+				backgroundColor: "transparent",
+			},
+			focusVisible: {
+				cursor: "default",
+				backgroundColor: "transparent",
+			},
+		},
 	}
 });

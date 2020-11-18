@@ -52,64 +52,62 @@ export default function HistoryTable(props: HistoryTableProps) {
 	const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
 	return (
-		<>
-			<Paper className={classes.paperTable} elevation={10}>
-				<TitleTable numSelected={selected.length} title={title}/>
-				<TableContainer>
-					<Table
-						className={classes.table}
-						aria-labelledby="tableTitle"
-						size="medium"
-						aria-label="enhanced table"
-					>
-						<LabelTable
-							classes={classes}
-							numSelected={selected.length}
-							order={order}
-							orderBy={orderBy}
-							onSelectAllClick={handleSelectAllClick}
-							onRequestSort={handleRequestSort}
-							rowCount={rows.length}
-							labels={rows[0]}
-						/>
-						<TableBody>
-							{stableSort(rows, getComparator(order, orderBy))
-								.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-								.map((row: TItleTableModel, i: number, arr: Array<TItleTableModel>) => {
-									const isItemSelected = isSelected(row.id.toString());
-									return (
-										<TableRow
-											hover
-											role="checkbox"
-											aria-checked={isItemSelected}
-											tabIndex={-1}
-											key={row.id}
-											selected={isItemSelected}
-										>
-											{Object.values(arr[i]).map((value, j) =>
-												j !== 0 && <TableCell align="left" key={j}>{value}</TableCell>
-											)}
-										</TableRow>
-									);
-								})}
-							{emptyRows > 0 && (
-								<TableRow style={{ height: 53 * emptyRows }}>
-									<TableCell colSpan={6} />
-								</TableRow>
-							)}
-						</TableBody>
-					</Table>
-				</TableContainer>
-				<TablePagination
-					rowsPerPageOptions={[ 10 ]}
-					component="div"
-					count={rows.length}
-					rowsPerPage={rowsPerPage}
-					page={page}
-					onChangePage={handleChangePage}
-				/>
-			</Paper>
-		</>
+		<Paper className={classes.paperTable} elevation={10}>
+			<TitleTable numSelected={selected.length} title={title}/>
+			<TableContainer>
+				<Table
+					className={classes.table}
+					aria-labelledby="tableTitle"
+					size="medium"
+					aria-label="enhanced table"
+				>
+					<LabelTable
+						classes={classes}
+						numSelected={selected.length}
+						order={order}
+						orderBy={orderBy}
+						onSelectAllClick={handleSelectAllClick}
+						onRequestSort={handleRequestSort}
+						rowCount={rows.length}
+						labels={rows[0]}
+					/>
+					<TableBody>
+						{stableSort(rows, getComparator(order, orderBy))
+							.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+							.map((row: TItleTableModel, i: number, arr: Array<TItleTableModel>) => {
+								const isItemSelected = isSelected(row.id.toString());
+								return (
+									<TableRow
+										hover
+										role="checkbox"
+										aria-checked={isItemSelected}
+										tabIndex={-1}
+										key={row.id}
+										selected={isItemSelected}
+									>
+										{Object.values(arr[i]).map((value, j) =>
+											j !== 0 && <TableCell align="left" key={j}>{value}</TableCell>
+										)}
+									</TableRow>
+								);
+							})}
+						{emptyRows > 0 && (
+							<TableRow style={{ height: 53 * emptyRows }}>
+								<TableCell colSpan={6} />
+							</TableRow>
+						)}
+					</TableBody>
+				</Table>
+			</TableContainer>
+			<TablePagination
+				rowsPerPageOptions={[ 10 ]}
+				component="div"
+				count={rows.length}
+				rowsPerPage={rowsPerPage}
+				page={page}
+				onChangePage={handleChangePage}
+			/>
+		</Paper>
 	);
 }
 
