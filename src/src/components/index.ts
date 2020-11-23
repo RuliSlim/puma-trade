@@ -11,3 +11,5 @@ export { default as CardVertical } from "./card/car_vertical";
 export { default as DepositForm } from "./forms/deposit";
 export { default as InvestForm } from "./forms/invest";
 export { default as Profile } from "./profile/profile";
+export { default as WithdrawForm } from "./forms/withdraw";
+export { default as TransferForm } from "./forms/transfer";

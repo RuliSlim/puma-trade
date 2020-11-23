@@ -101,7 +101,7 @@ export const useStyles = makeStyles((theme) => ({
 	bonus: {
 		display: "flex",
 		flexDirection: "column",
-		justifyContent: "center",
+		justifyContent: "space-between",
 		alignItems: "center",
 		height: "100%",
 	},

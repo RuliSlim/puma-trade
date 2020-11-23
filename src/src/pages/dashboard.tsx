@@ -1,10 +1,29 @@
 import React from "react";
 import { Grid, Button, Accordion, AccordionDetails, AccordionSummary, Card, CardHeader, CardContent, Typography, Box, CardActions } from "@material-ui/core";
-import { CardHorizontal, CardVertical, DepositForm, InvestForm } from "../components";
+import { CardHorizontal, CardVertical, DepositForm, InvestForm, MyModal, TransferForm, WithdrawForm } from "../components";
 import { AccordianState, CardModel } from "../model/components/dashboard";
+import { useDebounce } from "../hooks/debounce";
+import { useHistory } from "react-router-dom";
+
+interface Modal {
+	withdraw: boolean;
+	transfer: boolean;
+	convertBonus: boolean;
+	convertCapping: boolean;
+}
 
 export default function Dashboard(): JSX.Element {
+	const history = useHistory();
+	// const { setNow } = useDebounce();
+
 	const topItem = [ "Deposit", "Invest" ];
+	const [ isModal, setIsModal ] = React.useState<Modal>({
+		convertBonus: false,
+		convertCapping: false,
+		transfer: false,
+		withdraw: false
+	});
+
 	const dummy: CardModel[] = [
 		{
 			name: "Token",
@@ -41,8 +60,14 @@ export default function Dashboard(): JSX.Element {
 		setCollapse({ ...collapse, [item]: !collapse[data] });
 	};
 
+	const openingModal = (item: string) => (): void => {
+		console.log("masuk sini ga siiih????", item);
+		setIsModal({ ...isModal, [item.toLowerCase()]: true });
+	};
+
 	React.useEffect(() => {
-		// console.log(props, "ini prosps");
+		const route: string = history.location.pathname.slice(1);
+		// setNow(route);
 	}, []);
 
 	return (
@@ -50,7 +75,7 @@ export default function Dashboard(): JSX.Element {
 			<Grid item container spacing={5} xs={12}>
 				{topItem.map((item) => (
 					<Grid item xs={12} md={6} key={item}>
-						<Accordion>
+						<Accordion >
 							<AccordionSummary>
 								<Button size="large" fullWidth variant="contained" onClick={openingForm(item)}>{item}</Button>
 							</AccordionSummary>
@@ -66,7 +91,7 @@ export default function Dashboard(): JSX.Element {
 					{
 						dummy.map((el, i) => (
 							<Grid item key={el.name + i} xs={12}>
-								<CardHorizontal item={el}/>
+								<CardHorizontal item={el} openingModal={openingModal}/>
 							</Grid>
 						))
 					}
@@ -75,12 +100,40 @@ export default function Dashboard(): JSX.Element {
 					{
 						dummyBonus.map((el, i) => (
 							<Grid item xs={12} lg={6} key={el.name + i}>
-								<CardVertical item={el} />
+								<CardVertical item={el} openingModal={openingModal}/>
 							</Grid>
 						))
 					}
 				</Grid>
 			</Grid>
+			<MyModal
+				buttons={{ cancel: "Cancel", accept: "Register" }}
+				content={<WithdrawForm />}
+				isOpen={isModal.withdraw}
+				message={{ title: "Withdraw", message: "" }}
+				onClose={(): void => setIsModal({ ...isModal, withdraw: false })}
+			/>
+			<MyModal
+				buttons={{ cancel: "Cancel", accept: "Register" }}
+				content={<TransferForm />}
+				isOpen={isModal.transfer}
+				message={{ title: "Transfer Point", message: "" }}
+				onClose={(): void => setIsModal({ ...isModal, transfer: false })}
+			/>
+			{/* <MyModal
+				buttons={{ cancel: "Cancel", accept: "Register" }}
+				content={<WithdrawForm />}
+				isOpen={isModal.withdraw}
+				message={{ title: "Withdraw", message: "" }}
+				onClose={(): void => setIsModal({ ...isModal, withdraw: false })}
+			/>
+			<MyModal
+				buttons={{ cancel: "Cancel", accept: "Register" }}
+				content={<WithdrawForm />}
+				isOpen={isModal.withdraw}
+				message={{ title: "Withdraw", message: "" }}
+				onClose={(): void => setIsModal({ ...isModal, withdraw: false })}
+			/> */}
 		</Grid>
 	);
 }

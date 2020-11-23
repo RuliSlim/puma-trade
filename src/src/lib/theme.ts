@@ -55,15 +55,23 @@ export const MyTheme = createMuiTheme({
 		},
 		MuiCardActionArea: {
 			root: {
-			},
-			focusHighlight: {
-				cursor: "default",
-				backgroundColor: "transparent",
-			},
-			focusVisible: {
-				cursor: "default",
-				backgroundColor: "transparent",
+				"&$focusHighlight": {
+					cursor: "default",
+					backgroundColor: "transparent",
+				},
+				"&$focusVisible": {
+					cursor: "default",
+					backgroundColor: "transparent",
+				},
 			},
 		},
+		MuiFormLabel: {
+			root: {
+				color: primaryText,
+				focused: {
+					color: "rgba(78,87,110,1)"
+				}
+			},
+		}
 	}
 });

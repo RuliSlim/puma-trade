@@ -1,15 +1,20 @@
 import AwesomeDebouncePromise from "awesome-debounce-promise";
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { SwipeableHandlers, SwipeEventData, useSwipeable } from "react-swipeable";
+import { SwipeEventData, useSwipeable } from "react-swipeable";
 import useConstant from "use-constant";
 
-interface ReturnUseDebounce {
-	pages: number;
-	eventTouch: SwipeableHandlers;
-	initPage: () => void;
-	// setNow: React.Dispatch<React.SetStateAction<string>>;
-	// setPages: React.Dispatch<React.SetStateAction<number>>;
+interface PageProviderProps {
+	children: JSX.Element;
+	initialData: number;
+}
+
+interface PageData {
+	// data: Array<Member>;
+	// actions: {
+	// 	getData: (parent: string) => void;
+	// };
+	page: number;
 }
 
 interface Touch {
@@ -17,33 +22,49 @@ interface Touch {
 	end: number;
 }
 
-export const useDebounce = (): ReturnUseDebounce => {
-	const routes: string[] = [ "", "trees", "history" ];
+export const pageData = React.createContext<PageData>({
+	page: 0
+	// actions: {
+	// 	getData: (parent: string): void => undefined,
+	// },
+});
+
+const routes: string[] = [ "", "trees", "history" ];
+
+export const PageProvider = (props: PageProviderProps): JSX.Element => {
+	const { children, initialData } = props;
 	const history = useHistory();
-	const [ pages, setPages ] = React.useState<number>(0);
+
+	const [ page, setPage ] = React.useState<number>(initialData);
+
+	React.useEffect(() => {
+		// const
+		console.log(page, "<<<<<<<<<<<CSADS");
+	}, [ page ]);
+
 	const [ touch, setTouch ] = React.useState<Touch>({ start: 0, end: 0 });
 	const [ now, setNow ] = React.useState<string>("");
 
 	const navigating = (): void => {
-		console.log("masuk looh", pages);
-		if (pages === routes.length) {
-			setPages(oldVal => oldVal - 1);
+		// console.log("masuk looh", page);
+		if (page === routes.length) {
+			setPage(oldVal => oldVal - 1);
 			return;
 		}
 
-		history.push(`/${routes[pages]}`);
+		history.push(`/${routes[page]}`);
 	};
 
 	const onScroll = (e: WheelEvent): void => {
 		// NOTE: beacause use awesomeDebouncePromise pages will still as 0;
 		if (e.deltaY > 0) {
-			setPages(oldVal => oldVal + 1);
+			setPage(oldVal => oldVal + 1);
 		} else {
 			if (history.location.pathname === "/") {
-				setPages(0);
+				setPage(0);
 				return;
 			} else {
-				setPages(oldVal => oldVal - 1);
+				setPage(oldVal => oldVal - 1);
 			}
 		}
 	};
@@ -57,16 +78,16 @@ export const useDebounce = (): ReturnUseDebounce => {
 
 		const index: number = routes.findIndex((value) => value === route);
 
-		if (index !== -1) setPages(index);
+		if (index !== -1) setPage(index);
 	};
 
 	const eventTouch = useSwipeable({
 		onSwipedLeft: (e: SwipeEventData): void => {
-			setPages(oldPages => oldPages + 1);
+			setPage(oldPages => oldPages + 1);
 		},
 		onSwipedRight: (e: SwipeEventData): void => {
 			if (history.location.pathname === "/") return;
-			setPages(oldPages => oldPages - 1);
+			setPage(oldPages => oldPages - 1);
 		}
 	});
 
@@ -83,29 +104,22 @@ export const useDebounce = (): ReturnUseDebounce => {
 		document.addEventListener("touchstart", touchStart);
 		document.addEventListener("touchmove", touchMove);
 		console.log("masuk sini dulu ga siiih????");
-		initPage();
+		// initPage();
 	}, []);
-
-	// React.useEffect(() => {
-	// 	console.log("masuk sinidas");
-	// 	initPage();
-	// }, [ now ]);
-
-	// React.useEffect(() => {
-	// 	navigating();
-	// }, [ pages ]);
 
 	React.useEffect(() => {
 		navigating();
 		console.log("APA MASUKD SIDNSIADNA>>>>>>>>>>>>");
-		initPage();
-	}, [ pages ]);
+		// initPage();
+	}, [ page ]);
 
-	React.useEffect(() => {
-		navigating();
-		console.log("<<<<<<<<NIH MASDUSAKDSA>>>>>>>>");
-		initPage();
-	}, [ history.location.pathname.slice(1) ]);
-
-	return { pages, eventTouch, initPage };
+	return(
+		<pageData.Provider
+			value={{
+				page
+			}}
+		>
+			{children}
+		</pageData.Provider>
+	);
 };

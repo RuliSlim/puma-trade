@@ -18,22 +18,21 @@ export default function DepositForm(): JSX.Element {
 						/>
 					</Grid>
 					<Grid item>
-						<TextField
-							margin="dense"
-							id="ticket"
-							label="ticket"
-							type="text"
-							fullWidth
-						/>
-					</Grid>
-					<Grid item>
 						<FormControlLabel
 							control={<Checkbox checked={checked} onChange={(): void => setChecked(!checked)} name="agreement" />}
 							label="agree to term and services"
 						/>
 					</Grid>
 					<Grid item>
-						<Button type="submit" variant="contained" color="secondary" fullWidth>Submit</Button>
+						<Button
+							type="submit"
+							variant="contained"
+							color="secondary"
+							disabled={!checked}
+							fullWidth
+						>
+							Submit
+						</Button>
 					</Grid>
 				</Grid>
 			</form>

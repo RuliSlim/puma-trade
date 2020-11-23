@@ -9,9 +9,10 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
-import { Collapse, Link } from "@material-ui/core";
+import { Collapse } from "@material-ui/core";
 import { useStyles } from "../../utils/styles";
 import { CollapseNavbar } from "../../model/components/navbar";
+import { Link } from "react-router-dom";
 
 type Anchor = "top" | "left" | "bottom" | "right";
 
@@ -39,7 +40,7 @@ export default function TemporaryDrawer(): JSX.Element {
 		setExpand({ ...expand, [key]: !expand[key] });
 	};
 
-	const listData = [ "Logo", "Dashboard", "Profile", "Deposit", "Withdraw", "Trees", "History" ];
+	const listData = [ "Logo", "Dashboard", "Profile", "Trees", "History" ];
 	const depositList = [ "BTC", "ETH", "DOGE" ];
 	const historyList = [ "Deposit", "Sponsor", "Pairing" ];
 
@@ -53,10 +54,10 @@ export default function TemporaryDrawer(): JSX.Element {
 			<List>
 				{listData.map((text: string) => (
 					<React.Fragment key={text}>
-						<Link href={"/" + text.toLowerCase()} onClick={expandList(text as keyof CollapseNavbar)}>
+						<Link to={text === "Dashboard" ? "/" : "/" + text.toLowerCase()} onClick={expandList(text as keyof CollapseNavbar)}>
 							<ListItem button key={text + "-list"}>
 								<ListItemText primary={text} key={text + "-item"}/>
-								{text === "Deposit" || text === "History" ? expand[(text.toLowerCase() as keyof CollapseNavbar)] ? <ExpandLess key={text + "-expanded"}/> : <ExpandMore key={text + "-expand"}/> : null}
+								{text === "History" ? expand[(text.toLowerCase() as keyof CollapseNavbar)] ? <ExpandLess key={text + "-expanded"}/> : <ExpandMore key={text + "-expand"}/> : null}
 							</ListItem>
 						</Link>
 						<Divider key={text + "-divider"}/>
@@ -65,7 +66,7 @@ export default function TemporaryDrawer(): JSX.Element {
 								{text === "Deposit" ?
 									depositList.map((list) => (
 										<React.Fragment key={list}>
-											<Link href={"#" + text.toLowerCase() + "?" + list.toLowerCase()} >
+											<Link to={"#" + text.toLowerCase() + "?" + list.toLowerCase()} >
 												<ListItem button className={classes.nested} key={list}>
 													<ListItemText primary={list} key={list + "-item"}/>
 												</ListItem>
@@ -75,7 +76,7 @@ export default function TemporaryDrawer(): JSX.Element {
 									)) :
 									text === "History" && historyList.map((list) => (
 										<React.Fragment key={list}>
-											<Link href={`#${text.toLowerCase()}?${list.toLowerCase()}`}>
+											<Link to={`/${text.toLowerCase()}?${list.toLowerCase()}`}>
 												<ListItem button className={classes.nested} key={list}>
 													<ListItemText primary={list} key={list + "-item"}/>
 												</ListItem>

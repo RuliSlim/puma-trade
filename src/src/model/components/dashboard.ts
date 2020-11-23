@@ -6,6 +6,7 @@ export interface CardModel {
 
 export interface CardComponentProps {
 	item: CardModel;
+	openingModal: (item: string) => () => void;
 }
 
 export interface AccordianState {
