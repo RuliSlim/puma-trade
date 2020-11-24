@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable no-undef */
 import { AES, enc, SHA256 } from "crypto-js";
 import { User } from "../model/models/user.model";
 
@@ -6,6 +8,7 @@ const _decrypToken = (): string => {
 	const token = localStorage.getItem(key);
 	const secret = process.env.REACT_APP_SECRET!.toString();
 	const unlock = AES.decrypt(token ?? "", secret).toString(enc.Utf8);
+	console.log(unlock ? true : false, "<<<<<<CSAAS");
 	return unlock;
 };
 
@@ -16,7 +19,7 @@ const _encrypToken = (token: string): void => {
 	localStorage.setItem(key, lockedToken.toString());
 };
 
-const _clearToken = (token: string) => {
+const _clearToken = (): void => {
 	const key = SHA256("token").toString(enc.Hex);
 	localStorage.removeItem(key);
 };
@@ -29,8 +32,16 @@ export const saveToken = (token: string): void => {
 	_encrypToken(token);
 };
 
-export const clearToken = (token: string): void => {
-	_clearToken(token);
+export const clearToken = (): void => {
+	_clearToken();
+};
+
+export const getUser = (): User => {
+	const key = SHA256("user").toString(enc.Hex);
+	const user = localStorage.getItem(key);
+	const secret = process.env.REACT_APP_SECRET!.toString();
+	const unlock = AES.decrypt(user!, secret).toString(enc.Utf8);
+	return JSON.parse(unlock);
 };
 
 export const saveUser = (user: User): void => {
@@ -42,21 +53,13 @@ export const saveUser = (user: User): void => {
 	getUser();
 };
 
-export const getUser = () => {
-	const key = SHA256("user").toString(enc.Hex);
-	const user = localStorage.getItem(key);
-	const secret = process.env.REACT_APP_SECRET!.toString();
-	const unlock = AES.decrypt(user!, secret).toString(enc.Utf8);
-	return JSON.parse(unlock);
-};
-
-export const hashLinkUrl = (url: string) => {
+export const hashLinkUrl = (url: string): string => {
 	const secret = process.env.REACT_APP_SECRET!.toString();
 	const locked = AES.encrypt(url, secret).toString();
 	return locked;
 };
 
-export const decryptLinkUrl = (locked: string) => {
+export const decryptLinkUrl = (locked: string): string => {
 	const secret = process.env.REACT_APP_SECRET!.toString();
 	const unLocked = AES.decrypt(locked, secret).toString(enc.Utf8);
 	return unLocked.length > 2 ? unLocked : "";

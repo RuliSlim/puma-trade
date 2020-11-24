@@ -8,8 +8,9 @@ import "./../lib/tree.css";
 import { useDeviceSize } from "../hooks/device";
 import { useHistory } from "react-router-dom";
 import { useDebounce } from "../hooks/debounce";
+import { PagesProps } from "../model/components/pages";
 
-export default function Trees(): JSX.Element {
+export default function Trees(props: PagesProps): JSX.Element {
 	const [ isOpen, setIsOpen ] = useState<ModalState>({ modal: false, snackbar: false });
 	const history = useHistory();
 	// const { setNow } = useDebounce();
@@ -101,7 +102,7 @@ export default function Trees(): JSX.Element {
 						onClose={(): void => setIsOpen({ ...isOpen, modal: false })}
 						message={{ title: "Register New Member", message: "" }}
 						buttons={{ cancel: "Cancel", accept: "Register" }}
-						content={<Register />}
+						content={<div>sdafa</div>}
 					/>}
 				{isOpen.snackbar &&
 					<MySnackbar

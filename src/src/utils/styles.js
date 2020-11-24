@@ -112,5 +112,18 @@ export const useStyles = makeStyles((theme) => ({
 		[theme.breakpoints.down("md")]: {
 			width: "65%"
 		},
+	},
+	// login or register
+	loginOrRegister: {
+		display: "flex",
+		flexDirection: "column",
+		justifyContent: "space-between",
+		alignItems: "center",
+		alignContent: "center",
+		width: "65%",
+		margin: "auto",
+		"& > *": {
+			margin: "0.8vw"
+		}
 	}
 }));

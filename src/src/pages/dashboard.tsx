@@ -4,6 +4,7 @@ import { CardHorizontal, CardVertical, DepositForm, InvestForm, MyModal, Transfe
 import { AccordianState, CardModel } from "../model/components/dashboard";
 import { useDebounce } from "../hooks/debounce";
 import { useHistory } from "react-router-dom";
+import { PagesProps } from "../model/components/pages";
 
 interface Modal {
 	withdraw: boolean;
@@ -12,7 +13,7 @@ interface Modal {
 	convertCapping: boolean;
 }
 
-export default function Dashboard(): JSX.Element {
+export default function Dashboard(props: PagesProps): JSX.Element {
 	const history = useHistory();
 	// const { setNow } = useDebounce();
 

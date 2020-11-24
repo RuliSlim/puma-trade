@@ -1,10 +1,11 @@
 import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { HistoryTable } from "../components";
+import { PagesProps } from "../model/components/pages";
 // import { useDebounce } from "../hooks/debounce";
 import { dummyDeposit, dummyPairing, dummySponsor } from "../model/dummy_data";
 
-export default function HistoryPages(): JSX.Element {
+export default function HistoryPages(props: PagesProps): JSX.Element {
 	const params = useLocation().search.slice(1);
 	const history = useHistory();
 	// const { initPage } = useDebounce();
