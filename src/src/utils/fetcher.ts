@@ -6,8 +6,6 @@ import { getToken } from "./auth";
 export const callFetch = async (type: string, url: string, data?: {} | string): Promise<Response> => {
 	// const token: string = getToken();
 	// let option;
-	console.log(data, "<<<<INI DATA DI FETCHER");
-
 	// if (url !== countryURL && url !== numVerify) {
 	const option = {
 		"Content-Type": "application/json",
@@ -18,6 +16,8 @@ export const callFetch = async (type: string, url: string, data?: {} | string): 
 	// if (url === numVerify || url === emailVerify) {
 	// 	url += data;
 	// }
+
+	console.log(data, "<<<<<");
 
 	const response: Response = await fetch(url, {
 		method: type,
@@ -34,6 +34,8 @@ export const wrapFetccher = (promise: Promise<Response>): WrapperGet => {
 	let result: {};
 	const suspender = promise.then(
 		r => {
+			console.log(r, "Ini di reEEEe<<<<<<<<<");
+			// if (r.ok) {
 			r.json().then(
 				d => {
 					console.log(d, "ini di sucksead");
@@ -46,6 +48,9 @@ export const wrapFetccher = (promise: Promise<Response>): WrapperGet => {
 					result = e;
 				}
 			);
+			// } else {
+			// 	throw new Error("ada tang gagaal");
+			// }
 		},
 		e => {
 			console.log(e, "ini di ea sebleum json");
@@ -66,15 +71,14 @@ export const wrapFetccher = (promise: Promise<Response>): WrapperGet => {
 		},
 		write(): ResponsePost {
 			if (status === "pending") {
-				console.log("masuk sini dulu");
+				console.log("di pending");
 				throw suspender;
 			} else if (status === "error") {
-				console.log("masuk error");
+				console.log("di errorrr");
 				throw result;
-			} else {
-				console.log("berahsil");
-				return result as ResponsePost;
 			}
+			console.log("di elseee");
+			return result as ResponsePost;
 		}
 	};
 };

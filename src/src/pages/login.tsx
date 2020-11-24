@@ -13,8 +13,6 @@ export default function LoginPage (props: PagesProps): JSX.Element {
 	const classes = useStyles();
 	const history = useHistory();
 
-	console.log(props, "INI PROPSADSFAS");
-
 	// const { handleLogin, postResource, handleChange, values } = UseFormApi();
 	const { actions, values } = React.useContext(formContext);
 	const { handleChange, handleLogin } = actions;

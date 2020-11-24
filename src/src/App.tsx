@@ -11,6 +11,7 @@ import { getToken } from "./utils/auth";
 import { fetchApi } from "./utils/fetcher";
 import { FetchApi } from "./model/api/fetcher";
 import { FormProvider } from "./context/form.context";
+import { ErrorBoundary } from "./components/error/boundary";
 
 const routes: string[] = [ "", "trees", "history" ];
 // const resource = fetchApi();
@@ -45,38 +46,40 @@ function App(): JSX.Element {
 			height={window.innerHeight}
 			// {...eventTouch}
 		>
-			{/* <React.Suspense fallback={<Loading/>}> */}
-			<FormProvider>
-				{!isLogged ?
-					<Box m="auto" mt={5} width="80vw">
-						<Switch>
-							<Route exact path="/login" render={(): JSX.Element => <Login />} />
-							<Route exact path="/register" render={(): JSX.Element => <Register />} />
-							<Route exact path="/test" render={(): JSX.Element => <Todo  />} />
-							<Route path="*">
-								<Redirect to="/login" />
-							</Route>
-						</Switch>
-					</Box>
-					:
-					<React.Fragment>
-						<Navbar />
-						<MyAppbar />
+			<ErrorBoundary>
+				{/* <React.Suspense fallback={<Loading/>}> */}
+				<FormProvider>
+					{!isLogged ?
 						<Box m="auto" mt={5} width="80vw">
-							<PageProvider initialData={page}>
-								<TreeProvider initialData={dummyData}>
-									<Switch>
-										<Route exact path="/" render={(): JSX.Element => <Dashboard />} />
-										<Route exact path="/trees" render={(): JSX.Element => <Trees />} />
-										<Route exact path="/history" render={(): JSX.Element => <History />} />
-									</Switch>
-								</TreeProvider>
-							</PageProvider>
+							<Switch>
+								<Route exact path="/login" render={(): JSX.Element => <Login />} />
+								<Route exact path="/register" render={(): JSX.Element => <Register />} />
+								<Route exact path="/test" render={(): JSX.Element => <Todo  />} />
+								<Route path="*">
+									<Redirect to="/login" />
+								</Route>
+							</Switch>
 						</Box>
-					</React.Fragment>
-				}
-			</FormProvider>
-			{/* </React.Suspense> */}
+						:
+						<React.Fragment>
+							<Navbar />
+							<MyAppbar />
+							<Box m="auto" mt={5} width="80vw">
+								<PageProvider initialData={page}>
+									<TreeProvider initialData={dummyData}>
+										<Switch>
+											<Route exact path="/" render={(): JSX.Element => <Dashboard />} />
+											<Route exact path="/trees" render={(): JSX.Element => <Trees />} />
+											<Route exact path="/history" render={(): JSX.Element => <History />} />
+										</Switch>
+									</TreeProvider>
+								</PageProvider>
+							</Box>
+						</React.Fragment>
+					}
+				</FormProvider>
+				{/* </React.Suspense> */}
+			</ErrorBoundary>
 		</Box>
 	);
 }

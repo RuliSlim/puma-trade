@@ -13,7 +13,7 @@ export default function MySnackbarSuspense(): JSX.Element {
 	const { resource } = React.useContext(formContext);
 
 	const openOrNot = (): void => {
-		resource?.result.write().username ? setIsOpen(true) : setIsOpen(false);
+		resource?.result.write().message ? setIsOpen(true) : setIsOpen(false);
 	};
 
 	React.useEffect(() => {
@@ -28,7 +28,7 @@ export default function MySnackbarSuspense(): JSX.Element {
 				autoHideDuration={3000}
 			>
 				<Alert severity="success">
-					Ini hasil result tadiiii {resource?.result.write().username}
+					{resource?.result.write().message}
 				</Alert>
 			</Snackbar>
 		</>
