@@ -5,6 +5,7 @@ export const reducerForm = (state: FormApi, action: ActionFormApi): FormApi => {
 	case "email":
 	case "codeReferral":
 	case "password":
+	case "isSubmit":
 	case "username": {
 		return { ...state, [action.type]: action.value };
 	}

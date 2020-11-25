@@ -1,6 +1,5 @@
 import React from "react";
 import { TextField } from "@material-ui/core";
-import UseFormApi from "../../hooks/form_api";
 import { FormApi } from "../../model/components/form";
 
 interface RegisterProps {
@@ -11,7 +10,7 @@ interface RegisterProps {
 
 export default function Register (props: RegisterProps): JSX.Element {
 	const { type, handleChange, values } = props;
-	// const { handleChange, values } = UseFormApi();
+
 	return(
 		<>
 			<TextField

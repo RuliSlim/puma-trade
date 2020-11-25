@@ -15,7 +15,8 @@ export interface PostBody {
 
 export interface ResponsePost {
 	message: string;
-	username: string;
+	status: number;
+	data: User;
 }
 
 export interface WrapperApi {

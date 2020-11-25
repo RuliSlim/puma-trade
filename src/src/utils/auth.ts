@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable no-undef */
 import { AES, enc, SHA256 } from "crypto-js";
-import { User } from "../model/models/user.model";
+import { User, UserData } from "../model/models/user.model";
 
 const _decrypToken = (): string => {
 	const key = SHA256("token").toString(enc.Hex);
 	const token = localStorage.getItem(key);
 	const secret = process.env.REACT_APP_SECRET!.toString();
 	const unlock = AES.decrypt(token ?? "", secret).toString(enc.Utf8);
-	console.log(unlock ? true : false, "<<<<<<CSAAS");
+	console.log(unlock, "<<<<<<CSAAS");
 	return unlock;
 };
 
@@ -36,7 +36,7 @@ export const clearToken = (): void => {
 	_clearToken();
 };
 
-export const getUser = (): User => {
+export const getUser = (): UserData => {
 	const key = SHA256("user").toString(enc.Hex);
 	const user = localStorage.getItem(key);
 	const secret = process.env.REACT_APP_SECRET!.toString();
@@ -44,7 +44,7 @@ export const getUser = (): User => {
 	return JSON.parse(unlock);
 };
 
-export const saveUser = (user: User): void => {
+export const saveUser = (user: UserData): void => {
 	const key = SHA256("user").toString(enc.Hex);
 	const secret = process.env.REACT_APP_SECRET!.toString();
 	const value = JSON.stringify(user);

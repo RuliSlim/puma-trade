@@ -6,13 +6,22 @@ import * as serviceWorker from "./serviceWorker";
 import { CssBaseline, MuiThemeProvider } from "@material-ui/core";
 import { MyTheme } from "./lib/theme";
 import { BrowserRouter } from "react-router-dom";
+import { FormProvider } from "./context/form.context";
+import { ErrorBoundary } from "./components/error/boundary";
+import { Loading } from "./components";
 
 ReactDOM.render(
 	<React.StrictMode>
 		<MuiThemeProvider theme={MyTheme}>
 			<CssBaseline />
 			<BrowserRouter>
-				<App />
+				<ErrorBoundary>
+					<FormProvider>
+						<React.Suspense fallback={<Loading />}>
+							<App />
+						</React.Suspense>
+					</FormProvider>
+				</ErrorBoundary>
 			</BrowserRouter>
 		</MuiThemeProvider>
 	</React.StrictMode>,
