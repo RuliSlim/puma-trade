@@ -11,7 +11,7 @@ export default function CircleValue(props: CardComponentProps): JSX.Element {
 	return(
 		<Typography variant="h6" gutterBottom component="h2" align="center">
 			<Circle
-				percent={Number(resource[data]?.write().data)}
+				percent={Number(resource?.[data]?.write().data)}
 				strokeWidth={2}
 				strokeColor={{
 					"0%": "#fa100b",

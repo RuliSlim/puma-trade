@@ -21,9 +21,14 @@ export interface PostBody {
 export interface ResponsePost {
 	message: string;
 	status: number;
-	data: User | DepositModel;
+	data: User | DepositModel | null | string;
 }
 
 export interface WrapperApi {
-	result: WrapperGet;
+	result?: WrapperGet;
+	user?: WrapperGet;
+	point?: WrapperGet;
+	token?: WrapperGet;
+	bonus?: WrapperGet;
+	capping?: WrapperGet;
 }

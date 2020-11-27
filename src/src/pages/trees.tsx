@@ -10,6 +10,7 @@ import { useHistory } from "react-router-dom";
 import { useDebounce } from "../hooks/debounce";
 import { PagesProps } from "../model/components/pages";
 import { dummyData } from "../model/dummy_data";
+import { formContext } from "../context/form.context";
 
 export default function Trees(props: PagesProps): JSX.Element {
 	const [ isOpen, setIsOpen ] = useState<ModalState>({ modal: false, snackbar: false });
@@ -18,9 +19,13 @@ export default function Trees(props: PagesProps): JSX.Element {
 	// states
 	const [ treeData, setTreeData ] = useState({});
 
+	const { actions } = React.useContext(formContext);
+	const { clearPostResource } = actions;
+
 	React.useEffect(() => {
 		const result = structTree(dummyData);
 		setTreeData(result);
+		clearPostResource();
 	}, []);
 
 	const handleClick = (targetNode: ReactD3TreeItem): void => {

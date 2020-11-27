@@ -20,29 +20,34 @@ const CardHorizontal = React.lazy(() => import("../components/card/card_horizont
 const CardVertical = React.lazy(() => import("../components/card/car_vertical"));
 
 export default function Dashboard(props: PagesProps): JSX.Element {
-	const { wrapFetcher } = ApiSuspense();
+	// const { wrapFetcher } = ApiSuspense();
 
-	const fetchApi = (): FetchApi => {
-		// const user = callFetch("GET", tokenUrl);
-		const point = callFetch("GET", pointUrl);
-		const token = callFetch("GET", tokenUrl);
-		const bonus = callFetch("GET", bonusUrl);
-		const capping = callFetch("GET", cappingUrl);
+	// const fetchApi = (): FetchApi => {
+	// 	// const user = callFetch("GET", tokenUrl);
+	// 	const point = callFetch("GET", pointUrl);
+	// 	const token = callFetch("GET", tokenUrl);
+	// 	const bonus = callFetch("GET", bonusUrl);
+	// 	const capping = callFetch("GET", cappingUrl);
 
-		return {
-			// user: wrapFetcher(user),
-			point: wrapFetcher(point),
-			token: wrapFetcher(token),
-			bonus: wrapFetcher(bonus),
-			capping: wrapFetcher(capping)
-		};
-	};
+	// 	return {
+	// 		// user: wrapFetcher(user),
+	// 		point: wrapFetcher(point),
+	// 		token: wrapFetcher(token),
+	// 		bonus: wrapFetcher(bonus),
+	// 		capping: wrapFetcher(capping)
+	// 	};
+	// };
 
-	const [ resource, setResource ] = React.useState(() => fetchApi());
+	// const [ resource, setResource ] = React.useState(() => fetchApi());
 
 	// deposit
-	const { actions, values } = React.useContext(formContext);
-	const { handleDeposit, handleChange, handleInvest } = actions;
+	const { actions, values, resource } = React.useContext(formContext);
+	const { handleDeposit, handleChange, handleInvest, fetchingData } = actions;
+
+	React.useEffect(() => {
+		console.log("masuk ga siiih???");
+		fetchingData("dashboard");
+	}, []);
 
 	// component dummy
 	const topItem = [ "Deposit", "Invest" ];
@@ -169,21 +174,6 @@ export default function Dashboard(props: PagesProps): JSX.Element {
 			/>
 			<ModalSuspense type="deposit"/>
 			<ModalSuspense type="invest"/>
-
-			{/* <MyModal
-				buttons={{ cancel: "Cancel", accept: "Register" }}
-				content={<WithdrawForm />}
-				isOpen={isModal.withdraw}
-				message={{ title: "Withdraw", message: "" }}
-				onClose={(): void => setIsModal({ ...isModal, withdraw: false })}
-			/>
-			<MyModal
-				buttons={{ cancel: "Cancel", accept: "Register" }}
-				content={<WithdrawForm />}
-				isOpen={isModal.withdraw}
-				message={{ title: "Withdraw", message: "" }}
-				onClose={(): void => setIsModal({ ...isModal, withdraw: false })}
-			/> */}
 		</Grid>
 	);
 }

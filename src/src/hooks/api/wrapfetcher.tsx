@@ -54,7 +54,31 @@ export default function ApiSuspense (): ApiSuspenseInterface {
 					throw result;
 				} else {
 					const data = result as ResponsePost;
-					if (data.status !== 200 && data.status !== 201) {
+					// if (data.status !== 400) {
+					// 	if (data.message === "invalid token") {
+					// 		handlingError("Please relog to get new access");
+					// 	} else {
+					// 		handlingError("Please Try again later");
+					// 	}
+					// }
+
+					// if (data.status !== 500) {
+					// 	if (data.message === "invalid token") {
+					// 		handlingError("Please relog to get new access");
+					// 	} else {
+					// 		handlingError("Please Try again later");
+					// 	}
+					// }
+
+					// if (data.status !== 404) {
+					// 	if (data.message === "invalid token") {
+					// 		handlingError("Please relog to get new access");
+					// 	} else {
+					// 		handlingError("Please Try again later");
+					// 	}
+					// }
+
+					if (data.status !== 401) {
 						if (data.message === "invalid token") {
 							handlingError("Please relog to get new access");
 						} else {

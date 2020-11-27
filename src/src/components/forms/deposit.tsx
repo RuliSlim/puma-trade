@@ -13,7 +13,7 @@ export default function DepositForm(props: FormProps): JSX.Element {
 
 	return(
 		<Box width="100%">
-			<form onSubmit={handleDeposit}>
+			<form onSubmit={onSubmit}>
 				<Grid container direction="column">
 					<Grid item>
 						<TextField

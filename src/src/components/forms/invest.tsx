@@ -23,7 +23,7 @@ export default function InvestForm(props: FormProps): JSX.Element {
 
 	return (
 		<Box width="100%">
-			<form onSubmit={handleInvest}>
+			<form onSubmit={handleSubmit}>
 				<FormControl component="blockquote">
 					<FormLabel component="legend">Package</FormLabel>
 					<RadioGroup aria-label="package" name="package" value={values.invest} onChange={handleChange("invest")}>
