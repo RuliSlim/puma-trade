@@ -1,6 +1,5 @@
 import React from "react";
 import { MyAppbar, MySnackbar, Navbar } from "./components";
-import { Dashboard, Trees, History, Register, Todo } from "./pages";
 import { Redirect, Route, Switch, useHistory } from "react-router-dom";
 import { Box } from "@material-ui/core";
 import { TreeProvider } from "./context/tree_context";
@@ -15,6 +14,10 @@ const routes: string[] = [ "", "trees", "history" ];
 
 // all pages;
 const Login = React.lazy(() => import("./pages/login"));
+const Dashboard = React.lazy(() => import("./pages/dashboard"));
+const Trees = React.lazy(() => import("./pages/trees"));
+const History = React.lazy(() => import("./pages/history"));
+const Register = React.lazy(() => import("./pages/register"));
 
 function App(): JSX.Element {
 	// const { eventTouch } = useDebounce();
@@ -55,7 +58,6 @@ function App(): JSX.Element {
 						<Switch>
 							<Route exact path="/login" render={(): JSX.Element => <Login />} />
 							<Route exact path="/register" render={(): JSX.Element => <Register />} />
-							<Route exact path="/test" render={(): JSX.Element => <Todo  />} />
 							<Route path="*">
 								<Redirect to="/login" />
 							</Route>

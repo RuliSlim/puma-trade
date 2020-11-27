@@ -1,6 +1,6 @@
 export interface ButtonModal {
 	cancel?: string;
-	accept: string;
+	accept?: string;
 }
 
 export interface MessageModal {

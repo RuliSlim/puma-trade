@@ -20,7 +20,7 @@ export default function ModalSuspense(props: Props): JSX.Element {
 			console.log("masuk sini", amount ? true : false);
 			return amount ? true : false;
 		} else {
-			return postResource?.result?.write().data === "Invest Success!";
+			return postResource?.result?.write().data ? true : false;
 		}
 	};
 
@@ -31,8 +31,14 @@ export default function ModalSuspense(props: Props): JSX.Element {
 			setOpen(amount ? true : false);
 		} else if (type === "invest") {
 			setOpen(postResource?.result?.write().data === "Invest Success!" ? true : false);
+		} else if (type === "convert") {
+			setOpen(postResource?.result?.write().data === "Convert Success!" ? true : false);
+		} else if (type === "transfer") {
+			// setOpen(false);
+			setOpen(postResource?.result?.write().data === "Transfer Success!" ? true : false);
 		} else {
-			setOpen(false);
+			// setOpen(false);
+			setOpen(postResource?.result?.write().data ? true : false);
 		}
 
 	};
@@ -42,11 +48,11 @@ export default function ModalSuspense(props: Props): JSX.Element {
 	}, [ postResource ]);
 
 	const content = type === "deposit" ? <ContentDeposit /> : <ContentInvest />;
-	const title = type === "deposit" ? "Deposit Doge" : "Invest";
+	const title = type === "deposit" ? "Deposit Doge" : type === "invest" ? "Invest" : "Info";
 
 	return(
 		<MyModal
-			buttons={{ accept: "Ok" }}
+			buttons={{ cancel: "Ok" }}
 			content={content}
 			isOpen={open}
 			message={{ title: title, message: "" }}

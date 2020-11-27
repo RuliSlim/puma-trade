@@ -1,59 +1,34 @@
 import React from "react";
 import { Grid, Button, Accordion, AccordionDetails, AccordionSummary } from "@material-ui/core";
-import { DepositForm, InvestForm, Loading, ModalSuspense, MyModal, TransferForm, WithdrawForm } from "../components";
+import { ConverForm, DepositForm, InvestForm, Loading, ModalSuspense, MyModal, TransferForm, WithdrawForm } from "../components";
 import { AccordianState, CardModel } from "../model/components/dashboard";
-import { PagesProps } from "../model/components/pages";
-import { callFetch } from "../utils/fetcher";
-import { FetchApi } from "../model/api/fetcher";
-import { bonusUrl, cappingUrl, pointUrl, tokenUrl } from "../lib/url";
-import ApiSuspense from "../hooks/api/wrapfetcher";
 import { formContext } from "../context/form.context";
 
 interface Modal {
 	withdraw: boolean;
 	transfer: boolean;
-	convertBonus: boolean;
-	convertCapping: boolean;
+	convertbonus: boolean;
+	convertcapping: boolean;
 }
 
 const CardHorizontal = React.lazy(() => import("../components/card/card_horizontal"));
 const CardVertical = React.lazy(() => import("../components/card/car_vertical"));
 
-export default function Dashboard(props: PagesProps): JSX.Element {
-	// const { wrapFetcher } = ApiSuspense();
-
-	// const fetchApi = (): FetchApi => {
-	// 	// const user = callFetch("GET", tokenUrl);
-	// 	const point = callFetch("GET", pointUrl);
-	// 	const token = callFetch("GET", tokenUrl);
-	// 	const bonus = callFetch("GET", bonusUrl);
-	// 	const capping = callFetch("GET", cappingUrl);
-
-	// 	return {
-	// 		// user: wrapFetcher(user),
-	// 		point: wrapFetcher(point),
-	// 		token: wrapFetcher(token),
-	// 		bonus: wrapFetcher(bonus),
-	// 		capping: wrapFetcher(capping)
-	// 	};
-	// };
-
-	// const [ resource, setResource ] = React.useState(() => fetchApi());
-
+export default function Dashboard(): JSX.Element {
 	// deposit
-	const { actions, values, resource } = React.useContext(formContext);
+	const { actions, values, resource, postResource } = React.useContext(formContext);
 	const { handleDeposit, handleChange, handleInvest, fetchingData } = actions;
 
 	React.useEffect(() => {
 		console.log("masuk ga siiih???");
 		fetchingData("dashboard");
-	}, []);
+	}, [ postResource ]);
 
 	// component dummy
 	const topItem = [ "Deposit", "Invest" ];
 	const [ isModal, setIsModal ] = React.useState<Modal>({
-		convertBonus: false,
-		convertCapping: false,
+		convertbonus: false,
+		convertcapping: false,
 		transfer: false,
 		withdraw: false
 	});
@@ -97,10 +72,6 @@ export default function Dashboard(props: PagesProps): JSX.Element {
 	const openingModal = (item: string) => (): void => {
 		setIsModal({ ...isModal, [item.toLowerCase()]: true });
 	};
-
-	// const depositForm =
-
-	// const investForm = ;
 
 	return (
 		<Grid container direction="column" spacing={5} alignItems="center">
@@ -159,21 +130,36 @@ export default function Dashboard(props: PagesProps): JSX.Element {
 				</Grid>
 			</Grid>
 			<MyModal
-				buttons={{ cancel: "Cancel", accept: "Register" }}
+				buttons={{ cancel: "Cancel", accept: "Withdraw" }}
 				content={<WithdrawForm />}
 				isOpen={isModal.withdraw}
 				message={{ title: "Withdraw", message: "" }}
 				onClose={(): void => setIsModal({ ...isModal, withdraw: false })}
 			/>
 			<MyModal
-				buttons={{ cancel: "Cancel", accept: "Register" }}
+				buttons={{ cancel: "Cancel", accept: "Transfer" }}
 				content={<TransferForm />}
 				isOpen={isModal.transfer}
 				message={{ title: "Transfer Point", message: "" }}
 				onClose={(): void => setIsModal({ ...isModal, transfer: false })}
 			/>
+			<MyModal
+				buttons={{ cancel: "Cancel", accept: "Convert" }}
+				content={<ConverForm />}
+				isOpen={isModal.convertbonus}
+				message={{ title: "Convert Bonus", message: "" }}
+				onClose={(): void => setIsModal({ ...isModal, convertbonus: false })}
+			/>
+			<MyModal
+				buttons={{ cancel: "Cancel", accept: "Convert" }}
+				content={<ConverForm />}
+				isOpen={isModal.convertcapping}
+				message={{ title: "Convert Bonus", message: "" }}
+				onClose={(): void => setIsModal({ ...isModal, convertcapping: false })}
+			/>
 			<ModalSuspense type="deposit"/>
 			<ModalSuspense type="invest"/>
+			<ModalSuspense type="convert"/>
 		</Grid>
 	);
 }

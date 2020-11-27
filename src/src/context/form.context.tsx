@@ -1,6 +1,6 @@
 import React from "react";
 import { reducerForm } from "../hooks/reducer/form.reducer";
-import { bonusUrl, cappingUrl, depositUrl, investUrl, loginUrl, pointUrl, tokenUrl } from "../lib/url";
+import { bonusUrl, cappingUrl, convertUrl, depositUrl, investUrl, loginUrl, pointUrl, tokenUrl, transferUrl } from "../lib/url";
 import { ResponsePost, WrapperApi, WrapperGet } from "../model/api/fetcher";
 import { ActionFormApi, FormApi } from "../model/components/form";
 import { LoginModel, User } from "../model/models/user.model";
@@ -23,6 +23,9 @@ interface FormData {
 		handleDeposit: (e: React.FormEvent<HTMLFormElement>) => void;
 		handleInvest: (e: React.FormEvent<HTMLFormElement>) => void;
 		handlingError: (message: string) => void;
+		handlingConvert: () =>  void;
+		handleResetAgree: () => void;
+		handlingTransfer: () => void;
 		fetchingData: (type: string) => void;
 		clearPostResource: () => void;
 	};
@@ -39,6 +42,10 @@ const initialData: FormApi = {
 	invest: "50",
 	message: "",
 	variant: "warning",
+	agree: false,
+	convert: "",
+	point: "",
+	receiver: "",
 };
 
 export const formContext = React.createContext<FormData>({
@@ -49,10 +56,13 @@ export const formContext = React.createContext<FormData>({
 	actions: {
 		handleLogin: (): void => undefined,
 		handleChange: () => (): void => undefined,
-		handleDeposit: (e: React.FormEvent<HTMLFormElement>): void => undefined,
-		handleInvest: (e: React.FormEvent<HTMLFormElement>): void => undefined,
-		handlingError: (message: string): void => undefined,
-		fetchingData: (type: string) => undefined,
+		handleDeposit: (): void => undefined,
+		handleInvest: (): void => undefined,
+		handlingError: (): void => undefined,
+		handleResetAgree: (): void => undefined,
+		handlingConvert: (): void => undefined,
+		handlingTransfer: (): void => undefined,
+		fetchingData: (): void => undefined,
 		clearPostResource: (): void => undefined
 	},
 });
@@ -65,6 +75,10 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 	const [ postResource, setPostResource ] = React.useState<undefined | WrapperApi>();
 	const [ token, setToken ] = React.useState<string>("");
 
+	const handleResetAgree = (): void => {
+		dispatchValue({ type: "agree", value: false });
+	};
+
 	const handleChange = (value: keyof FormApi) => async (e: React.ChangeEvent<HTMLInputElement>): Promise<void> => {
 		const key = value as keyof FormApi;
 		dispatchValue({ type: key, value: e.target.value });
@@ -76,9 +90,14 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 				dispatchValue({ type: "variant", value: "error" });
 			}
 		}
+
+		if (value === "agree") {
+			dispatchValue({ type: "agree", value: !values.agree });
+			console.log("masuk sini ga siiih?????????<D<SAD<?SADSA");
+		}
 	};
 
-	const handlingError = (message: string) => {
+	const handlingError = (message: string): void => {
 		dispatchValue({ type: "isError", value: true });
 		dispatchValue({ type: "message", value: message });
 
@@ -160,6 +179,8 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 	};
 
 	const handleLogin = (): void => {
+		clearPostResource();
+		handleResetAgree();
 		const data: LoginModel = {
 			username: values.username,
 			password: values.password
@@ -171,6 +192,8 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 	};
 
 	const handleDeposit = (e: React.FormEvent<HTMLFormElement>): void => {
+		clearPostResource();
+		handleResetAgree();
 		e.preventDefault();
 		const data: {jumlah: number} = {
 			jumlah: values.nominal
@@ -181,6 +204,8 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 	};
 
 	const handleInvest = (e: React.FormEvent<HTMLFormElement>): void => {
+		clearPostResource();
+		handleResetAgree();
 		e.preventDefault();
 		const data: {nominal: string} = {
 			nominal: values.invest
@@ -190,7 +215,30 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 		setPostResource({ result: wrapFetcher(fetcher, "invest") });
 	};
 
-	const fetchingData = (type: string) => {
+	const handlingConvert = (): void => {
+		clearPostResource();
+		handleResetAgree();
+		const data: {nominal: string} = {
+			nominal: values.convert
+		};
+
+		const fetcher = callFetch("POST", convertUrl, data);
+		setPostResource({ result: wrapFetcher(fetcher, "convert") });
+	};
+
+	const handlingTransfer = (): void => {
+		clearPostResource();
+		handleResetAgree();
+		const data: {receiver: string; poin: string} = {
+			receiver: values.receiver,
+			poin: values.point
+		};
+
+		const fetcher = callFetch("POST", transferUrl, data);
+		setPostResource({ result: wrapFetcher(fetcher, "transfer") });
+	};
+
+	const fetchingData = (type: string): void => {
 		// const fetcher = callFetch("GET", url);
 		// setResource({ result: wrapFetcher(fetcher, type) });
 		if (type === "dashboard") {
@@ -220,6 +268,9 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 					handleDeposit,
 					handleInvest,
 					handlingError,
+					handlingConvert,
+					handlingTransfer,
+					handleResetAgree,
 					fetchingData,
 					clearPostResource
 				}

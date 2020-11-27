@@ -1,8 +1,8 @@
-import { Checkbox, FormControlLabel, TextField } from "@material-ui/core";
+import { Button, Checkbox, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, TextField } from "@material-ui/core";
 import React from "react";
 import { formContext } from "../../context/form.context";
 
-export default function TransferForm(): JSX.Element {
+export default function ConverBonus(): JSX.Element {
 	const { values, actions } = React.useContext(formContext);
 	const { handleChange } = actions;
 
@@ -11,22 +11,12 @@ export default function TransferForm(): JSX.Element {
 			<TextField
 				autoFocus
 				margin="dense"
-				id="receiver"
-				label="receiver"
+				id="nominal"
+				label="nominal"
 				type="text"
 				fullWidth
-				onChange={handleChange("receiver")}
-				value={values.receiver}
-			/>
-			<TextField
-				autoFocus
-				margin="dense"
-				id="amount"
-				label="amount in usd"
-				type="text"
-				fullWidth
-				onChange={handleChange("point")}
-				value={values.point}
+				onChange={handleChange("convert")}
+				value={values.convert}
 			/>
 			<FormControlLabel
 				control={<Checkbox checked={values.agree} onChange={handleChange("agree")} name="agreement" />}

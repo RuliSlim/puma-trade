@@ -7,11 +7,12 @@ import { CardComponentProps } from "../../../model/components/dashboard";
 export default function CircleValue(props: CardComponentProps): JSX.Element {
 	const { resource, item } = props;
 	const data = item.name.toLowerCase() as keyof FetchApi;
+	const percent = Number(resource?.[data]?.write().data);
 
 	return(
 		<Typography variant="h6" gutterBottom component="h2" align="center">
 			<Circle
-				percent={Number(resource?.[data]?.write().data)}
+				percent={item.name === "Capping" ? percent / 3 : percent}
 				strokeWidth={2}
 				strokeColor={{
 					"0%": "#fa100b",

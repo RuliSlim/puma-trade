@@ -9,6 +9,10 @@ export interface FormApi {
 	isError: boolean;
 	message: string;
 	variant: "success" | "info" | "warning" | "error";
+	agree: boolean;
+	convert: string;
+	point: string;
+	receiver: string;
 }
 
 export interface ActionFormApi {

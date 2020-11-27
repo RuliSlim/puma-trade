@@ -9,3 +9,5 @@ export const bonusUrl = `${baseUrl}/transaction/total-bonus/`;
 export const cappingUrl = `${baseUrl}/transaction/capping/`;
 export const depositUrl = `${baseUrl}/transaction/deposit/`;
 export const investUrl = `${baseUrl}/transaction/invest/`;
+export const convertUrl = `${baseUrl}/transaction/convert/`;
+export const transferUrl = `${baseUrl}/transaction/transfer/`;
