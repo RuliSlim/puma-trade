@@ -93,9 +93,9 @@ export default function Dashboard(props: PagesProps): JSX.Element {
 		setIsModal({ ...isModal, [item.toLowerCase()]: true });
 	};
 
-	const depositForm = <DepositForm handleChange={handleChange} handleDeposit={handleDeposit} values={values} handleInvest={handleInvest} />;
+	// const depositForm =
 
-	const investForm = <InvestForm handleChange={handleChange} handleDeposit={handleDeposit} values={values} handleInvest={handleInvest} />;
+	// const investForm = ;
 
 	return (
 		<Grid container direction="column" spacing={5} alignItems="center">
@@ -108,7 +108,25 @@ export default function Dashboard(props: PagesProps): JSX.Element {
 							</AccordionSummary>
 							<AccordionDetails>
 								<React.Suspense fallback={<Loading thickness={30}/>}>
-									{item === "Deposit" ? depositForm : investForm }
+									{item === "Deposit" ?
+										<DepositForm
+											handleChange={handleChange}
+											handleDeposit={handleDeposit}
+											values={values}
+											handleInvest={handleInvest}
+											closingForm={openingForm}
+											item={item}
+										/>
+										:
+										<InvestForm
+											handleChange={handleChange}
+											handleDeposit={handleDeposit}
+											values={values}
+											handleInvest={handleInvest}
+											closingForm={openingForm}
+											item={item}
+										/>
+									}
 								</React.Suspense>
 							</AccordionDetails>
 						</Accordion>

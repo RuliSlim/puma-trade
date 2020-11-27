@@ -10,16 +10,16 @@ import { FormProps } from "../../model/components/form";
 export default function InvestForm(props: FormProps): JSX.Element {
 	// const [ value, setValue ] = React.useState("50");
 	const [ checked, setChecked ] = React.useState<boolean>(false);
-	const { handleInvest, handleChange, values } = props;
+	const { handleInvest, handleChange, values, closingForm, item } = props;
 
 	// const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
 	// 	setValue((event.target as HTMLInputElement).value);
 	// };
 
-	// const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
-	// 	event.preventDefault();
-	// 	console.log(value);
-	// };
+	const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
+		handleInvest(event);
+		closingForm(item);
+	};
 
 	return (
 		<Box width="100%">

@@ -21,4 +21,6 @@ export interface FormProps {
 	handleChange: (value: keyof FormApi) => (e: React.ChangeEvent<HTMLInputElement>) => void;
 	handleDeposit: (e: React.FormEvent<HTMLFormElement>) => void;
 	handleInvest: (e: React.FormEvent<HTMLFormElement>) => void;
+	closingForm: (item: string) => () =>  void;
+	item: string;
 }
