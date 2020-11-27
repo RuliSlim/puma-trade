@@ -1,5 +1,5 @@
 import TreeData from "../model/tree_data";
-import { dummyData } from "../model/dummy_data";
+// import { dummyData } from "../model/dummy_data";
 // import { Modal } from "@material-ui/core";
 // import { componentType } from "../model/enums";
 
@@ -8,7 +8,7 @@ import { dummyData } from "../model/dummy_data";
 // TODO: FUNCTION ON HOVER MENAMPILKAN DETAIL DATA TSB
 
 // function for struct data in tree for initial stage
-export 	const structTree = () => {
+export 	const structTree = (dummyData) => {
 	const data = [];
 
 	for (const i of dummyData) {

@@ -14,3 +14,4 @@ export { default as Profile } from "./profile/profile";
 export { default as WithdrawForm } from "./forms/withdraw";
 export { default as TransferForm } from "./forms/transfer";
 export { default as Loading } from "./utils/loading";
+export { default as ModalSuspense } from "./modal/modal_suspense";

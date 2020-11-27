@@ -9,23 +9,18 @@ import { useDeviceSize } from "../hooks/device";
 import { useHistory } from "react-router-dom";
 import { useDebounce } from "../hooks/debounce";
 import { PagesProps } from "../model/components/pages";
+import { dummyData } from "../model/dummy_data";
 
 export default function Trees(props: PagesProps): JSX.Element {
 	const [ isOpen, setIsOpen ] = useState<ModalState>({ modal: false, snackbar: false });
-	const history = useHistory();
 	// const { setNow } = useDebounce();
 
 	// states
 	const [ treeData, setTreeData ] = useState({});
 
 	React.useEffect(() => {
-		const result = structTree;
+		const result = structTree(dummyData);
 		setTreeData(result);
-	}, []);
-
-	React.useEffect(() => {
-		const route: string = history.location.pathname.slice(1);
-		// setNow(route);
 	}, []);
 
 	const handleClick = (targetNode: ReactD3TreeItem): void => {

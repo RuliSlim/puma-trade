@@ -1,7 +1,7 @@
 import AwesomeDebouncePromise from "awesome-debounce-promise";
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { SwipeEventData, useSwipeable } from "react-swipeable";
+import { SwipeableHandlers, SwipeEventData, useSwipeable } from "react-swipeable";
 import useConstant from "use-constant";
 
 interface PageProviderProps {
@@ -15,6 +15,7 @@ interface PageData {
 	// 	getData: (parent: string) => void;
 	// };
 	page: number;
+	eventTouch: SwipeableHandlers | string;
 }
 
 interface Touch {
@@ -23,7 +24,8 @@ interface Touch {
 }
 
 export const pageData = React.createContext<PageData>({
-	page: 0
+	page: 0,
+	eventTouch: ""
 	// actions: {
 	// 	getData: (parent: string): void => undefined,
 	// },
@@ -83,9 +85,11 @@ export const PageProvider = (props: PageProviderProps): JSX.Element => {
 
 	const eventTouch = useSwipeable({
 		onSwipedLeft: (e: SwipeEventData): void => {
+			console.log("masuk sinig asiih");
 			setPage(oldPages => oldPages + 1);
 		},
 		onSwipedRight: (e: SwipeEventData): void => {
+			console.log("masuk sinig asiih");
 			if (history.location.pathname === "/") return;
 			setPage(oldPages => oldPages - 1);
 		}
@@ -116,7 +120,8 @@ export const PageProvider = (props: PageProviderProps): JSX.Element => {
 	return(
 		<pageData.Provider
 			value={{
-				page
+				page,
+				eventTouch
 			}}
 		>
 			{children}

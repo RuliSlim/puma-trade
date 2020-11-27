@@ -6,21 +6,21 @@ interface MySnackbarProps {
 	isOpen: boolean;
 	message: string;
 	variant: "success" | "info" | "warning" | "error" | undefined;
-	onClose?: (event: SyntheticEvent<unknown, Event>, reason: SnackbarCloseReason) => void;
+	onClose: (event: SyntheticEvent<unknown, Event>, reason: SnackbarCloseReason) => void;
 }
 
 function Alert(props: AlertProps): JSX.Element {
 	return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-export default function MySnackbar(props: MySnackbarProps): JSX.Element {
+export default function MySnackbarContext(props: MySnackbarProps): JSX.Element {
 	const { isOpen, message, variant, onClose } = props;
 
 	return (
 		<>
 			<Snackbar
 				open={isOpen}
-				onClose={onClose}
+				// onClose={onClose}
 				autoHideDuration={3000}
 			>
 				<Alert severity={variant}>

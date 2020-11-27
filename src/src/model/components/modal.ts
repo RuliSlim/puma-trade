@@ -1,5 +1,5 @@
 export interface ButtonModal {
-	cancel: string;
+	cancel?: string;
 	accept: string;
 }
 

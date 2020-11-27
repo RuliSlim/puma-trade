@@ -1,14 +1,15 @@
 import React from "react";
-import { MyAppbar, Navbar } from "./components";
+import { MyAppbar, MySnackbar, Navbar } from "./components";
 import { Dashboard, Trees, History, Register, Todo } from "./pages";
 import { Redirect, Route, Switch, useHistory } from "react-router-dom";
 import { Box } from "@material-ui/core";
 import { TreeProvider } from "./context/tree_context";
 import { dummyData } from "./model/dummy_data";
-import { PageProvider } from "./context/pages_context";
+import { pageData, PageProvider } from "./context/pages_context";
 import { getToken } from "./utils/auth";
 import { formContext } from "./context/form.context";
 import { ErrorBoundary } from "./components/error/boundary";
+import MySnackbarSuspense from "./components/utils/snack.suspense";
 
 const routes: string[] = [ "", "trees", "history" ];
 
@@ -22,7 +23,8 @@ function App(): JSX.Element {
 
 	const history = useHistory();
 
-	const { token } = React.useContext(formContext);
+	const { token, values } = React.useContext(formContext);
+	const { eventTouch } = React.useContext(pageData);
 
 	const checkToken = (): void => {
 		setIsLogged(getToken());
@@ -44,7 +46,7 @@ function App(): JSX.Element {
 			flexDirection="column"
 			width={window.innerWidth}
 			height={window.innerHeight}
-			// {...eventTouch}
+			{...eventTouch}
 		>
 			<ErrorBoundary>
 				{/* <React.Suspense fallback={<Loading/>}> */}
@@ -77,6 +79,8 @@ function App(): JSX.Element {
 					</React.Fragment>
 				}
 				{/* </React.Suspense> */}
+				<MySnackbar isOpen={values.isError} message={values.message} variant={values.variant}/>
+				<MySnackbarSuspense />
 			</ErrorBoundary>
 		</Box>
 	);

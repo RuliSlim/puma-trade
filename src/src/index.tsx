@@ -17,7 +17,7 @@ ReactDOM.render(
 			<BrowserRouter>
 				<ErrorBoundary>
 					<FormProvider>
-						<React.Suspense fallback={<Loading />}>
+						<React.Suspense fallback={<Loading thickness={100} position="absolute" left="50%" top="40%"/>}>
 							<App />
 						</React.Suspense>
 					</FormProvider>

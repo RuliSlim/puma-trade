@@ -72,6 +72,6 @@ export const MyTheme = createMuiTheme({
 					color: "rgba(78,87,110,1)"
 				}
 			},
-		}
+		},
 	}
 });

@@ -1,13 +1,12 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
-import ApiSuspense from "../hooks/api/wrapfetcher";
 import { reducerForm } from "../hooks/reducer/form.reducer";
-import { loginUrl } from "../lib/url";
+import { depositUrl, investUrl, loginUrl } from "../lib/url";
 import { ResponsePost, WrapperApi, WrapperGet } from "../model/api/fetcher";
 import { ActionFormApi, FormApi } from "../model/components/form";
 import { LoginModel, User } from "../model/models/user.model";
-import { getToken, saveToken, saveUser } from "../utils/auth";
+import { saveToken, saveUser } from "../utils/auth";
 import { callFetch } from "../utils/fetcher";
+import { validation } from "../utils/validation";
 
 interface FormProviderProps {
 	children: JSX.Element;
@@ -20,6 +19,10 @@ interface FormData {
 	actions: {
 		handleLogin: () => void;
 		handleChange: (value: keyof FormApi) => (e: React.ChangeEvent<HTMLInputElement>) => void;
+		handleDeposit: (e: React.FormEvent<HTMLFormElement>) => void;
+		handleInvest: (e: React.FormEvent<HTMLFormElement>) => void;
+		handlingError: (message: string) => void;
+		fetchingData: (url: string, type: string) => void;
 	};
 }
 
@@ -28,7 +31,12 @@ const initialData: FormApi = {
 	email: "",
 	isSubmit: "",
 	password: "",
-	username: ""
+	username: "",
+	nominal: 35,
+	isError: false,
+	invest: "50",
+	message: "",
+	variant: "warning",
 };
 
 export const formContext = React.createContext<FormData>({
@@ -38,6 +46,10 @@ export const formContext = React.createContext<FormData>({
 	actions: {
 		handleLogin: (): void => undefined,
 		handleChange: () => (): void => undefined,
+		handleDeposit: (e: React.FormEvent<HTMLFormElement>): void => undefined,
+		handleInvest: (e: React.FormEvent<HTMLFormElement>): void => undefined,
+		handlingError: (message: string): void => undefined,
+		fetchingData: (url: string, type: string) => undefined
 	},
 });
 
@@ -48,25 +60,20 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 	const [ resource, setResource ] = React.useState<undefined | WrapperApi>();
 	const [ token, setToken ] = React.useState<string>("");
 
-	const history = useHistory();
-
-	// const { wrapFetcher } = ApiSuspense();
-
-	React.useEffect(() => {
-		// const
-	}, []);
-
-	const handleChange = (value: keyof FormApi) => (e: React.ChangeEvent<HTMLInputElement>): void => {
+	const handleChange = (value: keyof FormApi) => async (e: React.ChangeEvent<HTMLInputElement>): Promise<void> => {
 		const key = value as keyof FormApi;
 		dispatchValue({ type: key, value: e.target.value });
+		if (value === "nominal") {
+			const isError = await validation("nominal", e.target.value);
+			dispatchValue({ type: "isError", value: isError });
+			if (isError) {
+				dispatchValue({ type: "message", value: "input must be greateer than 35 and in number!" });
+				dispatchValue({ type: "variant", value: "error" });
+			}
+		}
 	};
 
-	const _saveToken = (resource: WrapperApi) => {
-		console.log(resource.result.write().data, "<<<<<<<<<DSAD");
-
-	};
-
-	const wrapFetcher = (promise: Promise<Response>): WrapperGet => {
+	const wrapFetcher = (promise: Promise<Response>, type: string): WrapperGet => {
 		let status = "pending";
 		let result: {};
 		const suspender = promise.then(
@@ -115,13 +122,15 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 					throw result;
 				} else {
 					console.log("di elseee");
-					if ((result as ResponsePost).data !== null) {
-						if ((result as ResponsePost).data.token !== null) {
-							const { token, ...rest } = (result as ResponsePost).data;
-							if (token !== undefined) {
-								saveToken(token);
-								saveUser(rest);
-								setToken("trueee");
+					if (type === "login" || type === "register") {
+						if ((result as ResponsePost).data !== null) {
+							if (((result as ResponsePost).data as User).token !== null) {
+								const { token, ...rest } = (result as ResponsePost).data as User;
+								if (token !== undefined) {
+									saveToken(token);
+									saveUser(rest);
+									setToken("trueee");
+								}
 							}
 						}
 					}
@@ -138,8 +147,38 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 		};
 
 		const fetcher = callFetch("POST", loginUrl, data);
-		setResource({ result: wrapFetcher(fetcher) });
+		setResource({ result: wrapFetcher(fetcher, "login") });
 		dispatchValue({ type: "isSubmit", value: "login" });
+	};
+
+	const handleDeposit = (e: React.FormEvent<HTMLFormElement>): void => {
+		e.preventDefault();
+		const data: {jumlah: number} = {
+			jumlah: values.nominal
+		};
+
+		const fetcher = callFetch("POST", depositUrl, data);
+		setResource({ result: wrapFetcher(fetcher, "deposit") });
+	};
+
+	const handleInvest = (e: React.FormEvent<HTMLFormElement>): void => {
+		e.preventDefault();
+		const data: {nominal: string} = {
+			nominal: values.invest
+		};
+
+		const fetcher = callFetch("POST", investUrl, data);
+		setResource({ result: wrapFetcher(fetcher, "invest") });
+	};
+
+	const handlingError = (message: string) => {
+		dispatchValue({ type: "isError", value: true });
+		dispatchValue({ type: "message", value: message });
+	};
+
+	const fetchingData = (url: string, type: string) => {
+		const fetcher = callFetch("GET", url);
+		setResource({ result: wrapFetcher(fetcher, type) });
 	};
 
 	return(
@@ -151,6 +190,10 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 				actions: {
 					handleLogin,
 					handleChange,
+					handleDeposit,
+					handleInvest,
+					handlingError,
+					fetchingData
 				}
 			}}
 		>

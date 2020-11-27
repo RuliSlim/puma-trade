@@ -1,20 +1,25 @@
 import { Box, Button, Checkbox, FormControlLabel, Grid, TextField } from "@material-ui/core";
 import React from "react";
+import { FormApi, FormProps } from "../../model/components/form";
 
-export default function DepositForm(): JSX.Element {
+export default function DepositForm(props: FormProps): JSX.Element {
 	const [ checked, setChecked ] = React.useState<boolean>(false);
+	const { handleChange, values, handleDeposit } = props;
+
 	return(
 		<Box width="100%">
-			<form>
+			<form onSubmit={handleDeposit}>
 				<Grid container direction="column">
 					<Grid item>
 						<TextField
 							autoFocus
 							margin="dense"
-							id="amount"
-							label="amount"
+							id="nominal"
+							label="nominal"
 							type="text"
 							fullWidth
+							onChange={handleChange("nominal")}
+							value={values.nominal}
 						/>
 					</Grid>
 					<Grid item>

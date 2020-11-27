@@ -1,44 +1,37 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { formContext } from "../../context/form.context";
 import { ResponsePost, WrapperGet } from "../../model/api/fetcher";
 import { User } from "../../model/models/user.model";
 import { saveToken, saveUser } from "../../utils/auth";
 
 interface ApiSuspenseInterface {
 	wrapFetcher: (promise: Promise<Response>) => WrapperGet;
-	token: string;
-	setToken: React.Dispatch<React.SetStateAction<string>>;
+	// resource: undefined | FetchApi;
 }
 
 export default function ApiSuspense (): ApiSuspenseInterface {
-	const history = useHistory();
-	const [ token, setToken ] =  React.useState<string>("");
+	const { actions } = React.useContext(formContext);
+	const { handlingError } = actions;
 
 	const wrapFetcher = (promise: Promise<Response>): WrapperGet => {
 		let status = "pending";
 		let result: {};
+		console.log("jalaaan");
 		const suspender = promise.then(
 			r => {
-				console.log(r, "Ini di reEEEe<<<<<<<<<");
 				// if (r.ok) {
 				r.json().then(
 					d => {
-						console.log(d, "ini di sucksead");
 						status = "success";
 						result = d;
 					},
 					e => {
-						console.log(e, "ini di e json,");
 						status = "error";
 						result = e;
 					}
 				);
-				// } else {
-				// 	throw new Error("ada tang gagaal");
-				// }
 			},
 			e => {
-				console.log(e, "ini di ea sebleum json");
 				status = "error";
 				result = e;
 			}
@@ -56,29 +49,24 @@ export default function ApiSuspense (): ApiSuspenseInterface {
 			},
 			write(): ResponsePost {
 				if (status === "pending") {
-					console.log("di pending");
 					throw suspender;
 				} else if (status === "error") {
-					console.log("di errorrr");
 					throw result;
 				} else {
-					console.log("di elseee");
-					if ((result as ResponsePost).data !== null) {
-						if ((result as ResponsePost).data.token !== null) {
-							const { token, ...rest } = (result as ResponsePost).data;
-							if (token !== undefined) {
-								saveToken(token);
-								saveUser(rest);
-								// setToken(token);
-
-							}
+					const data = result as ResponsePost;
+					if (data.status !== 200 && data.status !== 201) {
+						if (data.message === "invalid token") {
+							handlingError("Please relog to get new access");
+						} else {
+							handlingError("Please Try again later");
 						}
 					}
+
 					return result as ResponsePost;
 				}
 			}
 		};
 	};
 
-	return { wrapFetcher, token, setToken };
+	return { wrapFetcher };
 }

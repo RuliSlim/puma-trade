@@ -1,10 +1,13 @@
 import React from "react";
-import { Grid, Button, Accordion, AccordionDetails, AccordionSummary, Card, CardHeader, CardContent, Typography, Box, CardActions } from "@material-ui/core";
-import { CardHorizontal, CardVertical, DepositForm, InvestForm, MyModal, TransferForm, WithdrawForm } from "../components";
+import { Grid, Button, Accordion, AccordionDetails, AccordionSummary } from "@material-ui/core";
+import { DepositForm, InvestForm, Loading, ModalSuspense, MyModal, TransferForm, WithdrawForm } from "../components";
 import { AccordianState, CardModel } from "../model/components/dashboard";
-import { useDebounce } from "../hooks/debounce";
-import { useHistory } from "react-router-dom";
 import { PagesProps } from "../model/components/pages";
+import { callFetch } from "../utils/fetcher";
+import { FetchApi } from "../model/api/fetcher";
+import { bonusUrl, cappingUrl, pointUrl, tokenUrl } from "../lib/url";
+import ApiSuspense from "../hooks/api/wrapfetcher";
+import { formContext } from "../context/form.context";
 
 interface Modal {
 	withdraw: boolean;
@@ -13,10 +16,35 @@ interface Modal {
 	convertCapping: boolean;
 }
 
-export default function Dashboard(props: PagesProps): JSX.Element {
-	const history = useHistory();
-	// const { setNow } = useDebounce();
+const CardHorizontal = React.lazy(() => import("../components/card/card_horizontal"));
+const CardVertical = React.lazy(() => import("../components/card/car_vertical"));
 
+export default function Dashboard(props: PagesProps): JSX.Element {
+	const { wrapFetcher } = ApiSuspense();
+
+	const fetchApi = (): FetchApi => {
+		// const user = callFetch("GET", tokenUrl);
+		const point = callFetch("GET", pointUrl);
+		const token = callFetch("GET", tokenUrl);
+		const bonus = callFetch("GET", bonusUrl);
+		const capping = callFetch("GET", cappingUrl);
+
+		return {
+			// user: wrapFetcher(user),
+			point: wrapFetcher(point),
+			token: wrapFetcher(token),
+			bonus: wrapFetcher(bonus),
+			capping: wrapFetcher(capping)
+		};
+	};
+
+	const [ resource, setResource ] = React.useState(() => fetchApi());
+
+	// deposit
+	const { actions, values } = React.useContext(formContext);
+	const { handleDeposit, handleChange, handleInvest } = actions;
+
+	// component dummy
 	const topItem = [ "Deposit", "Invest" ];
 	const [ isModal, setIsModal ] = React.useState<Modal>({
 		convertBonus: false,
@@ -62,14 +90,12 @@ export default function Dashboard(props: PagesProps): JSX.Element {
 	};
 
 	const openingModal = (item: string) => (): void => {
-		console.log("masuk sini ga siiih????", item);
 		setIsModal({ ...isModal, [item.toLowerCase()]: true });
 	};
 
-	React.useEffect(() => {
-		const route: string = history.location.pathname.slice(1);
-		// setNow(route);
-	}, []);
+	const depositForm = <DepositForm handleChange={handleChange} handleDeposit={handleDeposit} values={values} handleInvest={handleInvest} />;
+
+	const investForm = <InvestForm handleChange={handleChange} handleDeposit={handleDeposit} values={values} handleInvest={handleInvest} />;
 
 	return (
 		<Grid container direction="column" spacing={5} alignItems="center">
@@ -81,7 +107,9 @@ export default function Dashboard(props: PagesProps): JSX.Element {
 								<Button size="large" fullWidth variant="contained" onClick={openingForm(item)}>{item}</Button>
 							</AccordionSummary>
 							<AccordionDetails>
-								{item === "Deposit" ? <DepositForm /> : <InvestForm /> }
+								<React.Suspense fallback={<Loading thickness={30}/>}>
+									{item === "Deposit" ? depositForm : investForm }
+								</React.Suspense>
 							</AccordionDetails>
 						</Accordion>
 					</Grid>
@@ -92,7 +120,7 @@ export default function Dashboard(props: PagesProps): JSX.Element {
 					{
 						dummy.map((el, i) => (
 							<Grid item key={el.name + i} xs={12}>
-								<CardHorizontal item={el} openingModal={openingModal}/>
+								<CardHorizontal item={el} openingModal={openingModal} resource={resource} />
 							</Grid>
 						))
 					}
@@ -101,7 +129,7 @@ export default function Dashboard(props: PagesProps): JSX.Element {
 					{
 						dummyBonus.map((el, i) => (
 							<Grid item xs={12} lg={6} key={el.name + i}>
-								<CardVertical item={el} openingModal={openingModal}/>
+								<CardVertical item={el} openingModal={openingModal} resource={resource}/>
 							</Grid>
 						))
 					}
@@ -121,6 +149,9 @@ export default function Dashboard(props: PagesProps): JSX.Element {
 				message={{ title: "Transfer Point", message: "" }}
 				onClose={(): void => setIsModal({ ...isModal, transfer: false })}
 			/>
+			<ModalSuspense type="deposit"/>
+			<ModalSuspense type="invest"/>
+
 			{/* <MyModal
 				buttons={{ cancel: "Cancel", accept: "Register" }}
 				content={<WithdrawForm />}
