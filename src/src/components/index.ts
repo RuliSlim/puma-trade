@@ -1,6 +1,6 @@
 export { default as Navbar } from "./utils/navbar";
 export { default as MyAppbar } from "./utils/appbar";
-export { default as MyModal } from "./utils/modal";
+export { default as MyModal } from "./modal/modal";
 export { default as MySnackbar } from "./utils/snackbar";
 export { default as Register } from "./forms/register";
 export { default as HistoryTable } from "./table/history_table";

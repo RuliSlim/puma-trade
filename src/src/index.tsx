@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { CssBaseline, MuiThemeProvider } from "@material-ui/core";
@@ -17,7 +16,7 @@ ReactDOM.render(
 			<BrowserRouter>
 				<ErrorBoundary>
 					<FormProvider>
-						<React.Suspense fallback={<Loading thickness={100} position="absolute" left="50%" top="40%"/>}>
+						<React.Suspense fallback={<Loading thickness={100} position="absolute" left="45%" top="40%"/>}>
 							<App />
 						</React.Suspense>
 					</FormProvider>

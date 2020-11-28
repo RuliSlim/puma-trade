@@ -10,7 +10,7 @@ export default function ValueCard(props: CardComponentProps): JSX.Element {
 	const value = resource?.[data]?.write().data;
 	// resource?.result.write().data
 	return(
-		<Typography variant="h6" gutterBottom component="h2" align="center">
+		<Typography variant="h5" gutterBottom component="h5" align="center">
 			{item.name !== "Capping" && "$"}
 			{
 				value

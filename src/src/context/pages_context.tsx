@@ -10,10 +10,6 @@ interface PageProviderProps {
 }
 
 interface PageData {
-	// data: Array<Member>;
-	// actions: {
-	// 	getData: (parent: string) => void;
-	// };
 	page: number;
 	eventTouch: SwipeableHandlers | string;
 }
@@ -26,9 +22,6 @@ interface Touch {
 export const pageData = React.createContext<PageData>({
 	page: 0,
 	eventTouch: ""
-	// actions: {
-	// 	getData: (parent: string): void => undefined,
-	// },
 });
 
 const routes: string[] = [ "", "trees", "history" ];
@@ -108,7 +101,7 @@ export const PageProvider = (props: PageProviderProps): JSX.Element => {
 		document.addEventListener("touchstart", touchStart);
 		document.addEventListener("touchmove", touchMove);
 		console.log("masuk sini dulu ga siiih????");
-		// initPage();
+		initPage();
 	}, []);
 
 	React.useEffect(() => {

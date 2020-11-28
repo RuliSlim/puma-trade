@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/camelcase */
 import React from "react";
 import { reducerForm } from "../hooks/reducer/form.reducer";
-import { bonusUrl, cappingUrl, convertUrl, depositUrl, investUrl, loginUrl, pointUrl, tokenUrl, transferUrl } from "../lib/url";
+import { bonusUrl, cappingUrl, convertUrl, depositUrl, investUrl, loginUrl, logoutUrl, pointUrl, registerUrl, tokenUrl, transferUrl, treeUrl } from "../lib/url";
 import { ResponsePost, WrapperApi, WrapperGet } from "../model/api/fetcher";
 import { ActionFormApi, FormApi } from "../model/components/form";
-import { LoginModel, User } from "../model/models/user.model";
-import { saveToken, saveUser } from "../utils/auth";
+import { LoginModel, RegisterModel, User } from "../model/models/user.model";
+import { clearToken, getUser, saveToken, saveUser } from "../utils/auth";
 import { callFetch } from "../utils/fetcher";
 import { validation } from "../utils/validation";
 
@@ -19,6 +20,8 @@ interface FormData {
 	postResource: undefined | WrapperApi;
 	actions: {
 		handleLogin: () => void;
+		handleLogout: () => void;
+		handleRegister: () => void;
 		handleChange: (value: keyof FormApi) => (e: React.ChangeEvent<HTMLInputElement>) => void;
 		handleDeposit: (e: React.FormEvent<HTMLFormElement>) => void;
 		handleInvest: (e: React.FormEvent<HTMLFormElement>) => void;
@@ -55,6 +58,8 @@ export const formContext = React.createContext<FormData>({
 	postResource: undefined,
 	actions: {
 		handleLogin: (): void => undefined,
+		handleLogout: (): void => undefined,
+		handleRegister: (): void => undefined,
 		handleChange: () => (): void => undefined,
 		handleDeposit: (): void => undefined,
 		handleInvest: (): void => undefined,
@@ -109,6 +114,10 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 	const clearPostResource = (): void => {
 		console.log("<<<<<<<<<<<<<D>>>>>>>>>>>>>");
 		setPostResource(undefined);
+	};
+
+	const _clearGetResource = (): void => {
+		setResource(undefined);
 	};
 
 	const wrapFetcher = (promise: Promise<Response>, type: string): WrapperGet => {
@@ -189,6 +198,48 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 		const fetcher = callFetch("POST", loginUrl, data);
 		setPostResource({ result: wrapFetcher(fetcher, "login") });
 		dispatchValue({ type: "isSubmit", value: "login" });
+		dispatchValue({ type: "username", value: "" });
+		dispatchValue({ type: "password", value: "" });
+	};
+
+	const handleRegister = (): void => {
+		clearPostResource();
+		handleResetAgree();
+		const data: RegisterModel = {
+			email: values.email,
+			password: values.password,
+			referal_code: values.codeReferral,
+			username: values.username
+		};
+
+		const fetcher = callFetch("POST", registerUrl, data);
+		setPostResource({ result: wrapFetcher(fetcher, "register") });
+		dispatchValue({ type: "isSubmit", value: "register" });
+		dispatchValue({ type: "username", value: "" });
+		dispatchValue({ type: "password", value: "" });
+		dispatchValue({ type: "email", value: "" });
+		dispatchValue({ type: "codeReferral", value: "" });
+	};
+
+	const handleLogout = (): void => {
+		clearPostResource();
+		_clearGetResource();
+		handleResetAgree();
+		setToken("safasfasfa");
+		const user = getUser();
+		const data = {
+			username: user.username
+		};
+
+		const fetcher = callFetch("POST", logoutUrl, data);
+		setPostResource({ result: wrapFetcher(fetcher, "logout") });
+
+		dispatchValue({ type: "isError", value: true });
+		dispatchValue({ type: "message", value: "success log out!" });
+		clearToken();
+		setTimeout(() => {
+			dispatchValue({ type: "isError", value: false });
+		}, 5000);
 	};
 
 	const handleDeposit = (e: React.FormEvent<HTMLFormElement>): void => {
@@ -246,11 +297,21 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 			const token = callFetch("GET", tokenUrl);
 			const bonus = callFetch("GET", bonusUrl);
 			const capping = callFetch("GET", cappingUrl);
+			// const trees = callFetch("GET", treeUrl);
 			setResource({
 				point: wrapFetcher(point, "point"),
 				capping: wrapFetcher(capping, "capping"),
 				token: wrapFetcher(token, "token"),
 				bonus: wrapFetcher(bonus, "bonus"),
+				// tree: wrapFetcher(trees, "tree")
+			});
+		}
+
+		if (type === "trees") {
+			console.log("ANJING KENAPA GA KE CALL LAGI BANGSAAAAT!!!");
+			const trees = callFetch("GET", treeUrl);
+			setResource({
+				tree: wrapFetcher(trees, "tree")
 			});
 		}
 	};
@@ -264,6 +325,8 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 				token,
 				actions: {
 					handleLogin,
+					handleLogout,
+					handleRegister,
 					handleChange,
 					handleDeposit,
 					handleInvest,

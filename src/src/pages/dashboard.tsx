@@ -1,6 +1,6 @@
 import React from "react";
 import { Grid, Button, Accordion, AccordionDetails, AccordionSummary } from "@material-ui/core";
-import { ConverForm, DepositForm, InvestForm, Loading, ModalSuspense, MyModal, TransferForm, WithdrawForm } from "../components";
+import { Loading } from "../components";
 import { AccordianState, CardModel } from "../model/components/dashboard";
 import { formContext } from "../context/form.context";
 
@@ -11,16 +11,27 @@ interface Modal {
 	convertcapping: boolean;
 }
 
+// components
 const CardHorizontal = React.lazy(() => import("../components/card/card_horizontal"));
 const CardVertical = React.lazy(() => import("../components/card/car_vertical"));
+// forms
+const ConverForm = React.lazy(() => import("../components/forms/convert"));
+const DepositForm = React.lazy(() => import("../components/forms/deposit"));
+const InvestForm = React.lazy(() => import("../components/forms/invest"));
+const TransferForm = React.lazy(() => import("../components/forms/transfer"));
+const WithdrawForm = React.lazy(() => import("../components/forms/withdraw"));
+// modal suspense
+const ModalSuspense = React.lazy(() => import("../components/modal/modal_suspense"));
+// utils regular
+const MyModal = React.lazy(() => import("../components/modal/modal"));
 
 export default function Dashboard(): JSX.Element {
 	// deposit
 	const { actions, values, resource, postResource } = React.useContext(formContext);
-	const { handleDeposit, handleChange, handleInvest, fetchingData } = actions;
+	const { handleDeposit, handleChange, handleInvest, fetchingData, clearPostResource } = actions;
 
 	React.useEffect(() => {
-		console.log("masuk ga siiih???");
+		clearPostResource();
 		fetchingData("dashboard");
 	}, [ postResource ]);
 
@@ -83,7 +94,7 @@ export default function Dashboard(): JSX.Element {
 								<Button size="large" fullWidth variant="contained" onClick={openingForm(item)}>{item}</Button>
 							</AccordionSummary>
 							<AccordionDetails>
-								<React.Suspense fallback={<Loading thickness={30}/>}>
+								<React.Suspense fallback={<Loading thickness={30} />}>
 									{item === "Deposit" ?
 										<DepositForm
 											handleChange={handleChange}

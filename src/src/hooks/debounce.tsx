@@ -3,6 +3,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { SwipeableHandlers, SwipeEventData, useSwipeable } from "react-swipeable";
 import useConstant from "use-constant";
+import { getToken } from "../utils/auth";
 
 interface ReturnUseDebounce {
 	pages: number;
@@ -18,7 +19,7 @@ interface Touch {
 }
 
 export const useDebounce = (): ReturnUseDebounce => {
-	const routes: string[] = [ "", "trees", "history" ];
+	const routes: string[] = [ getToken() ? "" : "login", "trees", "history" ];
 	const history = useHistory();
 	const [ pages, setPages ] = React.useState<number>(0);
 	const [ touch, setTouch ] = React.useState<Touch>({ start: 0, end: 0 });
@@ -58,6 +59,7 @@ export const useDebounce = (): ReturnUseDebounce => {
 		const index: number = routes.findIndex((value) => value === route);
 
 		if (index !== -1) setPages(index);
+		else setPages(1);
 	};
 
 	const eventTouch = useSwipeable({
@@ -83,8 +85,15 @@ export const useDebounce = (): ReturnUseDebounce => {
 		document.addEventListener("touchstart", touchStart);
 		document.addEventListener("touchmove", touchMove);
 		console.log("masuk sini dulu ga siiih????");
-		initPage();
+		// initPage();
 	}, []);
+
+	// React.useEffect(() => {
+	// 	const route: string = history.location.pathname.slice(1);
+	// 	const index: number = routes.findIndex((value) => value === route);
+
+	// 	if (index !== -1) setPage(index);
+	// }, [ history.location.pathname ]);
 
 	// React.useEffect(() => {
 	// 	console.log("masuk sinidas");
@@ -98,14 +107,14 @@ export const useDebounce = (): ReturnUseDebounce => {
 	React.useEffect(() => {
 		navigating();
 		console.log("APA MASUKD SIDNSIADNA>>>>>>>>>>>>");
-		initPage();
+		// initPage();
 	}, [ pages ]);
 
-	React.useEffect(() => {
-		navigating();
-		console.log("<<<<<<<<NIH MASDUSAKDSA>>>>>>>>");
-		initPage();
-	}, [ history.location.pathname.slice(1) ]);
+	// React.useEffect(() => {
+	// 	navigating();
+	// 	console.log("<<<<<<<<NIH MASDUSAKDSA>>>>>>>>");
+	// 	initPage();
+	// }, [ history.location.pathname.slice(1) ]);
 
 	return { pages, eventTouch, initPage };
 };

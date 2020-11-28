@@ -120,10 +120,16 @@ export const useStyles = makeStyles((theme) => ({
 		justifyContent: "space-between",
 		alignItems: "center",
 		alignContent: "center",
-		width: "65%",
+		width: "80vw",
 		margin: "auto",
 		"& > *": {
 			margin: "0.8vw"
 		}
+	},
+	percent: {
+		display: "flex",
+		justifyContent: "center",
+		alignContent: "center",
+		alignItems: "center"
 	}
 }));

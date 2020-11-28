@@ -2,6 +2,7 @@ export interface User {
 	token?: string;
 	city: string;
 	name: string;
+	username: string;
 	email: string;
 	phone: string;
 	created: string;
@@ -18,6 +19,7 @@ export interface User {
 export interface UserData {
 	city: string;
 	name: string;
+	username: string;
 	email: string;
 	phone: string;
 	created: string;

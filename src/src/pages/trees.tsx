@@ -1,32 +1,28 @@
 import React, { useState } from "react";
-import Tree, { ReactD3TreeItem } from "react-d3-tree";
+import { ReactD3TreeItem } from "react-d3-tree";
 import { Box, Grid, Paper, Typography } from "@material-ui/core";
-import { structTree, treeOnClick } from "../utils";
-import { MyModal, MySnackbar, Register } from "../components";
+import { treeOnClick } from "../utils";
+import { Loading, MyModal, MySnackbar, Register } from "../components";
 import { ModalState } from "../model/components/modal";
 import "./../lib/tree.css";
-import { useDeviceSize } from "../hooks/device";
-import { useHistory } from "react-router-dom";
-import { useDebounce } from "../hooks/debounce";
 import { PagesProps } from "../model/components/pages";
-import { dummyData } from "../model/dummy_data";
 import { formContext } from "../context/form.context";
+// import MyTree from "../components/tree/tree";
+
+const MyTree = React.lazy(() => import("../components/tree/tree"));
 
 export default function Trees(props: PagesProps): JSX.Element {
 	const [ isOpen, setIsOpen ] = useState<ModalState>({ modal: false, snackbar: false });
-	// const { setNow } = useDebounce();
 
 	// states
-	const [ treeData, setTreeData ] = useState({});
-
-	const { actions } = React.useContext(formContext);
-	const { clearPostResource } = actions;
+	const { actions, values, resource, postResource } = React.useContext(formContext);
+	const { clearPostResource, fetchingData, handleChange } = actions;
 
 	React.useEffect(() => {
-		const result = structTree(dummyData);
-		setTreeData(result);
-		clearPostResource();
-	}, []);
+		fetchingData("trees");
+		// clearPostResource();
+		console.log("masuk sini ga siiiiiih anjiiing");
+	}, [ postResource ]);
 
 	const handleClick = (targetNode: ReactD3TreeItem): void => {
 		const result = treeOnClick(targetNode);
@@ -41,40 +37,6 @@ export default function Trees(props: PagesProps): JSX.Element {
 		}
 	};
 
-	const styles = {
-		links: {
-			stroke: "#fff",
-			width: "20rem",
-			fill: "#fff"
-		},
-		nodes: {
-			node: {
-				circle: {
-					fill: "#fff",
-					name: {
-						fontFamily: "'Roboto', sans-serif",
-						fontSize: "1.6rem",
-						fill: "#fff",
-						fontColor: "#fff"
-					},
-				},
-			},
-			leafNode: {
-				circle: {
-					fill: "#fff",
-					name: {
-						fontFamily: "'Roboto', sans-serif",
-						fontSize: "1.6rem",
-						fill: "#fff"
-					},
-					attributes: {
-						x: -10,
-					},
-				},
-			},
-		},
-	};
-
 	return (
 		<Paper>
 			<Grid container direction="column" spacing={5}>
@@ -84,17 +46,9 @@ export default function Trees(props: PagesProps): JSX.Element {
 					</Box>
 				</Grid>
 				<Box width="100vw" height="80vh" mt="-22%">
-					<Tree
-						data={treeData}
-						orientation="vertical"
-						translate={{ x: window.innerWidth/2.5, y: window.innerHeight/3 }}
-						pathFunc={"straight"}
-						collapsible={false}
-						zoomable={false}
-						onClick={handleClick}
-						styles={styles}
-						zoom={useDeviceSize().device.isMobile ? 0.45 : 1}
-					/>
+					<React.Suspense fallback={<Loading thickness={50}/>}>
+						<MyTree handleClick={handleClick}/>
+					</React.Suspense>
 				</Box>
 				{isOpen.modal &&
 					<MyModal
@@ -102,7 +56,7 @@ export default function Trees(props: PagesProps): JSX.Element {
 						onClose={(): void => setIsOpen({ ...isOpen, modal: false })}
 						message={{ title: "Register New Member", message: "" }}
 						buttons={{ cancel: "Cancel", accept: "Register" }}
-						content={<div>sdafa</div>}
+						content={<Register type="register"  handleChange={handleChange} values={values} />}
 					/>}
 				{isOpen.snackbar &&
 					<MySnackbar

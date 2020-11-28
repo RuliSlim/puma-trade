@@ -39,7 +39,7 @@ export default function FormDialog(props: FormDialogProps): JSX.Element {
 		onClose(e);
 	};
 	return (
-		<Dialog open={isOpen} onClose={onClose} aria-labelledby="form-dialog-title">
+		<Dialog open={isOpen} onClose={onClose} aria-labelledby="form-dialog-title" hideBackdrop>
 			<DialogTitle id="form-dialog-title">{message.title}</DialogTitle>
 			<DialogContent>
 				<DialogContentText>

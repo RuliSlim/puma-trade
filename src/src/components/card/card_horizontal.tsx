@@ -26,7 +26,7 @@ export default function CardDashboard(props: CardComponentProps): JSX.Element {
 					</React.Suspense>
 				</CardContent>
 			</CardActionArea>
-			<Button style={{ height: "100%", width: "100%" }} onClick={openingModal(item.button)}>
+			<Button style={{ height: "100%", width: "100%" }} className={classess.percent} onClick={openingModal(item.button)}>
 				<Box width="100%" height="100%">
 					<Paper elevation={10}>
 						<React.Suspense fallback={loading}>
@@ -34,7 +34,7 @@ export default function CardDashboard(props: CardComponentProps): JSX.Element {
 						</React.Suspense>
 					</Paper>
 				</Box>
-				<Box position="absolute" top="45%" left={device.isLaptop ? "28%" : "25%"}>
+				<Box position="absolute" top={device.isLaptop ? "45%" : "40%"} left={device.isLaptop ? "28%" : "30%"}>
 					<Typography variant={device.isLaptop ? "h5" : "subtitle2"}>{item.button}</Typography>
 				</Box>
 			</Button>

@@ -1,5 +1,6 @@
 import { DepositModel } from "../models/transaction.model";
 import { LoginModel, RegisterModel, User } from "../models/user.model";
+import { Member } from "../tree_data";
 
 export interface WrapperGet {
 	read(): User;
@@ -21,7 +22,7 @@ export interface PostBody {
 export interface ResponsePost {
 	message: string;
 	status: number;
-	data: User | DepositModel | null | string;
+	data: User | DepositModel | null | string | Member[];
 }
 
 export interface WrapperApi {
@@ -31,4 +32,5 @@ export interface WrapperApi {
 	token?: WrapperGet;
 	bonus?: WrapperGet;
 	capping?: WrapperGet;
+	tree?: WrapperGet;
 }

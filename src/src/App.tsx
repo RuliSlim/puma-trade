@@ -1,5 +1,4 @@
 import React from "react";
-import { MyAppbar, MySnackbar, Navbar } from "./components";
 import { Redirect, Route, Switch, useHistory } from "react-router-dom";
 import { Box } from "@material-ui/core";
 import { TreeProvider } from "./context/tree_context";
@@ -8,29 +7,38 @@ import { pageData, PageProvider } from "./context/pages_context";
 import { getToken } from "./utils/auth";
 import { formContext } from "./context/form.context";
 import { ErrorBoundary } from "./components/error/boundary";
-import MySnackbarSuspense from "./components/utils/snack.suspense";
+import { Loading, MyAppbar, Navbar } from "./components";
+import { useDebounce } from "./hooks/debounce";
+import { Trees } from "./pages";
 
 const routes: string[] = [ "", "trees", "history" ];
 
 // all pages;
 const Login = React.lazy(() => import("./pages/login"));
 const Dashboard = React.lazy(() => import("./pages/dashboard"));
-const Trees = React.lazy(() => import("./pages/trees"));
+// const Trees = React.lazy(() => import("./pages/trees"));
 const History = React.lazy(() => import("./pages/history"));
 const Register = React.lazy(() => import("./pages/register"));
 
+// components:
+const MySnackbar = React.lazy(() => import("./components/utils/snackbar"));
+
+// suspense
+const MySnackbarSuspense = React.lazy(() => import("./components/utils/snack.suspense"));
+
 function App(): JSX.Element {
-	// const { eventTouch } = useDebounce();
 	const [ page, setPage ] = React.useState(0);
 	const [ isLogged, setIsLogged ] = React.useState<string>();
 
 	const history = useHistory();
 
-	const { token, values } = React.useContext(formContext);
+	const { token, values, resource, postResource } = React.useContext(formContext);
 	const { eventTouch } = React.useContext(pageData);
+	useDebounce();
 
 	const checkToken = (): void => {
 		setIsLogged(getToken());
+		console.log(getToken() ? true : false);
 	};
 
 	React.useEffect(() => {
@@ -41,8 +49,9 @@ function App(): JSX.Element {
 	}, [ history.location.pathname ]);
 
 	React.useEffect(() => {
+		console.log("masuk ga??");
 		checkToken();
-	}, [ token ]);
+	}, [ token, postResource, resource ]);
 
 	return (
 		<Box display="flex"
@@ -52,9 +61,8 @@ function App(): JSX.Element {
 			{...eventTouch}
 		>
 			<ErrorBoundary>
-				{/* <React.Suspense fallback={<Loading/>}> */}
 				{!isLogged ?
-					<Box m="auto" mt={5} width="80vw">
+					<Box m="auto" mt={5} width="80vw" >
 						<Switch>
 							<Route exact path="/login" render={(): JSX.Element => <Login />} />
 							<Route exact path="/register" render={(): JSX.Element => <Register />} />
@@ -80,7 +88,6 @@ function App(): JSX.Element {
 						</Box>
 					</React.Fragment>
 				}
-				{/* </React.Suspense> */}
 				<MySnackbar isOpen={values.isError} message={values.message} variant={values.variant}/>
 				<MySnackbarSuspense />
 			</ErrorBoundary>

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable no-undef */
 import { AES, enc, SHA256 } from "crypto-js";
-import { User, UserData } from "../model/models/user.model";
+import { UserData } from "../model/models/user.model";
 
 const _decrypToken = (): string => {
 	const key = SHA256("token").toString(enc.Hex);

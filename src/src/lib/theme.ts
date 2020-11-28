@@ -34,9 +34,14 @@ export const MyTheme = createMuiTheme({
 			sizeLarge: {
 				height: "150%"
 			},
-			// label: {
-			// 	color: primaryText
-			// }
+			root: {
+				"&$disabled": {
+					color: "gray"
+				}
+			},
+			textPrimary:{
+				color: primaryText
+			}
 		},
 		MuiListItemText: {
 			primary: {
@@ -65,6 +70,23 @@ export const MyTheme = createMuiTheme({
 				},
 			},
 		},
+		// MuiCardHeader: {
+		// 	title: {
+		// 		fontSize: "1em"
+		// 	}
+		// },
+		MuiTypography: {
+			h5: {
+				fontSize: "1.5em"
+			},
+			h6: {
+				fontSize: "1em",
+				fontWeight: "bolder"
+			},
+			subtitle2: {
+				fontSize: "0.9em"
+			}
+		},
 		MuiFormLabel: {
 			root: {
 				color: primaryText,
@@ -73,5 +95,8 @@ export const MyTheme = createMuiTheme({
 				}
 			},
 		},
+		MuiDialog: {
+
+		}
 	}
 });
