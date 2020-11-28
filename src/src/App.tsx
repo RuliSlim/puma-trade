@@ -9,14 +9,13 @@ import { formContext } from "./context/form.context";
 import { ErrorBoundary } from "./components/error/boundary";
 import { Loading, MyAppbar, Navbar } from "./components";
 import { useDebounce } from "./hooks/debounce";
-import { Trees } from "./pages";
 
 const routes: string[] = [ "", "trees", "history" ];
 
 // all pages;
 const Login = React.lazy(() => import("./pages/login"));
 const Dashboard = React.lazy(() => import("./pages/dashboard"));
-// const Trees = React.lazy(() => import("./pages/trees"));
+const Trees = React.lazy(() => import("./pages/trees"));
 const History = React.lazy(() => import("./pages/history"));
 const Register = React.lazy(() => import("./pages/register"));
 

@@ -11,17 +11,16 @@ import { formContext } from "../context/form.context";
 
 const MyTree = React.lazy(() => import("../components/tree/tree"));
 
-export default function Trees(props: PagesProps): JSX.Element {
+export default function Trees(): JSX.Element {
 	const [ isOpen, setIsOpen ] = useState<ModalState>({ modal: false, snackbar: false });
 
 	// states
-	const { actions, values, resource, postResource } = React.useContext(formContext);
+	const { actions, values, postResource } = React.useContext(formContext);
 	const { clearPostResource, fetchingData, handleChange } = actions;
 
 	React.useEffect(() => {
 		fetchingData("trees");
-		// clearPostResource();
-		console.log("masuk sini ga siiiiiih anjiiing");
+		clearPostResource();
 	}, [ postResource ]);
 
 	const handleClick = (targetNode: ReactD3TreeItem): void => {
@@ -46,7 +45,7 @@ export default function Trees(props: PagesProps): JSX.Element {
 					</Box>
 				</Grid>
 				<Box width="100vw" height="80vh" mt="-22%">
-					<React.Suspense fallback={<Loading thickness={50}/>}>
+					<React.Suspense fallback={<Loading thickness={50} position="absolute" top="45%" left="45%" />}>
 						<MyTree handleClick={handleClick}/>
 					</React.Suspense>
 				</Box>
