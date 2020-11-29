@@ -19,10 +19,15 @@ export interface PostBody {
 	body: LoginModel | RegisterModel | string;
 }
 
+export interface Capping {
+	value_capping: number;
+	persen_capping: number;
+}
+
 export interface ResponsePost {
 	message: string;
 	status: number;
-	data: User | DepositModel | null | string | Member[];
+	data: User | DepositModel | null | string | Member[] | Capping;
 }
 
 export interface WrapperApi {

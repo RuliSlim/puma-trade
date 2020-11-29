@@ -7,6 +7,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { ButtonModal, MessageModal } from "../../model/components/modal";
 import { formContext } from "../../context/form.context";
+import { RegisterInsideModel } from "../../model/models/user.model";
 
 interface FormDialogProps {
 	isOpen: boolean;
@@ -14,12 +15,13 @@ interface FormDialogProps {
 	message: MessageModal;
 	buttons: ButtonModal;
 	content: JSX.Element;
+	data?: RegisterInsideModel;
 }
 
 export default function FormDialog(props: FormDialogProps): JSX.Element {
-	const { isOpen, onClose, message, buttons, content } = props;
+	const { isOpen, onClose, message, buttons, content, data } = props;
 	const { actions, values } = React.useContext(formContext);
-	const { handlingConvert, handlingTransfer, handleResetAgree } = actions;
+	const { handlingConvert, handlingTransfer, handleResetAgree, handleInside } = actions;
 
 	const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
 		onClose(e);
@@ -30,6 +32,12 @@ export default function FormDialog(props: FormDialogProps): JSX.Element {
 		if (message.title === "Transfer Point") {
 			console.log("masuk sainifasfs??>>>>>>>>>>>>>>");
 			handlingTransfer();
+		}
+
+		if (message.title === "Register Inside") {
+			if (data) {
+				handleInside(data);
+			}
 		}
 	};
 

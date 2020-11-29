@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { ReactD3TreeItem } from "react-d3-tree";
-import { Box, Grid, Paper, Typography } from "@material-ui/core";
+import { Box, Button, Grid, Paper, Typography } from "@material-ui/core";
 import { treeOnClick } from "../utils";
 import { Loading, MyModal, MySnackbar, Register } from "../components";
 import { ModalState } from "../model/components/modal";
 import "./../lib/tree.css";
 import { PagesProps } from "../model/components/pages";
 import { formContext } from "../context/form.context";
+import { ArrowUpward } from "@material-ui/icons";
+import { RegisterInsideModel } from "../model/models/user.model";
 // import MyTree from "../components/tree/tree";
 
 const MyTree = React.lazy(() => import("../components/tree/tree"));
@@ -18,14 +20,28 @@ export default function Trees(): JSX.Element {
 	const { actions, values, postResource } = React.useContext(formContext);
 	const { clearPostResource, fetchingData, handleChange } = actions;
 
+	const [ inside, setInside ] = React.useState<RegisterInsideModel>({
+		name: "",
+		parent: {
+			name: ""
+		},
+		position: ""
+	});
+
 	React.useEffect(() => {
-		fetchingData("trees");
 		clearPostResource();
+	}, []);
+
+	React.useEffect(() => {
+		console.log(">>>>>>>>>>>CSADSADASDSADSADASDEAVADS");
+		fetchingData("trees");
 	}, [ postResource ]);
 
 	const handleClick = (targetNode: ReactD3TreeItem): void => {
 		const result = treeOnClick(targetNode);
-		if (result === "modal") {
+		if (result.type === "modal") {
+			console.log(result.data, "<<<<<<<INI LOOOHDAD SAD");
+			setInside(result.data);
 			setIsOpen({ ...isOpen, modal: true });
 			return;
 		}
@@ -34,6 +50,14 @@ export default function Trees(): JSX.Element {
 			setIsOpen({ ...isOpen, snackbar: true });
 			return;
 		}
+
+		console.log(result, "<<<<<<INI HASIL KLIIIIICKCKCKS");
+
+		fetchingData(result.name);
+	};
+
+	const backToSelf = (): void => {
+		fetchingData("trees");
 	};
 
 	return (
@@ -47,15 +71,22 @@ export default function Trees(): JSX.Element {
 				<Box width="100vw" height="80vh" mt="-22%">
 					<React.Suspense fallback={<Loading thickness={50} position="absolute" top="45%" left="45%" />}>
 						<MyTree handleClick={handleClick}/>
+						<Box position="absolute" top="20%" left="65vw">
+							<Button onClick={backToSelf} variant="contained">
+								<ArrowUpward />
+								Self
+							</Button>
+						</Box>
 					</React.Suspense>
 				</Box>
 				{isOpen.modal &&
 					<MyModal
 						isOpen={isOpen.modal}
+						data={inside}
 						onClose={(): void => setIsOpen({ ...isOpen, modal: false })}
-						message={{ title: "Register New Member", message: "" }}
+						message={{ title: "Register Inside", message: "" }}
 						buttons={{ cancel: "Cancel", accept: "Register" }}
-						content={<Register type="register"  handleChange={handleChange} values={values} />}
+						content={<Register type="inside"  handleChange={handleChange} values={values} />}
 					/>}
 				{isOpen.snackbar &&
 					<MySnackbar

@@ -4,7 +4,7 @@ import { reducerForm } from "../hooks/reducer/form.reducer";
 import { bonusUrl, cappingUrl, convertUrl, depositUrl, investUrl, loginUrl, logoutUrl, pointUrl, registerUrl, tokenUrl, transferUrl, treeUrl } from "../lib/url";
 import { ResponsePost, WrapperApi, WrapperGet } from "../model/api/fetcher";
 import { ActionFormApi, FormApi } from "../model/components/form";
-import { LoginModel, RegisterModel, User } from "../model/models/user.model";
+import { LoginModel, RegisterInsideModel, RegisterModel, User } from "../model/models/user.model";
 import { clearToken, getUser, saveToken, saveUser } from "../utils/auth";
 import { callFetch } from "../utils/fetcher";
 import { validation } from "../utils/validation";
@@ -22,6 +22,7 @@ interface FormData {
 		handleLogin: () => void;
 		handleLogout: () => void;
 		handleRegister: () => void;
+		handleInside: (node: RegisterInsideModel) => void;
 		handleChange: (value: keyof FormApi) => (e: React.ChangeEvent<HTMLInputElement>) => void;
 		handleDeposit: (e: React.FormEvent<HTMLFormElement>) => void;
 		handleInvest: (e: React.FormEvent<HTMLFormElement>) => void;
@@ -39,6 +40,7 @@ const initialData: FormApi = {
 	email: "",
 	isSubmit: "",
 	password: "",
+	password2: "",
 	username: "",
 	nominal: 35,
 	isError: false,
@@ -60,6 +62,7 @@ export const formContext = React.createContext<FormData>({
 		handleLogin: (): void => undefined,
 		handleLogout: (): void => undefined,
 		handleRegister: (): void => undefined,
+		handleInside: (): void => undefined,
 		handleChange: () => (): void => undefined,
 		handleDeposit: (): void => undefined,
 		handleInvest: (): void => undefined,
@@ -181,6 +184,7 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 							}
 						}
 					}
+					// clearPostResource();
 					return result as ResponsePost;
 				}
 			}
@@ -188,7 +192,7 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 	};
 
 	const handleLogin = (): void => {
-		clearPostResource();
+		// clearPostResource();
 		handleResetAgree();
 		const data: LoginModel = {
 			username: values.username,
@@ -217,8 +221,31 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 		dispatchValue({ type: "isSubmit", value: "register" });
 		dispatchValue({ type: "username", value: "" });
 		dispatchValue({ type: "password", value: "" });
+		dispatchValue({ type: "password2", value: "" });
 		dispatchValue({ type: "email", value: "" });
 		dispatchValue({ type: "codeReferral", value: "" });
+	};
+
+	const handleInside = (node: RegisterInsideModel): void => {
+		// name: "register here"
+		// parent:
+		// attributes:
+		// omset: 0
+		// position: "1"
+		console.log(node, "<<<<<<<DSADS");
+		clearPostResource();
+		const data = {
+			username: values.username,
+			email: values.email,
+			password: values.password,
+			// password2: values.password2,
+			code_referal: values.codeReferral,
+			position: node.position,
+			parent: node.parent.name
+		};
+
+		const fetcher = callFetch("POST", registerUrl, data);
+		setPostResource({ result: wrapFetcher(fetcher, "inside") });
 	};
 
 	const handleLogout = (): void => {
@@ -305,14 +332,19 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 				bonus: wrapFetcher(bonus, "bonus"),
 				// tree: wrapFetcher(trees, "tree")
 			});
-		}
-
-		if (type === "trees") {
+		} else if (type === "trees") {
 			console.log("ANJING KENAPA GA KE CALL LAGI BANGSAAAAT!!!");
-			const trees = callFetch("GET", treeUrl);
+			const user = getUser().username;
+			const trees = callFetch("GET", treeUrl + user + "/");
 			setResource({
 				tree: wrapFetcher(trees, "tree")
 			});
+		} else {
+			const trees = callFetch("GET", treeUrl + type + "/");
+			setResource({
+				tree: wrapFetcher(trees, "tree")
+			});
+			console.log(type, "masuk siniiii");
 		}
 	};
 
@@ -327,6 +359,7 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 					handleLogin,
 					handleLogout,
 					handleRegister,
+					handleInside,
 					handleChange,
 					handleDeposit,
 					handleInvest,

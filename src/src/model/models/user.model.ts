@@ -45,6 +45,20 @@ export interface RegisterModel {
 	referal_code: string;
 }
 
+export interface RegisterInsideModel {
+	name: string;
+	position: string;
+	parent: {
+		name: string;
+	};
+}
+
+// name: "register here"
+// parent:
+// attributes:
+// omset: 0
+// position: "1"
+
 // city: "bekasi"
 // created_at: "2020-11-10"
 // email: "nabaman@gmail.com"

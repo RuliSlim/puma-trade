@@ -1,6 +1,6 @@
 const baseUrl = "http://192.168.43.77:8000";
 export const loginUrl = `${baseUrl}/user-management/login/`;
-export const registerUrl = "registerUrl";
+export const registerUrl = `${baseUrl}/user-management/create-user/`;
 export const logoutUrl = `${baseUrl}/user-management/logout/`;
 
 // dashboard

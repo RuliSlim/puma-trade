@@ -1,9 +1,9 @@
 import React from "react";
-import { TextField } from "@material-ui/core";
+import { Checkbox, FormControlLabel, TextField } from "@material-ui/core";
 import { FormApi } from "../../model/components/form";
 
 interface RegisterProps {
-	type: "login" | "register";
+	type: "login" | "register" | "inside";
 	handleChange: (value: keyof FormApi) => (e: React.ChangeEvent<HTMLInputElement>) => void;
 	values: FormApi;
 }
@@ -31,8 +31,17 @@ export default function Register (props: RegisterProps): JSX.Element {
 				onChange={handleChange("password")}
 				value={values.password}
 			/>
-			{type === "register" &&
+			{(type === "register" || type === "inside") &&
 				<>
+					<TextField
+						margin="dense"
+						id="password"
+						label="confirm passowrd"
+						type="text"
+						fullWidth
+						onChange={handleChange("password")}
+						value={values.password}
+					/>
 					<TextField
 						autoFocus
 						margin="dense"
@@ -46,14 +55,20 @@ export default function Register (props: RegisterProps): JSX.Element {
 					<TextField
 						margin="dense"
 						id="ticket"
-						label="ticket"
+						label="refferal"
 						type="text"
 						fullWidth
 						onChange={handleChange("codeReferral")}
 						value={values.codeReferral}
 					/>
+					<FormControlLabel
+						control={<Checkbox checked={values.agree} onChange={handleChange("agree")} name="agreement" />}
+						label="agree to term and services"
+					/>
 				</>
 			}
 		</>
+
+	// parent
 	);
 }

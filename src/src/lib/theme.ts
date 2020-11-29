@@ -95,8 +95,5 @@ export const MyTheme = createMuiTheme({
 				}
 			},
 		},
-		MuiDialog: {
-
-		}
 	}
 });

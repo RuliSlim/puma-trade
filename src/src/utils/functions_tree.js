@@ -130,12 +130,15 @@ export const structTree = (data) => {
 
 // CLICK TREE
 export const treeOnClick = (e) => {
-	console.log(e, "<<<<<<<<<<DSDSA");
+	console.log(e, "<<<<<<<<<<DSDSA INI DATA PAS DIKLIIIIK");
 	if(e.name === "register here") {
-		return "modal";
-	}
-
-	if(e.name === "empty") {
+		return {
+			data: e,
+			type: "modal"
+		};
+	} else if(e.name === "empty") {
 		return "snackbar";
+	} else {
+		return e;
 	}
 };
