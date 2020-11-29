@@ -19,11 +19,11 @@ export default function LoginPage (props: PagesProps): JSX.Element {
 	return (
 		<Card className={classes.loginOrRegister}>
 			<CardHeader title="Login"/>
-			<CardContent className={classes.loginOrRegister}>
-				<img src="https://cdn.pixabay.com/photo/2017/05/10/17/19/libra-2301362_1280.png" width="105em"/>
+			<CardContent style={{ width: "80%" }}>
+				{/* <img src="https://cdn.pixabay.com/photo/2017/05/10/17/19/libra-2301362_1280.png" width="105em"/> */}
 				<Register type="login" handleChange={handleChange} values={values}/>
 				<React.Suspense fallback={loading}>
-					<Button variant="contained" onClick={handleLogin}>Login</Button>
+					<Button variant="contained" onClick={handleLogin} fullWidth>Login</Button>
 				</React.Suspense>
 			</CardContent>
 			<CardActions>

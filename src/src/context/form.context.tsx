@@ -195,7 +195,7 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 		// clearPostResource();
 		handleResetAgree();
 		const data: LoginModel = {
-			username: values.username,
+			username: values.username.toUpperCase(),
 			password: values.password
 		};
 
@@ -213,7 +213,7 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 			email: values.email,
 			password: values.password,
 			referal_code: values.codeReferral,
-			username: values.username
+			username: values.username.toUpperCase()
 		};
 
 		const fetcher = callFetch("POST", registerUrl, data);

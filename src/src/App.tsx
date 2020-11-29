@@ -32,8 +32,8 @@ function App(): JSX.Element {
 	const history = useHistory();
 
 	const { token, values, resource, postResource } = React.useContext(formContext);
-	const { eventTouch } = React.useContext(pageData);
-	useDebounce();
+	// const { eventTouch } = React.useContext(pageData);
+	// useDebounce();
 
 	const checkToken = (): void => {
 		setIsLogged(getToken());
@@ -57,17 +57,17 @@ function App(): JSX.Element {
 			flexDirection="column"
 			width={window.innerWidth}
 			height={window.innerHeight}
-			{...eventTouch}
+			// {...eventTouch}
 		>
 			<ErrorBoundary>
 				{!isLogged ?
-					<Box m="auto" mt={5} width="80vw" >
+					<Box m="auto" mt={5} width="80vw" height="80vh" >
 						<Switch>
 							<Route exact path="/login" render={(): JSX.Element => <Login />} />
 							<Route exact path="/register" render={(): JSX.Element => <Register />} />
-							<Route path="*">
-								<Redirect to="/login" />
-							</Route>
+							{/* <Route path="*">
+								<Redirect to="/" />
+							</Route> */}
 						</Switch>
 					</Box>
 					:
@@ -75,15 +75,15 @@ function App(): JSX.Element {
 						<Navbar />
 						<MyAppbar />
 						<Box m="auto" mt={5} width="80vw">
-							<PageProvider initialData={page}>
-								<TreeProvider initialData={dummyData}>
-									<Switch>
-										<Route exact path="/" render={(): JSX.Element => <Dashboard />} />
-										<Route exact path="/trees" render={(): JSX.Element => <Trees />} />
-										<Route exact path="/history" render={(): JSX.Element => <History />} />
-									</Switch>
-								</TreeProvider>
-							</PageProvider>
+							{/* <PageProvider initialData={page}> */}
+							{/* <TreeProvider initialData={dummyData}> */}
+							<Switch>
+								<Route exact path="/" render={(): JSX.Element => <Dashboard />} />
+								<Route exact path="/trees" render={(): JSX.Element => <Trees />} />
+								<Route exact path="/history" render={(): JSX.Element => <History />} />
+							</Switch>
+							{/* </TreeProvider> */}
+							{/* </PageProvider> */}
 						</Box>
 					</React.Fragment>
 				}

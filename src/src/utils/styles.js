@@ -117,13 +117,30 @@ export const useStyles = makeStyles((theme) => ({
 	loginOrRegister: {
 		display: "flex",
 		flexDirection: "column",
-		justifyContent: "space-between",
+		justifyContent: "space-around",
 		alignItems: "center",
 		alignContent: "center",
-		width: "80vw",
+		// width: "80vw",
 		margin: "auto",
+		height: "100%",
+		[theme.breakpoints.up("lg")]: {
+			width: "40vw"
+		},
+		[theme.breakpoints.down("md")]: {
+			width: "80vw",
+		},
+		// "& > *": {
+		// 	margin: "0.8vw"
+		// }
+	},
+	forms: {
+		display: "flex",
+		flexDirection: "column",
+		justifyContent: "space-around",
+		// width: "100%",
 		"& > *": {
-			margin: "0.8vw"
+			marginTop: "1vw",
+			marginBottom: "1vw"
 		}
 	},
 	percent: {
