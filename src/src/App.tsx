@@ -7,7 +7,7 @@ import { pageData, PageProvider } from "./context/pages_context";
 import { getToken } from "./utils/auth";
 import { formContext } from "./context/form.context";
 import { ErrorBoundary } from "./components/error/boundary";
-import { Loading, MyAppbar, Navbar } from "./components";
+import { Loading, MyAppbar, MyParticle, Navbar } from "./components";
 import { useDebounce } from "./hooks/debounce";
 
 const routes: string[] = [ "", "trees", "history" ];
@@ -16,6 +16,7 @@ const routes: string[] = [ "", "trees", "history" ];
 const Login = React.lazy(() => import("./pages/login"));
 const Dashboard = React.lazy(() => import("./pages/dashboard"));
 const Trees = React.lazy(() => import("./pages/trees"));
+const Profile = React.lazy(() => import("./pages/profile"));
 const History = React.lazy(() => import("./pages/history"));
 const Register = React.lazy(() => import("./pages/register"));
 
@@ -59,6 +60,7 @@ function App(): JSX.Element {
 			height={window.innerHeight}
 			// {...eventTouch}
 		>
+			{/* <MyParticle /> */}
 			<ErrorBoundary>
 				{!isLogged ?
 					<Box m="auto" mt={5} width="80vw" height="80vh" >
@@ -83,6 +85,7 @@ function App(): JSX.Element {
 								</Route>
 								<Route exact path="/" render={(): JSX.Element => <Dashboard />} />
 								<Route exact path="/trees" render={(): JSX.Element => <Trees />} />
+								<Route exact path="/profile" render={(): JSX.Element => <Profile />} />
 								<Route exact path="/history" render={(): JSX.Element => <History />} />
 							</Switch>
 							{/* </TreeProvider> */}

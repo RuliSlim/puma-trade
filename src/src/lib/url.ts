@@ -20,4 +20,6 @@ export const treeUrl = `${baseUrl}/user-management/tree/`;
 export const historyDepositUrl = `${baseUrl}/transaction/history-depo/`;
 export const historyInvestUrl = `${baseUrl}/transaction/history-invest/`;
 export const historyConvertUrl = `${baseUrl}/transaction/history-convert/`;
-// export const historyTransferUrl = `${baseUrl}/transaction/transfer/`;
+export const historyTransferUrl = `${baseUrl}/transaction/history-transfer/`;
+export const historyWithdrawUrl = `${baseUrl}/transaction/history-withdraw/`;
+export const historySponsorUrl = `${baseUrl}/transaction/history-bonus-sponsor/`;

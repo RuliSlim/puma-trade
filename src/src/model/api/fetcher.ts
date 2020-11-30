@@ -1,3 +1,4 @@
+import { TItleTableModel } from "../history";
 import { DepositModel } from "../models/transaction.model";
 import { LoginModel, RegisterModel, User } from "../models/user.model";
 import { Member } from "../tree_data";
@@ -27,7 +28,7 @@ export interface Capping {
 export interface ResponsePost {
 	message: string;
 	status: number;
-	data: User | DepositModel | null | string | Member[] | Capping;
+	data: User | DepositModel | null | string | Member[] | Capping | TItleTableModel[];
 }
 
 export interface WrapperApi {
@@ -41,4 +42,7 @@ export interface WrapperApi {
 	deposit?: WrapperGet;
 	invest?: WrapperGet;
 	convert?: WrapperGet;
+	transfer?: WrapperGet;
+	withdraw?: WrapperGet;
+	sponsor?: WrapperGet;
 }

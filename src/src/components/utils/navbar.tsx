@@ -23,7 +23,7 @@ export default function TemporaryDrawer(): JSX.Element {
 	});
 	const [ expand, setExpand ] = useState<CollapseNavbar>({
 		deposit: false,
-		history: false
+		history: true
 	});
 
 	const toggleDrawer = (anchor: Anchor, open: boolean) => (
@@ -36,13 +36,14 @@ export default function TemporaryDrawer(): JSX.Element {
 	};
 
 	const expandList = (text: keyof CollapseNavbar) => (): void => {
+		console.log(text, "???????<D?SA<D?SA<D?SA<D?SDS?D<ASDA");
 		const key: keyof CollapseNavbar = text.toLowerCase() as keyof CollapseNavbar;
 		setExpand({ ...expand, [key]: !expand[key] });
 	};
 
 	const listData = [ "Logo", "Dashboard", "Profile", "Trees", "History" ];
 	const depositList = [ "BTC", "ETH", "DOGE" ];
-	const historyList = [ "Deposit", "Sponsor", "Pairing" ];
+	const historyList = [ "Deposit", "Invest", "Convert", "Transfer", "Withdraw", "Sponsor" ];
 
 	const list = (anchor: Anchor): JSX.Element => (
 		<div
@@ -57,7 +58,7 @@ export default function TemporaryDrawer(): JSX.Element {
 						<Link to={text === "Dashboard" ? "/" : "/" + text.toLowerCase()} >
 							<ListItem button key={text + "-list"}>
 								<ListItemText primary={text} key={text + "-item"}/>
-								{text === "History" ? expand[(text.toLowerCase() as keyof CollapseNavbar)] ? <ExpandLess key={text + "-expanded"} onClick={expandList(text as keyof CollapseNavbar)}/> : <ExpandMore key={text + "-expand"} onClick={expandList(text as keyof CollapseNavbar)}/> : null}
+								{text === "History" ? expand[(text.toLowerCase() as keyof CollapseNavbar)] ? <ExpandLess key={text + "-expanded"} onClick={expandList(text as keyof CollapseNavbar)}/> : <ExpandMore key={text + "-expand"} onClick={expandList(text as keyof CollapseNavbar)}/> : <></>}
 							</ListItem>
 						</Link>
 						<Divider key={text + "-divider"}/>

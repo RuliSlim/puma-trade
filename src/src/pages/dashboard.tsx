@@ -31,6 +31,10 @@ export default function Dashboard(): JSX.Element {
 	const { handleDeposit, handleChange, handleInvest, fetchingData, clearPostResource } = actions;
 
 	React.useEffect(() => {
+		clearPostResource();
+	}, []);
+
+	React.useEffect(() => {
 		fetchingData("dashboard");
 	}, [ postResource ]);
 

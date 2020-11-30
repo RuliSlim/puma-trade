@@ -2,7 +2,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { reducerForm } from "../hooks/reducer/form.reducer";
-import { bonusUrl, cappingUrl, convertUrl, depositUrl, historyConvertUrl, historyDepositUrl, historyInvestUrl, investUrl, loginUrl, logoutUrl, pointUrl, registerUrl, tokenUrl, transferUrl, treeUrl } from "../lib/url";
+import { bonusUrl, cappingUrl, convertUrl, depositUrl, historyConvertUrl, historyDepositUrl, historyInvestUrl, historySponsorUrl, historyTransferUrl, historyWithdrawUrl, investUrl, loginUrl, logoutUrl, pointUrl, registerUrl, tokenUrl, transferUrl, treeUrl } from "../lib/url";
 import { ResponsePost, WrapperApi, WrapperGet } from "../model/api/fetcher";
 import { ActionFormApi, FormApi } from "../model/components/form";
 import { LoginModel, RegisterInsideModel, RegisterModel, User } from "../model/models/user.model";
@@ -340,22 +340,22 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 			setResource({
 				tree: wrapFetcher(trees, "tree")
 			});
-		} else if (type === "deposit") {
-			const deposit = callFetch("POST", historyDepositUrl);
+		} else if (type === "history") {
+			const deposit = callFetch("GET", historyDepositUrl);
+			const invest = callFetch("GET", historyInvestUrl);
+			const convert = callFetch("GET", historyConvertUrl);
+			const transfer = callFetch("GET", historyTransferUrl);
+			const withdraw = callFetch("GET", historyWithdrawUrl);
+			const sponsor = callFetch("GET", historySponsorUrl);
 			setResource({
+				sponsor: wrapFetcher(sponsor, "withdraw"),
+				withdraw: wrapFetcher(withdraw, "withdraw"),
+				transfer: wrapFetcher(transfer, "transfer"),
+				convert: wrapFetcher(convert, "convert"),
+				invest: wrapFetcher(invest, "invest"),
 				deposit: wrapFetcher(deposit, "deposit")
 			});
-		} else if (type === "invest") {
-			const invest = callFetch("POST", historyInvestUrl);
-			setResource({
-				invest: wrapFetcher(invest, "invest")
-			});
-		} else if (type === "convert") {
-			const convert = callFetch("POST", historyConvertUrl);
-			setResource({
-				convert: wrapFetcher(convert, "convert")
-			});
-		}	else {
+		} else {
 			const trees = callFetch("GET", treeUrl + type + "/");
 			setResource({
 				tree: wrapFetcher(trees, "tree")

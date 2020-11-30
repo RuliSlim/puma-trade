@@ -1,4 +1,4 @@
-import { FetchApi, WrapperApi } from "../api/fetcher";
+import { WrapperApi } from "../api/fetcher";
 
 export interface CardModel {
 	name: "Bonus" | "Capping" | "Token" | "Point";
@@ -10,6 +10,10 @@ export interface CardComponentProps {
 	item: CardModel;
 	openingModal: (item: string) => () => void;
 	resource: WrapperApi | undefined;
+}
+
+export interface CardProfileProps {
+	openingModal: (item: string) => () => void;
 }
 
 export interface AccordianState {
