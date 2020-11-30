@@ -27,7 +27,7 @@ const MySnackbarSuspense = React.lazy(() => import("./components/utils/snack.sus
 
 function App(): JSX.Element {
 	const [ page, setPage ] = React.useState(0);
-	const [ isLogged, setIsLogged ] = React.useState<string>();
+	const [ isLogged, setIsLogged ] = React.useState<boolean>(false);
 
 	const history = useHistory();
 
@@ -36,16 +36,16 @@ function App(): JSX.Element {
 	// useDebounce();
 
 	const checkToken = (): void => {
-		setIsLogged(getToken());
+		setIsLogged(getToken() ? true : false);
 		console.log(getToken() ? true : false);
 	};
 
-	React.useEffect(() => {
-		const route: string = history.location.pathname.slice(1);
-		const index: number = routes.findIndex((value) => value === route);
+	// React.useEffect(() => {
+	// 	const route: string = history.location.pathname.slice(1);
+	// 	const index: number = routes.findIndex((value) => value === route);
 
-		if (index !== -1) setPage(index);
-	}, [ history.location.pathname ]);
+	// 	if (index !== -1) setPage(index);
+	// }, [ history.location.pathname ]);
 
 	React.useEffect(() => {
 		console.log("masuk ga??");
@@ -63,11 +63,11 @@ function App(): JSX.Element {
 				{!isLogged ?
 					<Box m="auto" mt={5} width="80vw" height="80vh" >
 						<Switch>
-							<Route exact path="/login" render={(): JSX.Element => <Login />} />
-							<Route exact path="/register" render={(): JSX.Element => <Register />} />
-							{/* <Route path="*">
-								<Redirect to="/" />
-							</Route> */}
+							<Route  path="/login" render={(): JSX.Element => <Login />} />
+							<Route  path="/register" render={(): JSX.Element => <Register />} />
+							<Route path="*">
+								<Redirect to="/login" />
+							</Route>
 						</Switch>
 					</Box>
 					:
@@ -78,6 +78,9 @@ function App(): JSX.Element {
 							{/* <PageProvider initialData={page}> */}
 							{/* <TreeProvider initialData={dummyData}> */}
 							<Switch>
+								<Route exact path="/login">
+									<Redirect to="/" />
+								</Route>
 								<Route exact path="/" render={(): JSX.Element => <Dashboard />} />
 								<Route exact path="/trees" render={(): JSX.Element => <Trees />} />
 								<Route exact path="/history" render={(): JSX.Element => <History />} />

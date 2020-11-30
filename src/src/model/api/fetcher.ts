@@ -38,4 +38,7 @@ export interface WrapperApi {
 	bonus?: WrapperGet;
 	capping?: WrapperGet;
 	tree?: WrapperGet;
+	deposit?: WrapperGet;
+	invest?: WrapperGet;
+	convert?: WrapperGet;
 }

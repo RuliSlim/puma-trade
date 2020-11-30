@@ -54,10 +54,10 @@ export default function TemporaryDrawer(): JSX.Element {
 			<List>
 				{listData.map((text: string) => (
 					<React.Fragment key={text}>
-						<Link to={text === "Dashboard" ? "/" : "/" + text.toLowerCase()} onClick={expandList(text as keyof CollapseNavbar)}>
+						<Link to={text === "Dashboard" ? "/" : "/" + text.toLowerCase()} >
 							<ListItem button key={text + "-list"}>
 								<ListItemText primary={text} key={text + "-item"}/>
-								{text === "History" ? expand[(text.toLowerCase() as keyof CollapseNavbar)] ? <ExpandLess key={text + "-expanded"}/> : <ExpandMore key={text + "-expand"}/> : null}
+								{text === "History" ? expand[(text.toLowerCase() as keyof CollapseNavbar)] ? <ExpandLess key={text + "-expanded"} onClick={expandList(text as keyof CollapseNavbar)}/> : <ExpandMore key={text + "-expand"} onClick={expandList(text as keyof CollapseNavbar)}/> : null}
 							</ListItem>
 						</Link>
 						<Divider key={text + "-divider"}/>

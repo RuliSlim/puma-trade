@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import React from "react";
+import { useHistory } from "react-router-dom";
 import { reducerForm } from "../hooks/reducer/form.reducer";
-import { bonusUrl, cappingUrl, convertUrl, depositUrl, investUrl, loginUrl, logoutUrl, pointUrl, registerUrl, tokenUrl, transferUrl, treeUrl } from "../lib/url";
+import { bonusUrl, cappingUrl, convertUrl, depositUrl, historyConvertUrl, historyDepositUrl, historyInvestUrl, investUrl, loginUrl, logoutUrl, pointUrl, registerUrl, tokenUrl, transferUrl, treeUrl } from "../lib/url";
 import { ResponsePost, WrapperApi, WrapperGet } from "../model/api/fetcher";
 import { ActionFormApi, FormApi } from "../model/components/form";
 import { LoginModel, RegisterInsideModel, RegisterModel, User } from "../model/models/user.model";
@@ -82,6 +83,7 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 	const [ resource, setResource ] = React.useState<undefined | WrapperApi>();
 	const [ postResource, setPostResource ] = React.useState<undefined | WrapperApi>();
 	const [ token, setToken ] = React.useState<string>("");
+	const history = useHistory();
 
 	const handleResetAgree = (): void => {
 		dispatchValue({ type: "agree", value: false });
@@ -180,6 +182,7 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 									saveToken(token);
 									saveUser(rest);
 									setToken("trueee");
+									// history.push("/");
 								}
 							}
 						}
@@ -232,14 +235,13 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 		// attributes:
 		// omset: 0
 		// position: "1"
-		console.log(node, "<<<<<<<DSADS");
 		clearPostResource();
 		const data = {
 			username: values.username,
 			email: values.email,
 			password: values.password,
 			// password2: values.password2,
-			code_referal: values.codeReferral,
+			referal_code: values.codeReferral,
 			position: node.position,
 			parent: node.parent.name
 		};
@@ -333,18 +335,31 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 				// tree: wrapFetcher(trees, "tree")
 			});
 		} else if (type === "trees") {
-			console.log("ANJING KENAPA GA KE CALL LAGI BANGSAAAAT!!!");
 			const user = getUser().username;
 			const trees = callFetch("GET", treeUrl + user + "/");
 			setResource({
 				tree: wrapFetcher(trees, "tree")
 			});
-		} else {
+		} else if (type === "deposit") {
+			const deposit = callFetch("POST", historyDepositUrl);
+			setResource({
+				deposit: wrapFetcher(deposit, "deposit")
+			});
+		} else if (type === "invest") {
+			const invest = callFetch("POST", historyInvestUrl);
+			setResource({
+				invest: wrapFetcher(invest, "invest")
+			});
+		} else if (type === "convert") {
+			const convert = callFetch("POST", historyConvertUrl);
+			setResource({
+				convert: wrapFetcher(convert, "convert")
+			});
+		}	else {
 			const trees = callFetch("GET", treeUrl + type + "/");
 			setResource({
 				tree: wrapFetcher(trees, "tree")
 			});
-			console.log(type, "masuk siniiii");
 		}
 	};
 
