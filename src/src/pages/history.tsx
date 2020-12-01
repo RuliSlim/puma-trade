@@ -13,43 +13,13 @@ import { Member } from "../model/tree_data";
 const HistoryTable = React.lazy(() => import("../components/table/wrapper"));
 export default function HistoryPages(): JSX.Element {
 	const params = useLocation().search.slice(1);
+	const location = useLocation();
 	const history = useHistory();
 
 	const [ data, setData ] = React.useState<string | User | DepositModel | Member[] | Capping | null | undefined>();
 
-	const { actions, resource } = React.useContext(formContext);
+	const { actions } = React.useContext(formContext);
 	const { fetchingData, clearPostResource } = actions;
-
-	// const deposit = resource?.deposit?.write().data;
-	// const invest = resource?.invest?.write().data;
-	// const convert = resource?.convert?.write().data;
-	// const transfer = resource?.transfer?.write().data;
-	// const withdraw = resource?.withdraw?.write().data;
-	// const sponsor = resource?.sponsor?.write().data;
-	// // let data;
-
-	// const getData = () => {
-
-	// 	if (params === "deposit") {
-	// 		// setData(deposit);
-	// 		data = deposit;
-	// 	} else if (params === "invest") {
-	// 		// setData(invest);
-	// 		data = invest;
-	// 	} else if (params === "transfer") {
-	// 		// setData(transfer);
-	// 		data = transfer;
-	// 	} else if (params === "withdraw") {
-	// 		// setData(withdraw);
-	// 		data = withdraw;
-	// 	} else if (params === "sponsor") {
-	// 		// setData(sponsor);
-	// 		data = sponsor;
-	// 	} else if (params === "convert") {
-	// 		// setData(convert);
-	// 		data = convert;
-	// 	}
-	// };
 
 	React.useEffect(() => {
 		const route: string = history.location.pathname.slice(1);
@@ -58,6 +28,7 @@ export default function HistoryPages(): JSX.Element {
 		// initPage();
 		const url = params === "" ? "deposit" : params;
 		fetchingData("history");
+		console.log("MASDSADSAD?SAD????????");
 		// getData();
 	}, [ params ]);
 

@@ -6,7 +6,6 @@ import { CssBaseline, MuiThemeProvider } from "@material-ui/core";
 import { MyTheme } from "./lib/theme";
 import { BrowserRouter } from "react-router-dom";
 import { FormProvider } from "./context/form.context";
-import { ErrorBoundary } from "./components/error/boundary";
 import { Loading } from "./components";
 
 ReactDOM.render(
@@ -14,13 +13,11 @@ ReactDOM.render(
 		<MuiThemeProvider theme={MyTheme}>
 			<CssBaseline />
 			<BrowserRouter>
-				<ErrorBoundary>
-					<FormProvider>
-						<React.Suspense fallback={<Loading thickness={100} position="absolute" left="45%" top="40%"/>}>
-							<App />
-						</React.Suspense>
-					</FormProvider>
-				</ErrorBoundary>
+				<FormProvider>
+					<React.Suspense fallback={<Loading thickness={100} position="absolute" left="45%" top="40%"/>}>
+						<App />
+					</React.Suspense>
+				</FormProvider>
 			</BrowserRouter>
 		</MuiThemeProvider>
 	</React.StrictMode>,

@@ -6,9 +6,12 @@ import { dummyData } from "./model/dummy_data";
 import { pageData, PageProvider } from "./context/pages_context";
 import { getToken } from "./utils/auth";
 import { formContext } from "./context/form.context";
-import { ErrorBoundary } from "./components/error/boundary";
+// import { ErrorBoundary } from "./components/error/boundary";
 import { Loading, MyAppbar, MyParticle, Navbar } from "./components";
 import { useDebounce } from "./hooks/debounce";
+import { ErrorBoundary } from "react-error-boundary";
+import ErrorFallback from "./components/error/boundary";
+import { History } from "./pages";
 
 const routes: string[] = [ "", "trees", "history" ];
 
@@ -17,7 +20,7 @@ const Login = React.lazy(() => import("./pages/login"));
 const Dashboard = React.lazy(() => import("./pages/dashboard"));
 const Trees = React.lazy(() => import("./pages/trees"));
 const Profile = React.lazy(() => import("./pages/profile"));
-const History = React.lazy(() => import("./pages/history"));
+// const History = React.lazy(() => import("./pages/history"));
 const Register = React.lazy(() => import("./pages/register"));
 
 // components:
@@ -60,8 +63,15 @@ function App(): JSX.Element {
 			height={window.innerHeight}
 			// {...eventTouch}
 		>
-			{/* <MyParticle /> */}
-			<ErrorBoundary>
+			<MyParticle />
+			<ErrorBoundary
+				FallbackComponent={ErrorFallback}
+				// onReset={resetPass}
+				// resetKeys={[ explode ]}
+				// FallbackComponent={ErrorFallback}
+				// onReset={() => setExplode(false)}
+				// resetKeys={[explode]}
+			>
 				{!isLogged ?
 					<Box m="auto" mt={5} width="80vw" height="80vh" >
 						<Switch>
