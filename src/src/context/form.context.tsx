@@ -2,7 +2,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { reducerForm } from "../hooks/reducer/form.reducer";
-import { bonusUrl, cappingUrl, convertUrl, depositUrl, historyConvertUrl, historyDepositUrl, historyInvestUrl, historySponsorUrl, historyTransferUrl, historyWithdrawUrl, investUrl, loginUrl, logoutUrl, pointUrl, registerUrl, tokenUrl, transferUrl, treeUrl } from "../lib/url";
+import { bonusUrl, cappingUrl, changePassword, convertUrl, depositUrl, historyConvertUrl, historyDepositUrl, historyInvestUrl, historySponsorUrl, historyTransferUrl, historyWithdrawUrl, investUrl, loginUrl, logoutUrl, pointUrl, registerUrl, tokenUrl, transferUrl, treeUrl } from "../lib/url";
 import { ResponsePost, WrapperApi, WrapperGet } from "../model/api/fetcher";
 import { ActionFormApi, FormApi } from "../model/components/form";
 import { LoginModel, RegisterInsideModel, RegisterModel, User } from "../model/models/user.model";
@@ -25,6 +25,7 @@ interface FormData {
 		handleRegister: () => void;
 		handleInside: (node: RegisterInsideModel) => void;
 		handleChange: (value: keyof FormApi) => (e: React.ChangeEvent<HTMLInputElement>) => void;
+		handleChangePassword: () => void;
 		handleDeposit: (e: React.FormEvent<HTMLFormElement>) => void;
 		handleInvest: (e: React.FormEvent<HTMLFormElement>) => void;
 		handlingError: (message: string) => void;
@@ -64,6 +65,7 @@ export const formContext = React.createContext<FormData>({
 		handleLogout: (): void => undefined,
 		handleRegister: (): void => undefined,
 		handleInside: (): void => undefined,
+		handleChangePassword: (): void => undefined,
 		handleChange: () => (): void => undefined,
 		handleDeposit: (): void => undefined,
 		handleInvest: (): void => undefined,
@@ -250,6 +252,16 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 		setPostResource({ result: wrapFetcher(fetcher, "inside") });
 	};
 
+	const handleChangePassword = (): void => {
+		clearPostResource();
+		const data = {
+			password1: values.password,
+			password2: values.password2
+		};
+		const fetcher = callFetch("POST", changePassword, data);
+		setPostResource({ result: wrapFetcher(fetcher, "passwoord") });
+	};
+
 	const handleLogout = (): void => {
 		clearPostResource();
 		_clearGetResource();
@@ -375,6 +387,7 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 					handleLogout,
 					handleRegister,
 					handleInside,
+					handleChangePassword,
 					handleChange,
 					handleDeposit,
 					handleInvest,

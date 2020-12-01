@@ -77,7 +77,7 @@ export default function Register (props: RegisterProps): JSX.Element {
 											onClick={handleShowPassword}
 											// onMouseDown={handleMouseDownPassword}
 										>
-											{showPassword? <Visibility /> : <VisibilityOff />}
+											{showPassword? <Visibility color="secondary"/> : <VisibilityOff color="primary"/>}
 										</IconButton>
 									</InputAdornment>
 								}

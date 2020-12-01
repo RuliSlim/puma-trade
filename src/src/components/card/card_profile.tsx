@@ -16,6 +16,8 @@ export default function CardProfile(props: CardProfileProps): JSX.Element {
 	const classess = useStyles();
 	const [ user, setUser ] = React.useState<UserData>(getUser());
 
+	// const
+
 	return(
 		<Card raised className={classess.wallet}>
 			<CardActionArea>

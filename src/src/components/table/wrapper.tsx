@@ -1,7 +1,6 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import { formContext } from "../../context/form.context";
-import { dummyDeposit } from "../../model/dummy_data";
 import { SponsorHistoryModel, TItleTableModel } from "../../model/history";
 import HistoryTable from "./history_table";
 

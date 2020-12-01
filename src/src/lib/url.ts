@@ -18,6 +18,9 @@ export const transferUrl = `${baseUrl}/transaction/transfer/`;
 // tree
 export const treeUrl = `${baseUrl}/user-management/tree/`;
 
+// profile
+export const changePassword = `${baseUrl}/user-management/change-password/`;
+
 // HISTORY
 export const historyDepositUrl = `${baseUrl}/transaction/history-depo/`;
 export const historyInvestUrl = `${baseUrl}/transaction/history-invest/`;
