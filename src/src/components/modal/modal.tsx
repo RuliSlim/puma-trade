@@ -23,7 +23,7 @@ export default function FormDialog(props: FormDialogProps): JSX.Element {
 	const { actions, values } = React.useContext(formContext);
 	const { handlingConvert, handlingTransfer, handleResetAgree, handleInside, handleChangePassword } = actions;
 
-	const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+	const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
 		onClose(e);
 		if (message.title === "Convert Bonus") {
 			handlingConvert();
@@ -40,7 +40,7 @@ export default function FormDialog(props: FormDialogProps): JSX.Element {
 			}
 		}
 
-		if (message.title === "Change Password") {
+		if (message.title === "Change Profile") {
 			handleChangePassword();
 		}
 	};
@@ -63,7 +63,7 @@ export default function FormDialog(props: FormDialogProps): JSX.Element {
 				<Button onClick={handleClose} color="primary">
 					{buttons.cancel}
 				</Button>
-				<Button onClick={handleSubmit} color="primary" disabled={!values.agree}>
+				<Button onClick={handleSubmit} color="primary" disabled={(!values.agree || values.isError)}>
 					{buttons.accept}
 				</Button>
 			</DialogActions>

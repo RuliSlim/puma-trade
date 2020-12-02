@@ -22,7 +22,29 @@ export default function ChangePassword (props: RegisterProps): JSX.Element {
 	return(
 		<div className={classes.forms}>
 			<FormControl fullWidth>
-				<InputLabel htmlFor="password">password</InputLabel>
+				<InputLabel htmlFor="password">old password</InputLabel>
+				<Input
+					margin="dense"
+					id="password"
+					fullWidth
+					onChange={handleChange("oldPassword")}
+					type={showPassword ? "text" : "password"}
+					value={values.oldPassword}
+					endAdornment={
+						<InputAdornment position="end">
+							<IconButton
+								aria-label="toggle password visibility"
+								onClick={handleShowPassword}
+								// onMouseDown={handleMouseDownPassword}
+							>
+								{showPassword ? <Visibility color="secondary"/> : <VisibilityOff color="primary"/>}
+							</IconButton>
+						</InputAdornment>
+					}
+				/>
+			</FormControl>
+			<FormControl fullWidth>
+				<InputLabel htmlFor="password">new password</InputLabel>
 				<Input
 					margin="dense"
 					id="password"
@@ -51,13 +73,12 @@ export default function ChangePassword (props: RegisterProps): JSX.Element {
 					type={showPassword ? "text" : "password"}
 					fullWidth
 					onChange={handleChange("password2")}
-					value={values.password}
+					value={values.password2}
 					endAdornment={
 						<InputAdornment position="end">
 							<IconButton
 								aria-label="toggle password visibility"
 								onClick={handleShowPassword}
-								// onMouseDown={handleMouseDownPassword}
 							>
 								{showPassword? <Visibility color="secondary"/> : <VisibilityOff color="primary"/>}
 							</IconButton>
@@ -65,8 +86,10 @@ export default function ChangePassword (props: RegisterProps): JSX.Element {
 					}
 				/>
 			</FormControl>
+			<FormControlLabel
+				control={<Checkbox checked={values.agree} onChange={handleChange("agree")} name="agreement" />}
+				label="agree to term and services"
+			/>
 		</div>
-
-	// parent
 	);
 }

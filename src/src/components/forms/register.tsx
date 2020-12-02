@@ -69,7 +69,7 @@ export default function Register (props: RegisterProps): JSX.Element {
 								type={showPassword ? "text" : "password"}
 								fullWidth
 								onChange={handleChange("password2")}
-								value={values.password}
+								value={values.password2}
 								endAdornment={
 									<InputAdornment position="end">
 										<IconButton

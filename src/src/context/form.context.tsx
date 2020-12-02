@@ -53,6 +53,7 @@ const initialData: FormApi = {
 	convert: "",
 	point: "",
 	receiver: "",
+	oldPassword: ""
 };
 
 export const formContext = React.createContext<FormData>({
@@ -91,9 +92,22 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 		dispatchValue({ type: "agree", value: false });
 	};
 
+	const _checkPassword = (pass1: string, pass2: string): boolean => pass1 !== pass2;
+
+	const handlingError = (message: string): void => {
+		dispatchValue({ type: "isError", value: true });
+		dispatchValue({ type: "message", value: message });
+		dispatchValue({ type: "variant", value: "error" });
+
+		setTimeout(() => {
+			dispatchValue({ type: "isError", value: false });
+		}, 5000);
+	};
+
 	const handleChange = (value: keyof FormApi) => async (e: React.ChangeEvent<HTMLInputElement>): Promise<void> => {
 		const key = value as keyof FormApi;
 		dispatchValue({ type: key, value: e.target.value });
+
 		if (value === "nominal") {
 			const isError = await validation("nominal", e.target.value);
 			dispatchValue({ type: "isError", value: isError });
@@ -105,17 +119,21 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 
 		if (value === "agree") {
 			dispatchValue({ type: "agree", value: !values.agree });
-			console.log("masuk sini ga siiih?????????<D<SAD<?SADSA");
 		}
-	};
 
-	const handlingError = (message: string): void => {
-		dispatchValue({ type: "isError", value: true });
-		dispatchValue({ type: "message", value: message });
-
-		setTimeout(() => {
-			dispatchValue({ type: "isError", value: false });
-		}, 5000);
+		if (value === "password2") {
+			// dispatchValue({ type: "password2", value: e.target.value });
+			const isError = _checkPassword(values.password, e.target.value);
+			if (isError) {
+				dispatchValue({ type: "isError", value: true });
+				dispatchValue({ type: "message", value: "confirmation password does not match" });
+				dispatchValue({ type: "variant", value: "error" });
+			} else {
+				dispatchValue({ type: "isError", value: false });
+				dispatchValue({ type: "message", value: "" });
+				dispatchValue({ type: "variant", value: "" });
+			}
+		}
 	};
 
 	const clearPostResource = (): void => {
@@ -255,7 +273,7 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 	const handleChangePassword = (): void => {
 		clearPostResource();
 		const data = {
-			password1: values.password,
+			password1: values.oldPassword,
 			password2: values.password2
 		};
 		const fetcher = callFetch("POST", changePassword, data);

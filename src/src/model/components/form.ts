@@ -1,6 +1,7 @@
 export interface FormApi {
 	username: string;
 	email: string;
+	oldPassword: string;
 	password: string;
 	password2: string;
 	codeReferral: string;

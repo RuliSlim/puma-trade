@@ -25,7 +25,11 @@ export default function MyParticleJS(): JSX.Element {
 						"speed": 0.05
 					},
 					"size": {
-						"value": 1
+						"value": 1,
+						random: {
+							enable: true,
+							minimumValue: 0.8
+						}
 					},
 					"opacity": {
 						"anim": {
