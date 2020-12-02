@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/camelcase */
 import { TItleTableModel } from "./history";
 import { Member } from "./tree_data";
 
@@ -271,63 +272,3 @@ export const dummyUser = {
 	capping: 300,
 	total_purchased: 1000
 };
-
-/*
-Sponsor
-tanggal, type, nominal hasil
-date, sponsor, $214214
-
-Pairing
-tanggal, type, nominal hasil
-date, pairing, $1234
-
-*/
-
-/*
-[ETH] => POP UP (masukin nominal) => diarahin coin paymen
-[DOGE] => POP UP (masukin nominal) => diarahin coin paymen
-[BTC] => POP UP (masukin nominal) => diarahin coin paymen
-*/
-
-/*
-PROFIL
-avatar (options kita sediakan)
-email, no phone editable
-*/
-
-/*
-BONUS AKTIF DAN PASIF DIGABUNG
-POP UP CONVERT
-masukan nominal
-token 30%, poin 70%
-*/
-
-/*
-PURCHASE
-tampilan saldo user
-isi nominal
-isi password user
-tos
-button
-*/
-
-/*
-WITDRAW
-tipe jenis (wd admin atau wd p2p member)
-
-wd admin:
-menampilkan saldo token
-isi nominal (minimum 10% purchase, ambil dari token!, max capping kalau sudah melebihi capping repurchase)
-hasil yang diterima
-password
-tos
-button
-
-p2p member:
-menampilkan saldo token dan poin
-isi username tujuan
-nominal
-password
-tos
-button
-*/
