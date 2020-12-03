@@ -70,7 +70,7 @@ export default function Trees(): JSX.Element {
 						<Typography variant="h4" color="textPrimary">Tree</Typography>
 					</Box>
 				</Grid>
-				<Box width="100vw" height="80vh" mt="-22%">
+				<Box width="80vw" height="100vh" mt="-22%">
 					<React.Suspense fallback={<Loading thickness={50} position="absolute" top="45%" left="45%" />}>
 						<MyTree handleClick={handleClick}/>
 						<Box position="absolute" top="20%" left="65vw">

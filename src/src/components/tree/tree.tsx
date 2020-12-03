@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/ban-ts-ignore */
 import React from "react";
 import Tree, { ReactD3TreeItem } from "react-d3-tree";
 import { formContext } from "../../context/form.context";
 import { useDeviceSize } from "../../hooks/device";
 import { dummyData } from "../../model/dummy_data";
-import { structTree } from "../../utils";
 
 const styles = {
 	links: {
@@ -46,11 +46,12 @@ interface Props {
 export default function MyTree(props: Props): JSX.Element {
 	const { resource } = React.useContext(formContext);
 	const data = resource?.tree?.write();
-	const result = structTree(data?.data ?? dummyData);
+	const result = data?.data ?? dummyData;
 
 	const { handleClick } = props;
 	return (
 		<Tree
+		//@ts-ignore
 			data={result}
 			orientation="vertical"
 			translate={{ x: window.innerWidth/2.5, y: window.innerHeight/3 }}

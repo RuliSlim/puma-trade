@@ -21,7 +21,7 @@ export default function HistoryPages(): JSX.Element {
 
 	return(
 		<React.Fragment>
-			<React.Suspense fallback={<Loading thickness={100} />}>
+			<React.Suspense fallback={<Loading thickness={100} position="absolute" top="40%" left="45%"/>}>
 				<HistoryTable rows={dummyDeposit} title={`History ${params}`} params={params} />
 			</React.Suspense>
 		</React.Fragment>
