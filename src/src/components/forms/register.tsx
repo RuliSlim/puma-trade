@@ -29,7 +29,7 @@ export default function Register (props: RegisterProps): JSX.Element {
 					type="text"
 					fullWidth
 					onChange={handleChange("username")}
-					value={values.username}
+					value={values.username.toUpperCase()}
 				/>
 			</FormControl>
 			<FormControl fullWidth>

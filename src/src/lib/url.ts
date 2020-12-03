@@ -21,6 +21,9 @@ export const treeUrl = `${baseUrl}/user-management/tree/`;
 // profile
 export const changePassword = `${baseUrl}/user-management/change-password/`;
 
+// confirm email
+export const confirmationUrl = `${baseUrl}/user-management/confirmation/`;
+
 // HISTORY
 export const historyDepositUrl = `${baseUrl}/transaction/history-depo/`;
 export const historyInvestUrl = `${baseUrl}/transaction/history-invest/`;

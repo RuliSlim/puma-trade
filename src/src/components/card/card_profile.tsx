@@ -16,7 +16,7 @@ export default function CardProfile(props: CardProfileProps): JSX.Element {
 
 	return(
 		<Card raised className={classess.wallet}>
-			<CardHeader title="Profile" />
+			{device.isLaptop && <CardHeader title="Profile" />}
 			<CardContent>
 				<Grid container direction="column" style={{ height: "100%" }} spacing={5}>
 					<Grid item>
@@ -34,7 +34,7 @@ export default function CardProfile(props: CardProfileProps): JSX.Element {
 				</Grid>
 			</CardContent>
 			<Button style={{ height: "100%", width: "100%" }} className={classess.percent} onClick={openingModal("profile")}>
-				<Box width="100%" height="100%" position="absolute" top={device.isLaptop ? "45%" : "10%"} >
+				<Box width="100%" height="100%" position={device.isLaptop ? "" : "absolute"} top={device.isLaptop ? "45%" : "10%"} >
 					<Paper elevation={10}>
 						<Typography variant="h6" gutterBottom component="h2" align="center">
 							<Circle

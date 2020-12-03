@@ -15,6 +15,7 @@ const Trees = React.lazy(() => import("./pages/trees"));
 const Profile = React.lazy(() => import("./pages/profile"));
 const History = React.lazy(() => import("./pages/history"));
 const Register = React.lazy(() => import("./pages/register"));
+const Confirmation = React.lazy(() => import("./pages/email"));
 
 // components:
 const MySnackbar = React.lazy(() => import("./components/utils/snackbar"));
@@ -53,6 +54,7 @@ function App(): JSX.Element {
 						<Switch>
 							<Route  path="/login" render={(): JSX.Element => <Login />} />
 							<Route  path="/register" render={(): JSX.Element => <Register />} />
+							<Route  path="/confirmation/token" render={(): JSX.Element => <Confirmation />} />
 							<Route path="*">
 								<Redirect to="/login" />
 							</Route>
@@ -65,6 +67,9 @@ function App(): JSX.Element {
 						<Box m="auto" mt={5} width="80vw">
 							<Switch>
 								<Route exact path="/login">
+									<Redirect to="/" />
+								</Route>
+								<Route exact path="/register">
 									<Redirect to="/" />
 								</Route>
 								<Route exact path="/" render={(): JSX.Element => <Dashboard />} />

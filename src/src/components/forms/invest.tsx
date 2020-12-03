@@ -30,6 +30,7 @@ export default function InvestForm(props: FormProps): JSX.Element {
 						<FormControlLabel value="50" control={<Radio />} label="$ 50" />
 						<FormControlLabel value="100" control={<Radio />} label="$ 100" />
 						<FormControlLabel value="500" control={<Radio />} label="$ 500" />
+						<FormControlLabel value="1000" control={<Radio />} label="$ 1000" />
 					</RadioGroup>
 					<FormControlLabel
 						control={<Checkbox checked={checked} onChange={(): void => setChecked(!checked)} name="agreement" />}
