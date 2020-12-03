@@ -1,5 +1,8 @@
+/* eslint-disable @typescript-eslint/ban-ts-ignore */
 // eslint-disable-next-line
 /* eslint-disable react-hooks/exhaustive-deps ; */
+//@typescript-eslint/ban-ts-comment
+
 import React, { useState } from "react";
 import { ReactD3TreeItem } from "react-d3-tree";
 import { Box, Button, Grid, Paper, Typography } from "@material-ui/core";
@@ -7,11 +10,9 @@ import { treeOnClick } from "../utils";
 import { Loading, MyModal, MySnackbar, Register } from "../components";
 import { ModalState } from "../model/components/modal";
 import "./../lib/tree.css";
-import { PagesProps } from "../model/components/pages";
 import { formContext } from "../context/form.context";
 import { ArrowUpward } from "@material-ui/icons";
 import { RegisterInsideModel } from "../model/models/user.model";
-// import MyTree from "../components/tree/tree";
 
 const MyTree = React.lazy(() => import("../components/tree/tree"));
 
@@ -35,14 +36,14 @@ export default function Trees(): JSX.Element {
 	}, []);
 
 	React.useEffect(() => {
-		console.log(">>>>>>>>>>>CSADSADASDSADSADASDEAVADS");
 		fetchingData("trees");
 	}, [ postResource ]);
 
 	const handleClick = (targetNode: ReactD3TreeItem): void => {
 		const result = treeOnClick(targetNode);
+		//@ts-ignore
 		if (result.type === "modal") {
-			console.log(result.data, "<<<<<<<INI LOOOHDAD SAD");
+			//@ts-ignore
 			setInside(result.data);
 			setIsOpen({ ...isOpen, modal: true });
 			return;
@@ -53,8 +54,7 @@ export default function Trees(): JSX.Element {
 			return;
 		}
 
-		console.log(result, "<<<<<<INI HASIL KLIIIIICKCKCKS");
-
+		//@ts-ignore
 		fetchingData(result.name);
 	};
 
@@ -99,7 +99,6 @@ export default function Trees(): JSX.Element {
 					/>
 				}
 			</Grid>
-
 		</Paper>
 	);
 }

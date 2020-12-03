@@ -12,7 +12,6 @@ export { default as CardProfile } from "./card/card_profile";
 export { default as DepositForm } from "./forms/deposit";
 export { default as InvestForm } from "./forms/invest";
 export { default as ConverForm } from "./forms/convert";
-export { default as Profile } from "./profile/profile";
 export { default as WithdrawForm } from "./forms/withdraw";
 export { default as TransferForm } from "./forms/transfer";
 export { default as Loading } from "./utils/loading";

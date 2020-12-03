@@ -1,11 +1,10 @@
 import React from "react";
-import { Checkbox, Input, FormControl, FormControlLabel, Grid, IconButton, InputAdornment, InputLabel, TextField } from "@material-ui/core";
+import { Checkbox, Input, FormControl, FormControlLabel, IconButton, InputAdornment, InputLabel } from "@material-ui/core";
 import { FormApi } from "../../model/components/form";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 import { useStyles } from "../../utils";
 
 interface RegisterProps {
-	// type: "login" | "register" | "inside";
 	handleChange: (value: keyof FormApi) => (e: React.ChangeEvent<HTMLInputElement>) => void;
 	values: FormApi;
 }
@@ -35,7 +34,6 @@ export default function ChangePassword (props: RegisterProps): JSX.Element {
 							<IconButton
 								aria-label="toggle password visibility"
 								onClick={handleShowPassword}
-								// onMouseDown={handleMouseDownPassword}
 							>
 								{showPassword ? <Visibility color="secondary"/> : <VisibilityOff color="primary"/>}
 							</IconButton>
@@ -57,7 +55,6 @@ export default function ChangePassword (props: RegisterProps): JSX.Element {
 							<IconButton
 								aria-label="toggle password visibility"
 								onClick={handleShowPassword}
-								// onMouseDown={handleMouseDownPassword}
 							>
 								{showPassword ? <Visibility color="secondary"/> : <VisibilityOff color="primary"/>}
 							</IconButton>

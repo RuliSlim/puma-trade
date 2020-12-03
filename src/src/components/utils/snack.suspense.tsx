@@ -14,24 +14,17 @@ export default function MySnackbarSuspense(): JSX.Element {
 	let message: string = postResource?.result?.write().message ?? resource?.result?.write().message ?? "please relogin";
 
 	const openOrNot = (): void => {
-		// if (!resource?.result.write().ok) {
-		// 	resource?.result.write().statusText ? setIsOpen(true) : setIsOpen(false);
-		// }
 		if (resource?.result?.write().status !== 200 || resource?.result.write().status !== 201) {
-			console.log("masuk sini gaaaa?????D?SA?DSA?D?S?A?");
 			resource?.result?.write().message ? setIsOpen(true) : setIsOpen(false);
 			message = resource?.result?.write().message ?? "please relogin";
-			console.log(resource?.result?.write(), "<<<<II MESASSGA");
 		}
 		if (postResource?.result?.write().status !== 200 || postResource?.result.write().status !== 201) {
-			console.log("masuk sini gaaaa?????D?SA?DSA?D?S?A?");
 			postResource?.result?.write().message ? setIsOpen(true) : setIsOpen(false);
 			message = postResource?.result?.write().message ?? "please relogin";
 		}
 	};
 
 	React.useEffect(() => {
-		console.log("<<<<>SD<D>SA<D>SA<DA>S<D>D<A>>>>");
 		openOrNot();
 	}, [ postResource, resource ]);
 

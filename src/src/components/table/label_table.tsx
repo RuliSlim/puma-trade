@@ -20,7 +20,7 @@ interface EnhancedTableProps {
 	labels: TItleTableModel | SponsorHistoryModel;
 }
 
-export default function LabelTable(props: EnhancedTableProps) {
+export default function LabelTable(props: EnhancedTableProps): JSX.Element {
 	const { classes, order, orderBy, onRequestSort, labels } = props;
 	const createSortHandler = (property: keyof TItleTableModel) => (event: React.MouseEvent<unknown>): void => {
 		onRequestSort(event, property);
@@ -37,7 +37,6 @@ export default function LabelTable(props: EnhancedTableProps) {
 					<TableCell
 						key={key}
 						align={typeof values[i] === "number" ? "right" : "left"}
-						// padding="false"
 						sortDirection={orderBy === key ? order : false}
 					>
 						<TableSortLabel

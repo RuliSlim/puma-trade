@@ -45,9 +45,8 @@ export default function FormDialog(props: FormDialogProps): JSX.Element {
 		}
 	};
 
-	const handleClose = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+	const handleClose = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
 		handleResetAgree();
-		console.log("masuk sini gaaaa??????>>>>>>>>");
 		onClose(e);
 	};
 	return (

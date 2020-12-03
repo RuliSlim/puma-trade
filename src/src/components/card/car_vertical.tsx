@@ -1,10 +1,8 @@
 import React from "react";
 import { Box, Button, Card, CardActionArea, CardContent, CardHeader, Paper, Typography } from "@material-ui/core";
-// import { Circle } from "rc-progress";
 import { useStyles } from "../../utils";
 import { CardComponentProps } from "../../model/components/dashboard";
 import { useDeviceSize } from "../../hooks/device";
-import { FetchApi } from "../../model/api/fetcher";
 import Loading from "../utils/loading";
 
 const Value = React.lazy(() => import("./fetching/value"));

@@ -1,22 +1,17 @@
 import React from "react";
 import { Box, Button, Card, CardActionArea, CardContent, CardHeader, Grid, Paper, Typography } from "@material-ui/core";
-import { CardComponentProps, CardProfileProps } from "../../model/components/dashboard";
+import { CardProfileProps } from "../../model/components/dashboard";
 import { Circle } from "rc-progress";
 import { useStyles } from "../../utils";
 import { useDeviceSize } from "../../hooks/device";
 import { getUser } from "../../utils/auth";
 import { UserData } from "../../model/models/user.model";
 
-// const Value = React.lazy(() => import("./fetching/value"));
-// const Circle = React.lazy(() => import("./fetching/circle"));
-
 export default function CardProfile(props: CardProfileProps): JSX.Element {
 	const { openingModal } = props;
 	const { device } = useDeviceSize();
 	const classess = useStyles();
-	const [ user, setUser ] = React.useState<UserData>(getUser());
-
-	// const
+	const [ user, _ ] = React.useState<UserData>(getUser());
 
 	return(
 		<Card raised className={classess.wallet}>

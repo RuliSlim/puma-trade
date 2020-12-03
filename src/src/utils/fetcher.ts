@@ -1,24 +1,15 @@
-import { useHistory } from "react-router-dom";
 import { loginUrl, registerUrl } from "../lib/url";
-import { FetchApi, PostBody, ResponsePost, WrapperGet } from "../model/api/fetcher";
+import { ResponsePost, WrapperGet } from "../model/api/fetcher";
 import { User } from "../model/models/user.model";
-import { getToken, saveToken, saveUser } from "./auth";
+import { getToken } from "./auth";
 
 export const callFetch = async (type: string, url: string, data?: {} | string): Promise<Response> => {
 	const token: string = getToken();
-	// let option;
-	// if (url !== countryURL && url !== numVerify) {
+
 	const option = {
 		"Content-Type": "application/json",
 		...((url !== loginUrl && url !== registerUrl) && { Authorization: `Token ${token}` })
 	};
-	// }
-
-	// if (url === numVerify || url === emailVerify) {
-	// 	url += data;
-	// }
-
-	console.log(data, "<<<<<");
 
 	const response: Response = await fetch(url, {
 		method: type,
@@ -35,8 +26,6 @@ export const wrapFetccher = (promise: Promise<Response>): WrapperGet => {
 	let result: {};
 	const suspender = promise.then(
 		r => {
-			console.log(r, "Ini di reEEEe<<<<<<<<<");
-			// if (r.ok) {
 			r.json().then(
 				d => {
 					console.log(d, "ini di sucksead");
@@ -49,9 +38,6 @@ export const wrapFetccher = (promise: Promise<Response>): WrapperGet => {
 					result = e;
 				}
 			);
-			// } else {
-			// 	throw new Error("ada tang gagaal");
-			// }
 		},
 		e => {
 			console.log(e, "ini di ea sebleum json");
@@ -75,12 +61,3 @@ export const wrapFetccher = (promise: Promise<Response>): WrapperGet => {
 		}
 	};
 };
-
-// export function fetchApi(): FetchApi {
-// 	const user = callFetch("GET", "https://jsonplaceholder.typicode.com/posts");
-// 	// const login = (data?: PostBody): Promise<Response> => fetcher("POST", "login", data?.body);
-
-// 	return {
-// 		user: wrapFetccher(user),
-// 	};
-// }

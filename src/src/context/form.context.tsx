@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import React from "react";
-import { useHistory } from "react-router-dom";
 import { reducerForm } from "../hooks/reducer/form.reducer";
 import { bonusUrl, cappingUrl, changePassword, convertUrl, depositUrl, historyConvertUrl, historyDepositUrl, historyInvestUrl, historySponsorUrl, historyTransferUrl, historyWithdrawUrl, investUrl, loginUrl, logoutUrl, pointUrl, registerUrl, tokenUrl, transferUrl, treeUrl } from "../lib/url";
 import { ResponsePost, WrapperApi, WrapperGet } from "../model/api/fetcher";
@@ -86,7 +85,6 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 	const [ resource, setResource ] = React.useState<undefined | WrapperApi>();
 	const [ postResource, setPostResource ] = React.useState<undefined | WrapperApi>();
 	const [ token, setToken ] = React.useState<string>("");
-	const history = useHistory();
 
 	const handleResetAgree = (): void => {
 		dispatchValue({ type: "agree", value: false });
@@ -122,7 +120,6 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 		}
 
 		if (value === "password2") {
-			// dispatchValue({ type: "password2", value: e.target.value });
 			const isError = _checkPassword(values.password, e.target.value);
 			if (isError) {
 				dispatchValue({ type: "isError", value: true });
@@ -137,7 +134,6 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 	};
 
 	const clearPostResource = (): void => {
-		console.log("<<<<<<<<<<<<<D>>>>>>>>>>>>>");
 		setPostResource(undefined);
 	};
 
@@ -150,7 +146,6 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 		let result: void | Response | User | ResponsePost;
 		const suspender = promise.then(
 			r => {
-				console.log(r, "Ini di reEEEe<<<<<<<<<");
 				r.json().then(
 					d => {
 						console.log(d, "ini di sucksead");
@@ -202,12 +197,10 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 									saveToken(token);
 									saveUser(rest);
 									setToken("trueee");
-									// history.push("/");
 								}
 							}
 						}
 					}
-					// clearPostResource();
 					return result as ResponsePost;
 				}
 			}
@@ -215,7 +208,6 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 	};
 
 	const handleLogin = (): void => {
-		// clearPostResource();
 		handleResetAgree();
 		const data: LoginModel = {
 			username: values.username.toUpperCase(),
@@ -250,17 +242,12 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 	};
 
 	const handleInside = (node: RegisterInsideModel): void => {
-		// name: "register here"
-		// parent:
-		// attributes:
-		// omset: 0
-		// position: "1"
 		clearPostResource();
+
 		const data = {
 			username: values.username,
 			email: values.email,
 			password: values.password,
-			// password2: values.password2,
 			referal_code: values.codeReferral,
 			position: node.position,
 			parent: node.parent.name
@@ -272,10 +259,12 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 
 	const handleChangePassword = (): void => {
 		clearPostResource();
+
 		const data = {
 			password1: values.oldPassword,
 			password2: values.password2
 		};
+
 		const fetcher = callFetch("POST", changePassword, data);
 		setPostResource({ result: wrapFetcher(fetcher, "passwoord") });
 	};
@@ -349,21 +338,19 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 	};
 
 	const fetchingData = (type: string): void => {
-		// const fetcher = callFetch("GET", url);
-		// setResource({ result: wrapFetcher(fetcher, type) });
 		if (type === "dashboard") {
 			const point = callFetch("GET", pointUrl);
 			const token = callFetch("GET", tokenUrl);
 			const bonus = callFetch("GET", bonusUrl);
 			const capping = callFetch("GET", cappingUrl);
-			// const trees = callFetch("GET", treeUrl);
+
 			setResource({
 				point: wrapFetcher(point, "point"),
 				capping: wrapFetcher(capping, "capping"),
 				token: wrapFetcher(token, "token"),
 				bonus: wrapFetcher(bonus, "bonus"),
-				// tree: wrapFetcher(trees, "tree")
 			});
+
 		} else if (type === "trees") {
 			const user = getUser().username;
 			const trees = callFetch("GET", treeUrl + user + "/");

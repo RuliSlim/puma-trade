@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import clsx from "clsx";
 import { lighten, makeStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -30,7 +29,7 @@ interface TitleTableProps {
 	title: string;
 }
 
-export default function TitleTable (props: TitleTableProps) {
+export default function TitleTable (props: TitleTableProps): JSX.Element {
 	const classes = useToolbarStyles();
 	const { numSelected, title } = props;
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Checkbox, Input, FormControl, FormControlLabel, Grid, IconButton, InputAdornment, InputLabel, TextField } from "@material-ui/core";
+import { Checkbox, Input, FormControl, FormControlLabel, Grid, IconButton, InputAdornment, InputLabel } from "@material-ui/core";
 import { FormApi } from "../../model/components/form";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 import { useStyles } from "../../utils";
@@ -21,7 +21,6 @@ export default function Register (props: RegisterProps): JSX.Element {
 
 	return(
 		<div className={classes.forms}>
-			{/* <Box> */}
 			<FormControl fullWidth>
 				<InputLabel htmlFor="username">username</InputLabel>
 				<Input
@@ -33,8 +32,6 @@ export default function Register (props: RegisterProps): JSX.Element {
 					value={values.username}
 				/>
 			</FormControl>
-			{/* </Box>
-			<Box> */}
 			<FormControl fullWidth>
 				<InputLabel htmlFor="password">password</InputLabel>
 				<Input
@@ -49,7 +46,6 @@ export default function Register (props: RegisterProps): JSX.Element {
 							<IconButton
 								aria-label="toggle password visibility"
 								onClick={handleShowPassword}
-								// onMouseDown={handleMouseDownPassword}
 							>
 								{showPassword ? <Visibility color="secondary"/> : <VisibilityOff color="primary"/>}
 							</IconButton>
@@ -57,7 +53,6 @@ export default function Register (props: RegisterProps): JSX.Element {
 					}
 				/>
 			</FormControl>
-			{/* </Box> */}
 			{(type === "register" || type === "inside") &&
 				<React.Fragment>
 					<Grid item>
@@ -75,7 +70,6 @@ export default function Register (props: RegisterProps): JSX.Element {
 										<IconButton
 											aria-label="toggle password visibility"
 											onClick={handleShowPassword}
-											// onMouseDown={handleMouseDownPassword}
 										>
 											{showPassword? <Visibility color="secondary"/> : <VisibilityOff color="primary"/>}
 										</IconButton>
@@ -120,7 +114,5 @@ export default function Register (props: RegisterProps): JSX.Element {
 				</React.Fragment>
 			}
 		</div>
-
-	// parent
 	);
 }

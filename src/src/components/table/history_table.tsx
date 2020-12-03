@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -19,7 +18,7 @@ type HistoryTableProps = {
 
 type Order = "asc" | "desc" | undefined;
 
-export default function HistoryTable(props: HistoryTableProps) {
+export default function HistoryTable(props: HistoryTableProps): JSX.Element {
 	const { rows, title } = props;
 	const classes = useStyles();
 	const [ order, setOrder ] = React.useState<Order>("asc");
@@ -28,13 +27,13 @@ export default function HistoryTable(props: HistoryTableProps) {
 	const [ page, setPage ] = React.useState(0);
 	const rowsPerPage = 10;
 
-	const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof TItleTableModel) => {
+	const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof TItleTableModel): void => {
 		const isAsc = orderBy === property && order === "asc";
 		setOrder(isAsc ? "desc" : "asc");
 		setOrderBy(property);
 	};
 
-	const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
+	const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>): void => {
 		if (event.target.checked) {
 			const newSelecteds: Array<string> = rows.map((n) => n.id.toString());
 			setSelected(newSelecteds);
@@ -43,11 +42,11 @@ export default function HistoryTable(props: HistoryTableProps) {
 		setSelected([]);
 	};
 
-	const handleChangePage = (event: unknown, newPage: number) => {
+	const handleChangePage = (event: unknown, newPage: number): void => {
 		setPage(newPage);
 	};
 
-	const isSelected = (name: string) => selected.indexOf(name) !== -1;
+	const isSelected = (name: string): boolean => selected.indexOf(name) !== -1;
 
 	const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
@@ -110,8 +109,3 @@ export default function HistoryTable(props: HistoryTableProps) {
 		</Paper>
 	);
 }
-
-HistoryTable.propTypes = {
-	rows: PropTypes.arrayOf(PropTypes.object),
-	title: PropTypes.string
-};

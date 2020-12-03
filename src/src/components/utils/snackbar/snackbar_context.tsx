@@ -14,13 +14,12 @@ function Alert(props: AlertProps): JSX.Element {
 }
 
 export default function MySnackbarContext(props: MySnackbarProps): JSX.Element {
-	const { isOpen, message, variant, onClose } = props;
+	const { isOpen, message, variant } = props;
 
 	return (
 		<>
 			<Snackbar
 				open={isOpen}
-				// onClose={onClose}
 				autoHideDuration={3000}
 			>
 				<Alert severity={variant}>
