@@ -28,7 +28,7 @@ const MyModal = React.lazy(() => import("../components/modal/modal"));
 export default function Dashboard(): JSX.Element {
 	// deposit
 	const { actions, values, resource, postResource } = React.useContext(formContext);
-	const { handleDeposit, handleChange, handleInvest, fetchingData, clearPostResource } = actions;
+	const { handleDeposit, handleChange, handleInvest, fetchingData, clearPostResource, handleWithdraw } = actions;
 
 	React.useEffect(() => {
 		clearPostResource();
@@ -174,6 +174,7 @@ export default function Dashboard(): JSX.Element {
 			<ModalSuspense type="deposit"/>
 			<ModalSuspense type="invest"/>
 			<ModalSuspense type="convert"/>
+			<ModalSuspense type="withdraw"/>
 		</Grid>
 	);
 }

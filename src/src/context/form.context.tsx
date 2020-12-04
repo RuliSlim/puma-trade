@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import React from "react";
 import { reducerForm } from "../hooks/reducer/form.reducer";
-import { bonusUrl, cappingUrl, changePassword, convertUrl, depositUrl, historyConvertUrl, historyDepositUrl, historyInvestUrl, historySponsorUrl, historyTransferUrl, historyWithdrawUrl, investUrl, loginUrl, logoutUrl, pointUrl, registerUrl, tokenUrl, transferUrl, treeUrl } from "../lib/url";
+import { bonusUrl, cappingUrl, changePassword, confirmationUrl, convertUrl, depositUrl, historyConvertUrl, historyDepositUrl, historyInvestUrl, historySponsorUrl, historyTransferUrl, historyWithdrawUrl, investUrl, loginUrl, logoutUrl, pointUrl, registerUrl, tokenUrl, transferUrl, treeUrl, withdrawUrl } from "../lib/url";
 import { ResponsePost, WrapperApi, WrapperGet } from "../model/api/fetcher";
 import { ActionFormApi, FormApi } from "../model/components/form";
 import { LoginModel, RegisterInsideModel, RegisterModel, User } from "../model/models/user.model";
@@ -26,6 +26,7 @@ interface FormData {
 		handleChange: (value: keyof FormApi) => (e: React.ChangeEvent<HTMLInputElement>) => void;
 		handleChangePassword: () => void;
 		handleDeposit: (e: React.FormEvent<HTMLFormElement>) => void;
+		handleWithdraw: () => void;
 		handleInvest: (e: React.FormEvent<HTMLFormElement>) => void;
 		handlingError: (message: string) => void;
 		handlingConvert: () =>  void;
@@ -33,6 +34,7 @@ interface FormData {
 		handlingTransfer: () => void;
 		fetchingData: (type: string) => void;
 		clearPostResource: () => void;
+		handleEmailConfirmation: (data: { token: string }) => void;
 	};
 }
 
@@ -43,6 +45,7 @@ const initialData: FormApi = {
 	password: "",
 	password2: "",
 	username: "",
+	confirmation: false,
 	nominal: 35,
 	isError: false,
 	invest: "50",
@@ -52,7 +55,9 @@ const initialData: FormApi = {
 	convert: "",
 	point: "",
 	receiver: "",
-	oldPassword: ""
+	oldPassword: "",
+	amount: "",
+	address: ""
 };
 
 export const formContext = React.createContext<FormData>({
@@ -68,13 +73,15 @@ export const formContext = React.createContext<FormData>({
 		handleChangePassword: (): void => undefined,
 		handleChange: () => (): void => undefined,
 		handleDeposit: (): void => undefined,
+		handleWithdraw: (): void => undefined,
 		handleInvest: (): void => undefined,
 		handlingError: (): void => undefined,
 		handleResetAgree: (): void => undefined,
 		handlingConvert: (): void => undefined,
 		handlingTransfer: (): void => undefined,
 		fetchingData: (): void => undefined,
-		clearPostResource: (): void => undefined
+		clearPostResource: (): void => undefined,
+		handleEmailConfirmation: (data: { token: string }): void => undefined
 	},
 });
 
@@ -201,6 +208,13 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 							}
 						}
 					}
+
+					if (type === "confirmation") {
+						if (Number((result as ResponsePost).status) === 200) {
+							dispatchValue({ type: "confirmation", value: true });
+						}
+					}
+
 					return result as ResponsePost;
 				}
 			}
@@ -239,6 +253,12 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 		dispatchValue({ type: "password2", value: "" });
 		dispatchValue({ type: "email", value: "" });
 		dispatchValue({ type: "codeReferral", value: "" });
+	};
+
+	const handleEmailConfirmation = (data: { token: string }): void => {
+		clearPostResource();
+		const fetcher = callFetch("POST", confirmationUrl, data);
+		setPostResource({ result: wrapFetcher(fetcher, "confirmation") });
 	};
 
 	const handleInside = (node: RegisterInsideModel): void => {
@@ -300,6 +320,19 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 
 		const fetcher = callFetch("POST", depositUrl, data);
 		setPostResource({ result: wrapFetcher(fetcher, "deposit") });
+	};
+
+	const handleWithdraw = (): void => {
+		clearPostResource();
+		handleResetAgree();
+
+		const data: {amount: string; address: string} = {
+			amount: values.amount,
+			address: values.address
+		};
+
+		const fetcher = callFetch("POST", withdrawUrl, data);
+		setPostResource({ result: wrapFetcher(fetcher, "withdraw") });
 	};
 
 	const handleInvest = (e: React.FormEvent<HTMLFormElement>): void => {
@@ -395,6 +428,8 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 					handleChangePassword,
 					handleChange,
 					handleDeposit,
+					handleWithdraw,
+					handleEmailConfirmation,
 					handleInvest,
 					handlingError,
 					handlingConvert,

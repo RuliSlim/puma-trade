@@ -14,6 +14,7 @@ export const depositUrl = `${baseUrl}/transaction/deposit/`;
 export const investUrl = `${baseUrl}/transaction/invest/`;
 export const convertUrl = `${baseUrl}/transaction/convert/`;
 export const transferUrl = `${baseUrl}/transaction/transfer/`;
+export const withdrawUrl = `${baseUrl}/transaction/withdraw/`;
 
 // tree
 export const treeUrl = `${baseUrl}/user-management/tree/`;

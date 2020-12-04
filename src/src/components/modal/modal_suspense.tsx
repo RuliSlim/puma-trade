@@ -4,6 +4,7 @@ import { formContext } from "../../context/form.context";
 import { DepositModel } from "../../model/models/transaction.model";
 import ContentDeposit from "./content/content_deposit";
 import ContentInvest from "./content/content_invest";
+import ContentWithdraw from "./content/content_withdraw";
 
 interface Props {
 	type: string;
@@ -17,7 +18,6 @@ export default function ModalSuspense(props: Props): JSX.Element {
 
 	const whichOpen = (): boolean => {
 		if (type === "deposit") {
-			console.log("masuk sini", amount ? true : false);
 			return amount ? true : false;
 		} else {
 			return postResource?.result?.write().data ? true : false;
@@ -36,8 +36,10 @@ export default function ModalSuspense(props: Props): JSX.Element {
 		} else if (type === "transfer") {
 			// setOpen(false);
 			setOpen(postResource?.result?.write().data === "Transfer Success!" ? true : false);
-		} else {
+		} else if (type === "withdraw") {
 			// setOpen(false);
+			// setOpen(amount === undefined && amount === null && postResource?.result?.write().data !== "None" && postResource?.result?.write().data !== undefined && postResource.result.write().data !== undefined);
+		} else {
 			setOpen(postResource?.result?.write().data ? true : false);
 		}
 
@@ -47,8 +49,8 @@ export default function ModalSuspense(props: Props): JSX.Element {
 		checkOpen();
 	}, [ postResource ]);
 
-	const content = type === "deposit" ? <ContentDeposit /> : <ContentInvest />;
-	const title = type === "deposit" ? "Deposit Doge" : type === "invest" ? "Invest" : "Info";
+	const content = type === "deposit" ? <ContentDeposit /> : type === "invest" ? <ContentInvest /> : <ContentWithdraw />;
+	const title = type === "deposit" ? "Deposit Doge" : type === "invest" ? "Invest" : type === "withdraw" ? "Withdraw" : "Info";
 
 	return(
 		<MyModal

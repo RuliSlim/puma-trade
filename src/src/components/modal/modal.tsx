@@ -21,7 +21,7 @@ interface FormDialogProps {
 export default function FormDialog(props: FormDialogProps): JSX.Element {
 	const { isOpen, onClose, message, buttons, content, data } = props;
 	const { actions, values } = React.useContext(formContext);
-	const { handlingConvert, handlingTransfer, handleResetAgree, handleInside, handleChangePassword } = actions;
+	const { handlingConvert, handlingTransfer, handleResetAgree, handleInside, handleChangePassword, handleWithdraw } = actions;
 
 	const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
 		onClose(e);
@@ -42,6 +42,10 @@ export default function FormDialog(props: FormDialogProps): JSX.Element {
 
 		if (message.title === "Change Profile") {
 			handleChangePassword();
+		}
+
+		if (message.title === "Withdraw") {
+			handleWithdraw();
 		}
 	};
 

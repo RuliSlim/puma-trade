@@ -7,6 +7,7 @@ export interface FormApi {
 	codeReferral: string;
 	isSubmit: string;
 	nominal: number;
+	confirmation: boolean;
 	invest: string;
 	isError: boolean;
 	message: string;
@@ -15,6 +16,8 @@ export interface FormApi {
 	convert: string;
 	point: string;
 	receiver: string;
+	address: string;
+	amount: string;
 }
 
 export interface ActionFormApi {
