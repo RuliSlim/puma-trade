@@ -30,7 +30,6 @@ export default function FormDialog(props: FormDialogProps): JSX.Element {
 		}
 
 		if (message.title === "Transfer Point") {
-			console.log("masuk sainifasfs??>>>>>>>>>>>>>>");
 			handlingTransfer();
 		}
 

@@ -13,7 +13,6 @@ export default function LoginPage (): JSX.Element {
 	const { handleChange, handleLogin } = actions;
 
 	const loading = <Loading thickness={50} position="absolute" top="45vh" left="25vw" />;
-	console.log("logiiiin??????");
 
 	return (
 		<Card className={classes.loginOrRegister}>
@@ -22,7 +21,15 @@ export default function LoginPage (): JSX.Element {
 			<CardContent style={{ width: "80%" }}>
 				<Register type="login" handleChange={handleChange} values={values}/>
 				<React.Suspense fallback={loading}>
-					<Button variant="contained" onClick={handleLogin} fullWidth style={{ marginTop: "20px" }}>Login</Button>
+					<Button 
+						variant="contained" 
+						onClick={handleLogin} 
+						fullWidth 
+						style={{ marginTop: "20px" }}
+						disabled={values.isError}
+					>
+						Login
+					</Button>
 				</React.Suspense>
 			</CardContent>
 			<CardActions>

@@ -15,7 +15,6 @@ export const useDeviceSize = (): {device: Device} => {
 	});
 
 	const resizeWindow = (): void => {
-		console.log("masuk sini");
 		const size = window.innerWidth;
 		if (size <= 960) setDevice({ ...device, isMobile: true });
 		if (size > 960 && size < 1280) setDevice({ ...device, isTablet: true });

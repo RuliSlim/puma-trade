@@ -16,7 +16,15 @@ export default function RegisterPage (): JSX.Element {
 			<img src="./assets/images/logo_no_text.png" alt="logo libra" className={classes.logo} />
 			<CardContent style={{ width: "80%" }}>
 				<Register type="register"  handleChange={handleChange} values={values}/>
-				<Button variant="contained" onClick={handleRegister} fullWidth style={{ marginTop: "20px" }}>Register</Button>
+				<Button 
+					variant="contained" 
+					onClick={handleRegister} 
+					fullWidth 
+					style={{ marginTop: "20px" }}
+					disabled={values.isError}
+				>
+					Register
+				</Button>
 			</CardContent>
 			<CardActions>
 				<Typography variant="body1">Already have account? Login <Link to="/login" >here</Link></Typography>

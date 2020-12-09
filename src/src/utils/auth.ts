@@ -8,7 +8,6 @@ const _decrypToken = (): string => {
 	const token = localStorage.getItem(key);
 	const secret = process.env.REACT_APP_SECRET!.toString();
 	const unlock = AES.decrypt(token ?? "", secret).toString(enc.Utf8);
-	console.log(unlock, "<<<<<<CSAAS");
 	return unlock;
 };
 

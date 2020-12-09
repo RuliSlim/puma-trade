@@ -30,11 +30,9 @@ function App(): JSX.Element {
 
 	const checkToken = (): void => {
 		setIsLogged(getToken() ? true : false);
-		console.log(getToken() ? true : false);
 	};
 
 	React.useEffect(() => {
-		console.log("masuk ga??");
 		checkToken();
 	}, [ token, postResource, resource ]);
 

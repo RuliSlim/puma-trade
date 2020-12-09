@@ -122,6 +122,24 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 			}
 		}
 
+		if (value === "username") {
+			const isError = await validation("username", e.target.value);
+			dispatchValue({ type: "isError", value: isError });
+			if (isError) {
+				dispatchValue({ type: "message", value: "username must not contains space or special characters and minimal 5!" });
+				dispatchValue({ type: "variant", value: "error" });
+			}
+		}
+
+		if (value === "password") {
+			const isError = await validation("password", e.target.value);
+			dispatchValue({ type: "isError", value: isError });
+			if (isError) {
+				dispatchValue({ type: "message", value: "password must contains number, capital letter and symbol!" });
+				dispatchValue({ type: "variant", value: "error" });
+			}
+		}
+
 		if (value === "agree") {
 			dispatchValue({ type: "agree", value: !values.agree });
 		}
@@ -155,7 +173,6 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 			r => {
 				r.json().then(
 					d => {
-						console.log(d, "ini di sucksead");
 						if (!r.ok){
 							handlingError(d.message);
 						}
@@ -163,14 +180,12 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 						result = d;
 					},
 					e => {
-						console.log(e, "ini di e json,");
 						status = "error";
 						result = e;
 					}
 				);
 			},
 			e => {
-				console.log(e, "ini di ea sebleum json");
 				status = "error";
 				result = e;
 			}
@@ -183,19 +198,15 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 				} else if (status === "error") {
 					throw result;
 				} else {
-					console.log("<<object>>");
 					return result as User;
 				}
 			},
 			write(): ResponsePost {
 				if (status === "pending") {
-					console.log("di pending");
 					throw suspender;
 				} else if (status === "error") {
-					console.log("di errorrr");
 					throw result;
 				} else {
-					console.log("di elseee", result);
 					if (type === "login" || type === "register") {
 						if ((result as ResponsePost).data !== null) {
 							if (((result as ResponsePost).data as User).token !== null) {

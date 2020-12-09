@@ -28,19 +28,16 @@ export const wrapFetccher = (promise: Promise<Response>): WrapperGet => {
 		r => {
 			r.json().then(
 				d => {
-					console.log(d, "ini di sucksead");
 					status = "success";
 					result = d;
 				},
 				e => {
-					console.log(e, "ini di e json,");
 					status = "error";
 					result = e;
 				}
 			);
 		},
 		e => {
-			console.log(e, "ini di ea sebleum json");
 			status = "error";
 			result = e;
 		}
