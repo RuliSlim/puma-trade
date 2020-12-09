@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import React from "react";
-import { Button, Card, CardActions, CardContent, CardHeader, Typography } from "@material-ui/core";
+import { Button, Card, CardActions, CardContent, CardHeader, CardMedia, Typography } from "@material-ui/core";
 import { Loading, Register } from "../components";
 import { useStyles } from "../utils";
 import { Link } from "react-router-dom";
@@ -18,10 +18,11 @@ export default function LoginPage (): JSX.Element {
 	return (
 		<Card className={classes.loginOrRegister}>
 			<CardHeader title="Login"/>
+			<img src="./assets/images/logo_no_text.png" alt="logo libra" className={classes.logo} />
 			<CardContent style={{ width: "80%" }}>
 				<Register type="login" handleChange={handleChange} values={values}/>
 				<React.Suspense fallback={loading}>
-					<Button variant="contained" onClick={handleLogin} fullWidth>Login</Button>
+					<Button variant="contained" onClick={handleLogin} fullWidth style={{ marginTop: "20px" }}>Login</Button>
 				</React.Suspense>
 			</CardContent>
 			<CardActions>

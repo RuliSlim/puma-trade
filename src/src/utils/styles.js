@@ -122,7 +122,7 @@ export const useStyles = makeStyles((theme) => ({
 		alignContent: "center",
 		// width: "80vw",
 		margin: "auto",
-		height: "100%",
+		// height: "100%",
 		[theme.breakpoints.up("lg")]: {
 			width: "40vw"
 		},
@@ -133,14 +133,24 @@ export const useStyles = makeStyles((theme) => ({
 		// 	margin: "0.8vw"
 		// }
 	},
+	logo: {
+		// backgroundImage: "url('./assets/images/logo.png')",
+		// background: "10vw no-repeat",
+		// backgroundSize: "contain",
+		// position: "relative",
+		// // width: "100%",
+		// zIndex: 10
+		flex: 0.2,
+		width: "200px"
+	},
 	forms: {
 		display: "flex",
 		flexDirection: "column",
 		justifyContent: "space-around",
 		// width: "100%",
 		"& > *": {
-			marginTop: "1vw",
-			marginBottom: "1vw"
+			marginTop: "20px",
+			marginBottom: "20px"
 		}
 	},
 	percent: {
