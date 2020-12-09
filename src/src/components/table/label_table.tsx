@@ -45,7 +45,7 @@ export default function LabelTable(props: EnhancedTableProps): JSX.Element {
 							onClick={createSortHandler(label[i] as keyof TItleTableModel)}
 							IconComponent={(): JSX.Element => order === "asc" ? <ArrowUpward /> : <ArrowDownward />}
 						>
-							{key}
+							{key === "coin_value" ? "amount" : key === "value_token" ? "nominal" : key}
 							{orderBy === key ? (
 								<span className={classes.visuallyHidden}>
 									{order === "desc" ? "sorted descending" : "sorted ascending"}

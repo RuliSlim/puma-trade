@@ -24,7 +24,7 @@ export default function MySnackbar(props: MySnackbarProps): JSX.Element {
 				autoHideDuration={3000}
 			>
 				<Alert severity={variant}>
-					{message}
+					{message === "invalid token" ? "please relogin" : message}
 				</Alert>
 			</Snackbar>
 		</>

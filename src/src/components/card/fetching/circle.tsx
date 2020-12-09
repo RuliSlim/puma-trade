@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-ignore */
 import { Typography } from "@material-ui/core";
 import { Circle } from "rc-progress";
 import React from "react";
@@ -7,12 +8,13 @@ import { CardComponentProps } from "../../../model/components/dashboard";
 export default function CircleValue(props: CardComponentProps): JSX.Element {
 	const { resource, item } = props;
 	const data = item.name.toLowerCase() as keyof FetchApi;
-	const percent = Number(resource?.[data]?.write().data);
+	//@ts-ignore
+	const percent = item.name !== "Capping" ? Number(resource?.[data]?.write().data) : Number(resource?.[data]?.write().data?.persen_capping / 3 ?? 3 / 3);
 
 	return(
 		<Typography variant="h6" gutterBottom component="h2" align="center">
 			<Circle
-				percent={item.name === "Capping" ? percent / 3 : percent}
+				percent={item.name === "Capping" ? percent : percent}
 				strokeWidth={2}
 				strokeColor={{
 					"0%": "#fa100b",

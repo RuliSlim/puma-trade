@@ -36,7 +36,7 @@ export default function MySnackbarSuspense(): JSX.Element {
 				autoHideDuration={3000}
 			>
 				<Alert severity="success">
-					{message}
+					{message === "invalid token" ? "please relogin" : message}
 				</Alert>
 			</Snackbar>
 		</>

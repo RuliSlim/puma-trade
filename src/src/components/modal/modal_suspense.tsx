@@ -38,7 +38,7 @@ export default function ModalSuspense(props: Props): JSX.Element {
 			setOpen(postResource?.result?.write().data === "Transfer Success!" ? true : false);
 		} else if (type === "withdraw") {
 			// setOpen(false);
-			// setOpen(amount === undefined && amount === null && postResource?.result?.write().data !== "None" && postResource?.result?.write().data !== undefined && postResource.result.write().data !== undefined);
+			setOpen(amount === undefined && amount === null && postResource?.result?.write().data !== "None" && postResource?.result?.write().data !== undefined && postResource.result.write().data !== undefined);
 		} else {
 			setOpen(postResource?.result?.write().data ? true : false);
 		}

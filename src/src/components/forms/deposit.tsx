@@ -38,7 +38,7 @@ export default function DepositForm(props: FormProps): JSX.Element {
 							type="submit"
 							variant="contained"
 							color="secondary"
-							disabled={!checked}
+							disabled={!checked || values.isError}
 							fullWidth
 						>
 							Submit

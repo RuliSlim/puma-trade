@@ -195,7 +195,7 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 					console.log("di errorrr");
 					throw result;
 				} else {
-					console.log("di elseee");
+					console.log("di elseee", result);
 					if (type === "login" || type === "register") {
 						if ((result as ResponsePost).data !== null) {
 							if (((result as ResponsePost).data as User).token !== null) {

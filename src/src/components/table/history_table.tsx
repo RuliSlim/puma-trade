@@ -10,6 +10,7 @@ import { getComparator, stableSort, useStyles } from "../../utils";
 import TitleTable from "./title_table";
 import LabelTable from "./label_table";
 import { SponsorHistoryModel, TItleTableModel } from "../../model/history";
+import { useHistory } from "react-router-dom";
 
 type HistoryTableProps = {
 	rows: Array<TItleTableModel | SponsorHistoryModel>;
@@ -26,6 +27,7 @@ export default function HistoryTable(props: HistoryTableProps): JSX.Element {
 	const [ selected, setSelected ] = React.useState<Array<string>>([]);
 	const [ page, setPage ] = React.useState(0);
 	const rowsPerPage = 10;
+	const history = useHistory();
 
 	const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof TItleTableModel): void => {
 		const isAsc = orderBy === property && order === "asc";
@@ -84,9 +86,13 @@ export default function HistoryTable(props: HistoryTableProps): JSX.Element {
 										key={row.id}
 										selected={isItemSelected}
 									>
-										{Object.values(arr[i]).map((value, j) =>
-											j !== 0 && <TableCell align="left" key={j}>{value}</TableCell>
-										)}
+										{Object.values(arr[i]).map((value, j) => {
+											const type = history.location.search.slice(1);
+											const showValue = type === "withdraw" && j === 3 ? value === "2" ? "success" : "pending" : type === "invest" && j === 3 ? value === "True" ? "Active" : "Inactive" : value;
+											return (
+												j !== 0 && <TableCell align="left" key={j}>{showValue}</TableCell>
+											);
+										})}
 									</TableRow>
 								);
 							})}
