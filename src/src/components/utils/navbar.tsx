@@ -41,7 +41,7 @@ export default function TemporaryDrawer(): JSX.Element {
 		setExpand({ ...expand, [key]: !expand[key] });
 	};
 
-	const listData = [ "Logo", "Dashboard", "Profile", "Trees", "History" ];
+	const listData = [ "Dashboard", "Profile", "Trees", "History" ];
 	const depositList = [ "BTC", "ETH", "DOGE" ];
 	const historyList = [ "Deposit", "Invest", "Convert", "Transfer", "Withdraw", "Sponsor" ];
 

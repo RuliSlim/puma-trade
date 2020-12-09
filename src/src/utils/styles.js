@@ -143,6 +143,9 @@ export const useStyles = makeStyles((theme) => ({
 		flex: 0.2,
 		width: "200px"
 	},
+	logoAppbar: {
+		width: "50px"
+	},
 	forms: {
 		display: "flex",
 		flexDirection: "column",
