@@ -21,15 +21,15 @@ export default function CardProfile(props: CardProfileProps): JSX.Element {
 				<Grid container direction="column" style={{ height: "100%" }} spacing={5}>
 					<Grid item>
 						<Typography variant="h6">username</Typography>
-						<Typography variant={device.isLaptop ? "h4" : "h5"}>{user.username}</Typography>
+						<Typography variant={device.isLaptop ? "h4" : "h6"}>{user.username}</Typography>
 					</Grid>
 					<Grid item>
 						<Typography variant="h6">email</Typography>
-						<Typography variant={device.isLaptop ? "h4" : "h5"}>{user.email}</Typography>
+						<Typography variant={device.isLaptop ? "h4" : "h6"}>{user.email}</Typography>
 					</Grid>
 					<Grid item>
 						<Typography variant="h6">Referal Code</Typography>
-						<Typography variant={device.isLaptop ? "h4" : "h5"}>{user.referal_code}</Typography>
+						<Typography variant={device.isLaptop ? "h4" : "h6"}>{user.referal_code}</Typography>
 					</Grid>
 				</Grid>
 			</CardContent>
