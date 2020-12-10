@@ -6,13 +6,20 @@ import { useStyles } from "../../utils";
 import { useDeviceSize } from "../../hooks/device";
 import { getUser } from "../../utils/auth";
 import { UserData } from "../../model/models/user.model";
-import { Settings } from "@material-ui/icons";
+import { FileCopy, Settings } from "@material-ui/icons";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import MySnackbar from "../utils/snackbar";
 
 export default function CardProfile(props: CardProfileProps): JSX.Element {
 	const { openingModal } = props;
 	const { device } = useDeviceSize();
 	const classess = useStyles();
 	const [ user, _ ] = React.useState<UserData>(getUser());
+	const [ copy, setCopy ] = React.useState<boolean>(false);
+
+	const handleCopy = (): void => {
+		setCopy(true);
+	};
 
 	return(
 		<Card raised className={classess.wallet}>
@@ -29,7 +36,17 @@ export default function CardProfile(props: CardProfileProps): JSX.Element {
 					</Grid>
 					<Grid item>
 						<Typography variant="h6">Referal Code</Typography>
-						<Typography variant={device.isLaptop ? "h4" : "h6"}>{user.referal_code}</Typography>
+						<Grid container direction="row" justify="space-between">
+							<Typography variant={device.isLaptop ? "h4" : "h6"}>{user.referal_code}</Typography>
+							<CopyToClipboard
+								text={user.referal_code}
+								onCopy={handleCopy}
+							>
+								<Button>
+									<FileCopy />
+								</Button>
+							</CopyToClipboard>
+						</Grid>
 					</Grid>
 				</Grid>
 			</CardContent>
@@ -57,6 +74,12 @@ export default function CardProfile(props: CardProfileProps): JSX.Element {
 					}</Typography>
 				</Box>
 			</Button>
+			<MySnackbar
+				isOpen={copy}
+				message="code copy to clipboard"
+				onClose={(): void => setCopy(false)}
+				variant="success"
+			/>
 		</Card>
 	);
 }

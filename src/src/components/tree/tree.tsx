@@ -57,7 +57,7 @@ export default function MyTree(props: Props): JSX.Element {
 			translate={{ x: window.innerWidth/2.5, y: window.innerHeight/3 }}
 			pathFunc={"straight"}
 			collapsible={false}
-			zoomable={false}
+			zoomable={useDeviceSize().device.isMobile ? true : false}
 			onClick={handleClick}
 			styles={styles}
 			zoom={useDeviceSize().device.isMobile ? 0.45 : 1}
