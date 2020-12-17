@@ -93,10 +93,15 @@ export const useStyles = makeStyles((theme) => ({
 	},
 	wallet: {
 		display: "flex",
+		// overflow: "auto !important",
 		flexDirection: "row",
 		justifyContent: "flex-end",
 		alignItems: "center",
 		height: "100%",
+	},
+	cardProf: {
+		width: "80%",
+		overflow: "auto"
 	},
 	bonus: {
 		display: "flex",

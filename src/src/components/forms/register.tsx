@@ -3,6 +3,8 @@ import { Checkbox, Input, FormControl, FormControlLabel, Grid, IconButton, Input
 import { FormApi } from "../../model/components/form";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 import { useStyles } from "../../utils";
+import { decryptLinkUrl } from "../../utils/auth";
+import { useHistory } from "react-router-dom";
 
 interface RegisterProps {
 	type: "login" | "register" | "inside";
@@ -13,11 +15,18 @@ interface RegisterProps {
 export default function Register (props: RegisterProps): JSX.Element {
 	const { type, handleChange, values } = props;
 	const [ showPassword, setShowPassword ] = React.useState<boolean>(false);
+	const [ reff, setReff ] = React.useState<string>("");
 	const classes = useStyles();
+	const history = useHistory();
 
 	const handleShowPassword = (): void => {
 		setShowPassword(!showPassword);
 	};
+	
+	React.useEffect(() => {
+		const refferal = decryptLinkUrl(history.location.search.slice(1)).slice(9);
+		setReff(refferal);
+	}, [])
 
 	return(
 		<div className={classes.forms}>
@@ -101,7 +110,8 @@ export default function Register (props: RegisterProps): JSX.Element {
 								type="text"
 								fullWidth
 								onChange={handleChange("codeReferral")}
-								value={values.codeReferral}
+								value={reff.length > 1 ? reff : values.codeReferral}
+								disabled={reff.length > 1 ? true : false}
 							/>
 						</FormControl>
 					</Grid>
