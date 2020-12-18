@@ -373,7 +373,7 @@ export const FormProvider = (props: FormProviderProps): JSX.Element => {
 		clearPostResource();
 		handleResetAgree();
 		const data: {receiver: string; poin: string} = {
-			receiver: values.receiver,
+			receiver: values.receiver.toUpperCase(),
 			poin: values.point
 		};
 

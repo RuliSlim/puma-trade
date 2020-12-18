@@ -16,7 +16,7 @@ export default function TransferForm(): JSX.Element {
 				type="text"
 				fullWidth
 				onChange={handleChange("receiver")}
-				value={values.receiver}
+				value={values.receiver.toUpperCase()}
 			/>
 			<TextField
 				autoFocus
